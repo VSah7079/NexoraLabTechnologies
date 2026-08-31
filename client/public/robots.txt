@@ -1,0 +1,33 @@
+User-agent: *
+Allow: /
+Allow: /about
+Allow: /services
+Allow: /portfolio
+Allow: /careers
+Allow: /contact
+Allow: /meeting
+Allow: /resume-analyzer
+Allow: /ats-score
+Allow: /resume-builder
+Allow: /portfolio-builder
+Allow: /skill-gap
+Allow: /career-coach
+Allow: /salary-prediction
+Allow: /interview
+
+# Block Auth Paths
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /verify-otp
+Disallow: /verify-email
+
+# Block Restricted Area Dashboards
+Disallow: /candidate/
+Disallow: /recruiter/
+Disallow: /company/
+Disallow: /admin/
+Disallow: /super-admin/
+
+Sitemap: https://nexoralabtechnologies.in/sitemap.xml

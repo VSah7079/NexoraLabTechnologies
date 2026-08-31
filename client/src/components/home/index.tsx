@@ -1,0 +1,13 @@
+export { default as Hero } from './Hero';
+export { default as About } from './About';
+export { default as Services } from './Services';
+export { default as Portfolio } from './Portfolio';
+export { default as Process } from './Process';
+export { default as Pricing } from './Pricing';
+export { default as Testimonials } from './Testimonials';
+export { default as Industries } from './Industries';
+export { default as Solutions } from './Solutions';
+export { default as Technologies } from './Technologies';
+export { default as TrustedCompanies } from './TrustedCompanies';
+export { default as FAQ } from './FAQ';
+export { default as ContactCTA } from './ContactCTA';
