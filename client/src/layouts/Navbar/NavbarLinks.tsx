@@ -1,7 +1,5 @@
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
-
-// ✅ Import from config instead of hardcoding
 import { navLinks } from "@/config/navigation";
 
 interface NavbarLinksProps {
@@ -15,12 +13,14 @@ const NavbarLinks = ({ onClick, mobile = false }: NavbarLinksProps) => {
       {navLinks.map((item, index) => (
         <motion.div
           key={item.title}
-          initial={mobile ? { opacity: 0, x: 30 } : false}
+          initial={mobile ? { opacity: 0, x: 20 } : false}
           animate={mobile ? { opacity: 1, x: 0 } : false}
-          transition={mobile ? { delay: index * 0.07 } : undefined}
+          transition={mobile ? { delay: index * 0.05, duration: 0.3 } : undefined}
+          className={mobile ? "w-full" : "relative shrink-0"}
         >
           <NavLink
             to={item.path}
+            end={item.path === "/"}
             onClick={() => {
               if (onClick) onClick();
             }}
@@ -30,61 +30,74 @@ const NavbarLinks = ({ onClick, mobile = false }: NavbarLinksProps) => {
                   flex
                   items-center
                   justify-between
-                  rounded-2xl
-                  border
-                  px-5
-                  py-4
-                  text-base
+                  rounded-xl
+                  px-4
+                  py-3
+                  text-sm
                   font-medium
                   transition-all
-                  duration-300
+                  duration-200
                   ${
                     isActive
-                      ? "border-cyan-400/40 bg-cyan-50 text-cyan-600"
-                      : "border-gray-200 bg-white text-gray-600 hover:border-cyan-400/30 hover:text-cyan-600 hover:bg-gray-50"
+                      ? "bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] text-white font-semibold shadow-md shadow-cyan-500/25"
+                      : "text-slate-300 hover:text-white hover:bg-slate-800/60"
                   }
                 `;
               }
               return `
                 relative
-                px-3
-                py-2
-                text-sm
+                inline-flex
+                items-center
+                justify-center
+                px-3.5
+                xl:px-4
+                py-1.5
+                text-xs
+                xl:text-[13px]
                 font-medium
-                transition-all
-                duration-300
-                rounded-lg
+                rounded-full
+                transition-colors
+                duration-200
                 cursor-pointer
+                select-none
                 ${
                   isActive
-                    ? "text-cyan-600"
-                    : "text-gray-600 hover:text-cyan-600 hover:bg-gray-50"
+                    ? "text-white font-semibold"
+                    : "text-slate-300 hover:text-white hover:bg-white/5"
                 }
               `;
             }}
           >
             {({ isActive }) => (
               <>
-                <span>
-                  {item.title}
-                </span>
-                {mobile && <span className="text-cyan-600 ml-2">→</span>}
+                {/* Active Sliding Capsule for Desktop */}
                 {!mobile && isActive && (
                   <motion.span
-                    layoutId="navbar-active"
+                    layoutId="active-nav-pill"
                     className="
                       absolute
-                      -bottom-0.5
-                      left-0
-                      h-[2.5px]
-                      w-full
+                      inset-0
                       rounded-full
                       bg-gradient-to-r
-                      from-cyan-400
-                      via-blue-500
-                      to-violet-600
+                      from-[#00D2FF]
+                      via-[#0066FF]
+                      to-[#7C3AED]
+                      shadow-[0_2px_14px_rgba(0,210,255,0.45)]
                     "
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 32,
+                    }}
                   />
+                )}
+
+                <span className="relative z-10">{item.title}</span>
+
+                {mobile && (
+                  <span className={`text-xs ${isActive ? "text-white" : "text-slate-500"}`}>
+                    →
+                  </span>
                 )}
               </>
             )}

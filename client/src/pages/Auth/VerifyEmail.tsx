@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Link, useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { HiCheckCircle, HiXCircle, HiEnvelope } from "react-icons/hi2";
+import { HiCheckCircle, HiXCircle } from "react-icons/hi2";
+import Logo from "@/layouts/Navbar/Logo";
 
 const VerifyEmail = () => {
   const [searchParams] = useSearchParams();
@@ -14,7 +15,7 @@ const VerifyEmail = () => {
       
       if (!token) {
         setStatus('error');
-        setMessage('Invalid verification link. Please request a new verification email.');
+        setMessage('Invalid or expired verification link.');
         return;
       }
 
@@ -24,14 +25,14 @@ const VerifyEmail = () => {
 
         if (data.success) {
           setStatus('success');
-          setMessage(data.message);
+          setMessage(data.message || 'Email verified successfully!');
         } else {
           setStatus('error');
           setMessage(data.message || 'Verification failed. Please try again.');
         }
       } catch (error) {
         setStatus('error');
-        setMessage('Network error. Please check your connection and try again.');
+        setMessage('Network connection error. Please try again.');
       }
     };
 
@@ -43,50 +44,54 @@ const VerifyEmail = () => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="w-full max-w-md mx-auto"
+      className="w-full max-w-md mx-auto py-8"
     >
-      <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 md:p-10">
+      <div className="rounded-3xl border border-slate-800 bg-[#070e1e]/95 p-8 sm:p-10 backdrop-blur-2xl shadow-2xl">
+        <div className="flex justify-center mb-6">
+          <Logo size="lg" />
+        </div>
+
         {status === 'loading' && (
-          <div className="text-center">
-            <div className="h-16 w-16 animate-spin rounded-full border-4 border-cyan-400 border-t-transparent mx-auto mb-6"></div>
-            <h2 className="text-2xl font-bold text-gray-900">Verifying Your Email</h2>
-            <p className="text-gray-500 mt-2">Please wait while we verify your email address...</p>
+          <div className="text-center space-y-4">
+            <div className="h-14 w-14 animate-spin rounded-full border-4 border-[#00D2FF] border-t-transparent mx-auto"></div>
+            <h2 className="text-2xl font-black text-white font-['Outfit']">Verifying Account</h2>
+            <p className="text-xs sm:text-sm text-slate-300 font-normal">Validating your email token with security servers...</p>
           </div>
         )}
 
         {status === 'success' && (
-          <div className="text-center">
-            <div className="flex justify-center mb-6">
-              <HiCheckCircle className="text-6xl text-green-500" />
+          <div className="text-center space-y-4">
+            <div className="flex justify-center">
+              <HiCheckCircle className="text-6xl text-emerald-400" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900">Email Verified!</h2>
-            <p className="text-gray-500 mt-2">{message}</p>
+            <h2 className="text-2xl font-black text-white font-['Outfit']">Email Verified!</h2>
+            <p className="text-xs sm:text-sm text-slate-300 font-normal">{message}</p>
             <Link
               to="/login"
-              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-violet-600 px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/40"
+              className="mt-4 inline-flex items-center justify-center w-full rounded-full bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] py-3.5 text-sm font-bold text-white shadow-xl shadow-cyan-500/25 transition-all hover:scale-105"
             >
-              Login to Your Account
+              Sign In to Your Workspace
             </Link>
           </div>
         )}
 
         {status === 'error' && (
-          <div className="text-center">
-            <div className="flex justify-center mb-6">
-              <HiXCircle className="text-6xl text-red-500" />
+          <div className="text-center space-y-4">
+            <div className="flex justify-center">
+              <HiXCircle className="text-6xl text-rose-500" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900">Verification Failed</h2>
-            <p className="text-gray-500 mt-2">{message}</p>
-            <div className="mt-6 space-y-3">
+            <h2 className="text-2xl font-black text-white font-['Outfit']">Verification Failed</h2>
+            <p className="text-xs sm:text-sm text-slate-300 font-normal">{message}</p>
+            <div className="pt-2 space-y-2.5">
               <Link
                 to="/register"
-                className="block w-full rounded-xl border border-gray-300 px-8 py-3.5 text-sm font-semibold text-gray-700 transition-all duration-300 hover:border-cyan-400 hover:text-cyan-600"
+                className="block w-full rounded-full border border-slate-700 bg-[#0a1128] py-3 text-xs font-bold text-slate-200 transition-all hover:border-[#00D2FF]"
               >
                 Back to Registration
               </Link>
               <Link
                 to="/login"
-                className="block w-full rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-violet-600 px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/40"
+                className="block w-full rounded-full bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] py-3 text-xs font-bold text-white shadow-xl shadow-cyan-500/25 transition-all hover:scale-105 text-center"
               >
                 Go to Login
               </Link>

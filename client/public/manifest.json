@@ -3,18 +3,13 @@
   "name": "NexoraLab Technologies",
   "icons": [
     {
-      "src": "/favicon.svg",
-      "type": "image/svg+xml",
-      "sizes": "any"
-    },
-    {
       "src": "/Circlelogo.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
   "start_url": "/",
-  "background_color": "#ffffff",
-  "theme_color": "#0ea5e9",
+  "background_color": "#030712",
+  "theme_color": "#00D2FF",
   "display": "standalone"
 }

@@ -79,10 +79,10 @@ const Meeting = lazy(() => import("../pages/Meeting/Meeting"));
 // COMPONENTS
 // ============================================
 const PageLoader = () => (
-  <div className="flex min-h-screen items-center justify-center bg-white/90 backdrop-blur-sm">
-    <div className="flex flex-col items-center gap-4">
-      <div className="h-12 w-12 animate-spin rounded-full border-4 border-cyan-400 border-t-transparent"></div>
-      <p className="text-gray-600 text-sm">Loading...</p>
+  <div className="flex min-h-[60vh] items-center justify-center bg-transparent">
+    <div className="flex flex-col items-center gap-4 rounded-3xl border border-slate-800 bg-[#060b18]/80 p-8 shadow-2xl backdrop-blur-2xl">
+      <div className="h-12 w-12 animate-spin rounded-full border-4 border-[#00D2FF] border-t-transparent shadow-[0_0_20px_rgba(0,210,255,0.4)]"></div>
+      <p className="text-slate-300 text-sm font-semibold tracking-wider uppercase">Loading...</p>
     </div>
   </div>
 );
@@ -182,19 +182,19 @@ const DashboardRouteWrapper = ({ children, title }: { children: React.ReactNode;
 
 // 404 Page with noindex
 const NotFound = () => (
-  <div className="flex min-h-screen items-center justify-center bg-white/90 backdrop-blur-sm">
+  <div className="flex min-h-[70vh] items-center justify-center bg-transparent px-4">
     <SEO
       title="404 - Page Not Found | NexoraLab Technologies"
       description="The page you are looking for does not exist on NexoraLab Technologies."
       robots="noindex, follow"
     />
-    <div className="text-center">
-      <h1 className="text-6xl md:text-8xl font-bold text-gray-900">404</h1>
-      <p className="mt-4 text-xl text-gray-600">Page Not Found</p>
-      <p className="mt-2 text-sm text-gray-500">The page you are looking for does not exist.</p>
+    <div className="text-center rounded-3xl border border-slate-800 bg-[#0b132b]/85 p-8 sm:p-12 shadow-2xl backdrop-blur-2xl max-w-lg w-full">
+      <h1 className="text-6xl md:text-8xl font-black bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 bg-clip-text text-transparent">404</h1>
+      <p className="mt-4 text-2xl font-bold text-white">Page Not Found</p>
+      <p className="mt-2 text-sm text-slate-300">The page you are looking for doesn't exist or has been moved.</p>
       <a 
         href="/" 
-        className="mt-6 inline-block rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-8 py-3 text-gray-900 font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(34,211,238,.35)]"
+        className="mt-8 inline-block rounded-full bg-gradient-to-r from-cyan-500 via-blue-600 to-violet-600 px-8 py-3.5 text-sm font-bold text-white shadow-[0_0_25px_rgba(0,210,255,0.4)] transition-all duration-300 hover:scale-105 active:scale-95"
       >
         Go Back Home
       </a>
@@ -217,14 +217,18 @@ const AppRoutes = () => {
         {/* ✅ ABOUT ROUTE */}
         <Route path="/about" element={<About />} />
         
-        {/* ✅ SERVICES ROUTE */}
+        {/* ✅ SERVICES & DIVISIONS ROUTES */}
         <Route path="/services" element={<Services />} />
+        <Route path="/divisions" element={<Services />} />
+        <Route path="/solutions" element={<Solutions />} />
         
-        {/* ✅ PORTFOLIO ROUTE */}
+        {/* ✅ PORTFOLIO & PROJECTS ROUTE */}
         <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/projects" element={<Portfolio />} />
         
-        {/* ✅ CAREERS ROUTE */}
+        {/* ✅ CAREERS & INSIGHTS ROUTE */}
         <Route path="/careers" element={<Careers />} />
+        <Route path="/insights" element={<Careers />} />
         
         {/* ✅ CONTACT ROUTE */}
         <Route path="/contact" element={<ContactCTA />} />

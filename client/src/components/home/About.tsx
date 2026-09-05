@@ -4,27 +4,20 @@ import SEO from "@/components/common/SEO";
 import {
   FaRocket,
   FaShieldAlt,
-  FaUsers,
   FaCode,
-  FaCloud,
-  FaBrain,
   FaArrowRight,
-  FaChartLine,
-  FaAward,
-  FaClock,
   FaGlobe,
   FaLightbulb,
-  FaHandshake,
   FaCrown,
-  FaGem
+  FaBrain
 } from "react-icons/fa";
 import {
   fadeInUp,
   fadeInLeft,
   fadeInRight,
-  staggerContainer,
-  scaleIn
+  staggerContainer
 } from "@/animations/variants";
+import { aboutTechImg } from "@/assets/images";
 
 const About = () => {
   const location = useLocation();
@@ -41,7 +34,8 @@ const About = () => {
           description="Learn about NexoraLab Technologies, a modern software development agency building secure, scalable, and high-performance digital products for global businesses."
         />
       )}
-      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 xl:px-10">
+      <div className="mx-auto max-w-[1480px] px-4 sm:px-6 lg:px-8 xl:px-10">
+        
         {/* Section Header */}
         <motion.div
           variants={fadeInUp}
@@ -50,258 +44,178 @@ const About = () => {
           viewport={{ once: true }}
           className="text-center mb-16 md:mb-20"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-500/10 backdrop-blur-md px-6 py-2 text-sm font-medium text-cyan-600">
+          <span className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-[#070e1b]/90 backdrop-blur-md px-5 py-2 text-xs sm:text-sm font-bold tracking-wide bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent shadow-[0_0_20px_rgba(0,210,255,0.15)]">
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-400" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#00D2FF] opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#00D2FF]" />
             </span>
-            About NexoraLab Technologies
+            INNOVATE • BUILD • ELEVATE
           </span>
-          <h2 className="mt-6 text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-gray-900 leading-tight">
-            Engineering{" "}
-            <span className="bg-linear-to-r from-cyan-400 via-blue-500 to-violet-500 bg-clip-text text-transparent">
-              Future Ready
-            </span>
-            <br />
-            Digital Solutions
+          <h2 className="mt-5 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight">
+            Architecting{" "}
+            <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
+              Future-Ready
+            </span>{" "}
+            Digital Systems
           </h2>
-          <p className="mt-4 max-w-3xl mx-auto text-base md:text-lg text-gray-700 leading-relaxed">
-            NexoraLab Technologies is a modern software development company
-            focused on building scalable digital products for startups,
-            enterprises, and organizations worldwide.
+          <p className="mt-4 max-w-3xl mx-auto text-base sm:text-lg text-slate-300 leading-relaxed font-normal">
+            NexoraLab Technologies is a premier engineering hub delivering custom enterprise software, AI-powered recruitment tools, and resilient multi-platform web & mobile systems for fast-scaling global organizations.
           </p>
         </motion.div>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-          {/* Left Column - Features & CTA */}
+        {/* 2-Column Split Showcase */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+          
+          {/* Left Column: Image Showcase + Floating Badge */}
           <motion.div
             variants={fadeInLeft}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="space-y-8"
+            className="lg:col-span-6 relative"
           >
-            {/* Features Grid */}
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6"
-            >
-              {[
-                {
-                  title: "Innovation First",
-                  description: "We build modern AI-powered software solutions that help businesses stay ahead of the competition.",
-                  icon: <FaRocket />,
-                  color: "from-cyan-400 to-blue-500"
-                },
-                {
-                  title: "Enterprise Security",
-                  description: "Secure architecture with scalable cloud infrastructure and industry best practices.",
-                  icon: <FaShieldAlt />,
-                  color: "from-violet-500 to-purple-500"
-                },
-                {
-                  title: "Expert Team",
-                  description: "Experienced developers, designers and consultants delivering premium digital products.",
-                  icon: <FaUsers />,
-                  color: "from-blue-500 to-cyan-400"
-                },
-                {
-                  title: "Quality First",
-                  description: "We follow industry best practices, clean code principles and rigorous testing.",
-                  icon: <FaCrown />,
-                  color: "from-purple-500 to-pink-500"
-                }
-              ].map((item, index) => (
-                <motion.div
-                  key={item.title}
-                  variants={fadeInUp}
-                  custom={index}
-                  whileHover={{ x: 8 }}
-                  className="group flex items-start gap-5 p-5 rounded-2xl border border-gray-300 transition-all duration-300 hover:border-cyan-400"
-                >
-                  <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-linear-to-r ${item.color} text-2xl text-white shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
-                    {item.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-cyan-600 transition-colors">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2 text-sm text-gray-700 leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
+            {/* Background Glow */}
+            <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-[#00D2FF]/20 via-[#0066FF]/15 to-[#7C3AED]/20 blur-3xl opacity-75 pointer-events-none" />
 
-            {/* CTA Buttons */}
+            {/* High-Tech Image Card Frame */}
+            <div className="relative overflow-hidden rounded-3xl border border-slate-800 bg-[#070e1e]/95 p-2.5 sm:p-3 shadow-2xl backdrop-blur-2xl transition-all duration-300 hover:border-[#00D2FF]/50 hover:shadow-[0_20px_50px_rgba(0,102,255,0.25)]">
+              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-950">
+                <img
+                  src={aboutTechImg}
+                  alt="NexoraLab Tech Lab and AI Engineering Team"
+                  className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
+                
+                {/* Floating Glass Pill */}
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-2xl border border-slate-700/80 bg-[#070e1b]/95 px-4 py-2.5 backdrop-blur-md">
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-[#00D2FF] animate-ping" />
+                    <span className="text-xs font-semibold text-white">Innovation Lab Active</span>
+                  </div>
+                  <span className="text-[11px] font-mono font-bold text-[#00D2FF]">ISO 9001:2026 Certified</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Floating Metric Badge */}
             <motion.div
-              variants={fadeInUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="flex flex-wrap gap-4 pt-4"
+              whileHover={{ scale: 1.05 }}
+              className="absolute -bottom-6 -right-2 sm:-right-4 hidden sm:flex items-center gap-3.5 rounded-2xl border border-cyan-400/40 bg-[#070e1b]/95 p-4 shadow-xl backdrop-blur-xl"
             >
-              <Link
-                to="/about"
-                className="inline-flex items-center gap-2 rounded-2xl bg-linear-to-r from-cyan-500 via-blue-500 to-violet-600 px-8 py-4 font-semibold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(34,211,238,.35)] active:scale-95"
-              >
-                Learn More <FaArrowRight className="text-sm" />
-              </Link>
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 rounded-2xl border border-gray-300 bg-white/80 backdrop-blur-sm px-8 py-4 font-semibold text-gray-700 transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-50 hover:text-cyan-600 hover:-translate-y-1"
-              >
-                Talk To Experts
-              </Link>
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-[#00D2FF] to-[#0066FF] text-white text-xl shadow-lg shadow-cyan-500/30">
+                <FaBrain />
+              </div>
+              <div>
+                <div className="text-xl font-black text-white">100% Custom</div>
+                <div className="text-xs text-slate-300 font-medium">AI & Full-Stack Solutions</div>
+              </div>
             </motion.div>
           </motion.div>
 
-          {/* Right Column - Stats & Info */}
+          {/* Right Column: Pillars & Capabilities */}
           <motion.div
             variants={fadeInRight}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="space-y-6"
+            className="lg:col-span-6 space-y-6"
           >
-            {/* Company Overview */}
-            <div className="p-6 rounded-2xl border border-gray-200/60 bg-white/70 backdrop-blur-xl shadow-lg shadow-gray-200/30 transition-all duration-300 hover:border-cyan-400/60 hover:shadow-[0_25px_60px_rgba(34,211,238,.2)]">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-2xl font-bold text-gray-900">Company Overview</h3>
-                <span className="rounded-full border border-emerald-400/30 bg-emerald-500/10 backdrop-blur-sm px-4 py-2 text-sm font-semibold text-emerald-600 shadow-lg shadow-emerald-500/10">
-                  Since 2026
-                </span>
-              </div>
-
-              {/* Progress Bars */}
-              <div className="space-y-6">
-                {[
-                  { title: "Project Success Rate", value: "98%", width: "98%", color: "from-cyan-400 to-blue-500" },
-                  { title: "Client Satisfaction", value: "99%", width: "99%", color: "from-violet-500 to-cyan-400" },
-                  { title: "On-Time Delivery", value: "97%", width: "97%", color: "from-blue-500 to-cyan-400" },
-                ].map((item) => (
-                  <div key={item.title}>
-                    <div className="mb-2 flex items-center justify-between">
-                      <span className="text-sm text-gray-800 font-medium">{item.title}</span>
-                      <span className="text-sm font-semibold text-cyan-600">{item.value}</span>
-                    </div>
-                    <div className="h-3 rounded-full bg-gray-200/60 backdrop-blur-sm overflow-hidden shadow-inner">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: item.width }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1.5, ease: "easeOut" }}
-                        className={`h-full rounded-full bg-gradient-to-r ${item.color} shadow-lg shadow-cyan-500/20 relative overflow-hidden`}
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/30 via-transparent to-transparent animate-pulse" />
-                      </motion.div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Stats Grid */}
+            {/* 4 Core Pillars Bento Grid */}
             <motion.div
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="grid grid-cols-2 gap-4"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
             >
               {[
-                { title: "Projects Delivered", value: "250+", icon: <FaCode /> },
-                { title: "Happy Clients", value: "120+", icon: <FaUsers /> },
-                { title: "Expert Team", value: "20+", icon: <FaCrown /> },
-                { title: "24/7 Support", value: "Always", icon: <FaClock /> },
-              ].map((item) => (
+                {
+                  title: "AI & Automation",
+                  description: "Automate complex pipelines with deep learning and real-time intelligent agents.",
+                  icon: <FaRocket />,
+                  color: "from-[#00D2FF] to-[#0066FF]",
+                },
+                {
+                  title: "Cloud & Microservices",
+                  description: "Resilient, zero-downtime cloud systems built on AWS, Azure, and Kubernetes.",
+                  icon: <FaShieldAlt />,
+                  color: "from-[#0066FF] to-[#7C3AED]",
+                },
+                {
+                  title: "Agile Engineering",
+                  description: "High-velocity 2-week sprint iterations with continuous CI/CD delivery.",
+                  icon: <FaCode />,
+                  color: "from-[#7C3AED] to-[#9333EA]",
+                },
+                {
+                  title: "Enterprise Grade",
+                  description: "SOC2 ready, bank-grade encryption, clean architecture, and strict NDA compliance.",
+                  icon: <FaCrown />,
+                  color: "from-[#9333EA] to-[#00D2FF]",
+                },
+              ].map((item, index) => (
                 <motion.div
                   key={item.title}
-                  variants={scaleIn}
+                  variants={fadeInUp}
+                  custom={index}
                   whileHover={{ y: -4 }}
-                  className="p-5 text-center rounded-2xl border border-gray-300 transition-all duration-300 hover:border-cyan-400"
+                  className="rounded-2xl border border-slate-800 bg-[#0b132b]/85 p-4.5 transition-all duration-300 hover:border-[#00D2FF]/50 hover:bg-[#0f1b3d] hover:shadow-[0_8px_25px_rgba(0,102,255,0.18)] backdrop-blur-xl"
                 >
-                  <div className="text-3xl text-cyan-500 mb-2">{item.icon}</div>
-                  <h4 className="text-3xl md:text-4xl font-black bg-linear-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent">
-                    {item.value}
-                  </h4>
-                  <p className="mt-1 text-sm text-gray-700 font-medium">{item.title}</p>
+                  <div className={`mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-r ${item.color} text-lg text-white shadow-md shadow-cyan-500/20`}>
+                    {item.icon}
+                  </div>
+                  <h3 className="text-base font-bold text-white">
+                    {item.title}
+                  </h3>
+                  <p className="mt-1.5 text-xs text-slate-300 leading-relaxed font-normal">
+                    {item.description}
+                  </p>
                 </motion.div>
               ))}
             </motion.div>
 
-            {/* Vision & Mission */}
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="grid grid-cols-1 gap-4"
-            >
-              <motion.div
-                variants={fadeInUp}
-                className="p-5 rounded-2xl border border-gray-300 transition-all duration-300 hover:border-cyan-400"
-              >
-                <div className="flex items-center gap-3">
-                  <FaGlobe className="text-cyan-500 text-2xl" />
-                  <h4 className="text-lg font-bold text-gray-900">Our Vision</h4>
+            {/* Mission & Vision Card */}
+            <div className="rounded-2xl border border-slate-800 bg-[#0b132b]/85 p-5 backdrop-blur-xl">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex items-start gap-3">
+                  <FaGlobe className="text-[#00D2FF] text-xl shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="text-sm font-bold text-white">Our Global Vision</h4>
+                    <p className="mt-1 text-xs text-slate-300 leading-relaxed">
+                      Empowering startups and enterprises with intelligent digital products that scale seamlessly worldwide.
+                    </p>
+                  </div>
                 </div>
-                <p className="mt-2 text-sm text-gray-700 leading-relaxed">
-                  To become one of India's leading AI-driven software development companies by creating innovative, scalable and future-ready digital solutions.
-                </p>
-              </motion.div>
-              <motion.div
-                variants={fadeInUp}
-                className="p-5 rounded-2xl border border-gray-300 transition-all duration-300 hover:border-cyan-400"
-              >
-                <div className="flex items-center gap-3">
-                  <FaLightbulb className="text-violet-500 text-2xl" />
-                  <h4 className="text-lg font-bold text-gray-900">Our Mission</h4>
-                </div>
-                <p className="mt-2 text-sm text-gray-700 leading-relaxed">
-                  Deliver secure, scalable and innovative digital products using modern technologies while maintaining exceptional quality and transparency.
-                </p>
-              </motion.div>
-            </motion.div>
 
-            {/* Core Values */}
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="p-5 rounded-2xl border border-gray-300 transition-all duration-300 hover:border-cyan-400"
-            >
-              <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <FaGem className="text-cyan-500" />
-                Core Values
-              </h4>
-              <div className="grid grid-cols-2 gap-3">
-                {[
-                  { label: "Innovation", icon: <FaRocket />, color: "from-cyan-400 to-blue-500" },
-                  { label: "Quality", icon: <FaCrown />, color: "from-blue-500 to-indigo-500" },
-                  { label: "Integrity", icon: <FaHandshake />, color: "from-indigo-500 to-purple-500" },
-                  { label: "Excellence", icon: <FaAward />, color: "from-purple-500 to-pink-500" },
-                ].map((item) => (
-                  <motion.div
-                    key={item.label}
-                    variants={fadeInUp}
-                    whileHover={{ y: -4 }}
-                    className="flex items-center gap-3 p-3 rounded-xl border border-gray-200 transition-all duration-300 hover:border-cyan-400"
-                  >
-                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-linear-to-r ${item.color} text-white`}>
-                      {item.icon}
-                    </div>
-                    <span className="text-sm font-semibold text-gray-800">{item.label}</span>
-                  </motion.div>
-                ))}
+                <div className="flex items-start gap-3">
+                  <FaLightbulb className="text-amber-400 text-xl shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="text-sm font-bold text-white">Our Commitment</h4>
+                    <p className="mt-1 text-xs text-slate-300 leading-relaxed">
+                      Unmatched software quality, agile velocity, transparent pricing, and 24/7 dedicated engineering support.
+                    </p>
+                  </div>
+                </div>
               </div>
-            </motion.div>
+            </div>
+
+            {/* Action CTA Buttons */}
+            <div className="flex flex-wrap gap-4 pt-2">
+              <Link
+                to="/about"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] px-7 py-3 text-sm font-bold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95"
+              >
+                <span>Read Full Company Story</span>
+                <FaArrowRight className="text-xs" />
+              </Link>
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-[#0b132b]/90 px-7 py-3 text-sm font-semibold text-slate-200 transition-all duration-300 hover:border-[#00D2FF]/60 hover:text-white hover:bg-[#0f1b3d]"
+              >
+                Schedule Consultation
+              </Link>
+            </div>
           </motion.div>
         </div>
       </div>

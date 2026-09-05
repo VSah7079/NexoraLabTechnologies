@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { userAPI, getUser } from "@/services/api";
+import { userAPI } from "@/services/api";
+import { HiUser, HiPencilSquare, HiCheckCircle } from "react-icons/hi2";
 
 const CandidateProfile = () => {
   const [user, setUser] = useState<any>(null);
@@ -71,13 +72,13 @@ const CandidateProfile = () => {
   };
 
   const handleSkillRemove = (skill: string) => {
-    setFormData({ ...formData, skills: formData.skills.filter(s => s !== skill) });
+    setFormData({ ...formData, skills: formData.skills.filter((s) => s !== skill) });
   };
 
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-cyan-400 border-t-transparent"></div>
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-[#00D2FF] border-t-transparent"></div>
       </div>
     );
   }
@@ -92,149 +93,132 @@ const CandidateProfile = () => {
       className="space-y-6"
     >
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">My Profile</h1>
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-black text-white font-['Outfit']">My Profile</h1>
+          <p className="text-xs sm:text-sm text-slate-300 mt-1 font-normal">
+            Manage your personal details, credentials, and technical skillset
+          </p>
+        </div>
         <button
           onClick={() => setEditing(!editing)}
-          className="rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-violet-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+          className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-cyan-500/20 hover:scale-105 transition-all"
         >
-          {editing ? "Cancel" : "Edit Profile"}
+          <HiPencilSquare className="text-base" />
+          <span>{editing ? "Cancel Editing" : "Edit Profile"}</span>
         </button>
       </div>
-      
-      <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-gray-200">
-        <div className="flex items-center gap-6">
-          <div className="w-24 h-24 rounded-full bg-gradient-to-r from-cyan-400 to-violet-600 flex items-center justify-center text-3xl text-white font-bold">
+
+      <div className="rounded-3xl border border-slate-800 bg-[#070e1e]/95 p-6 sm:p-10 backdrop-blur-2xl shadow-2xl">
+        <div className="flex flex-col sm:flex-row items-center gap-6 pb-6 border-b border-slate-800">
+          <div className="w-20 h-20 rounded-full bg-gradient-to-r from-[#00D2FF] to-[#7C3AED] flex items-center justify-center text-2xl text-white font-black shadow-lg shadow-cyan-500/30">
             {user?.avatar ? (
               <img src={user.avatar} alt="Avatar" className="w-full h-full rounded-full object-cover" />
             ) : (
               initials
             )}
           </div>
-          <div className="flex-1">
+          <div className="text-center sm:text-left flex-1">
             {editing ? (
               <input
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="text-2xl font-bold text-gray-900 bg-transparent border-b-2 border-gray-300 focus:border-cyan-400 outline-none"
+                className="text-xl font-bold text-white bg-transparent border-b-2 border-slate-700 focus:border-[#00D2FF] outline-none"
               />
             ) : (
-              <h2 className="text-2xl font-bold text-gray-900">{user?.name}</h2>
+              <h2 className="text-xl sm:text-2xl font-black text-white">{user?.name || "Enterprise User"}</h2>
             )}
-            <p className="text-gray-500">{user?.role || "User"}</p>
-            <p className="text-gray-400 text-sm">{user?.email}</p>
+            <p className="text-xs text-[#00D2FF] font-semibold mt-0.5 capitalize">{user?.role || "Candidate"}</p>
+            <p className="text-xs text-slate-400 mt-0.5">{user?.email}</p>
           </div>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-          <div className="border border-gray-200 rounded-xl p-4">
-            <p className="text-sm text-gray-500">Phone</p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+          <div className="border border-slate-800 rounded-2xl p-4 bg-[#0b132b]/85">
+            <p className="text-xs font-semibold text-slate-400">Phone</p>
             {editing ? (
               <input
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="font-medium text-gray-900 bg-transparent border-b border-gray-300 focus:border-cyan-400 outline-none w-full"
+                className="font-medium text-white bg-transparent border-b border-slate-700 focus:border-[#00D2FF] outline-none w-full text-sm mt-1"
               />
             ) : (
-              <p className="font-medium text-gray-900">{user?.phone || "Not provided"}</p>
+              <p className="font-medium text-white text-sm mt-1">{user?.phone || "Not provided"}</p>
             )}
           </div>
-          <div className="border border-gray-200 rounded-xl p-4">
-            <p className="text-sm text-gray-500">Location</p>
+
+          <div className="border border-slate-800 rounded-2xl p-4 bg-[#0b132b]/85">
+            <p className="text-xs font-semibold text-slate-400">Location</p>
             {editing ? (
               <input
                 type="text"
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                className="font-medium text-gray-900 bg-transparent border-b border-gray-300 focus:border-cyan-400 outline-none w-full"
+                className="font-medium text-white bg-transparent border-b border-slate-700 focus:border-[#00D2FF] outline-none w-full text-sm mt-1"
               />
             ) : (
-              <p className="font-medium text-gray-900">{user?.location || "Not provided"}</p>
+              <p className="font-medium text-white text-sm mt-1">{user?.location || "Not provided"}</p>
             )}
           </div>
-          <div className="border border-gray-200 rounded-xl p-4">
-            <p className="text-sm text-gray-500">Experience</p>
+
+          <div className="border border-slate-800 rounded-2xl p-4 bg-[#0b132b]/85">
+            <p className="text-xs font-semibold text-slate-400">Experience</p>
             {editing ? (
               <input
                 type="number"
                 value={formData.experience}
-                onChange={(e) => setFormData({ ...formData, experience: parseInt(e.target.value) })}
-                className="font-medium text-gray-900 bg-transparent border-b border-gray-300 focus:border-cyan-400 outline-none w-full"
+                onChange={(e) => setFormData({ ...formData, experience: parseInt(e.target.value) || 0 })}
+                className="font-medium text-white bg-transparent border-b border-slate-700 focus:border-[#00D2FF] outline-none w-full text-sm mt-1"
               />
             ) : (
-              <p className="font-medium text-gray-900">{user?.experience || 0} Years</p>
+              <p className="font-medium text-white text-sm mt-1">{user?.experience || 0} Years</p>
             )}
           </div>
-          <div className="border border-gray-200 rounded-xl p-4">
-            <p className="text-sm text-gray-500">Website</p>
+
+          <div className="border border-slate-800 rounded-2xl p-4 bg-[#0b132b]/85">
+            <p className="text-xs font-semibold text-slate-400">Portfolio Website</p>
             {editing ? (
               <input
                 type="url"
                 value={formData.website}
                 onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                className="font-medium text-gray-900 bg-transparent border-b border-gray-300 focus:border-cyan-400 outline-none w-full"
+                className="font-medium text-white bg-transparent border-b border-slate-700 focus:border-[#00D2FF] outline-none w-full text-sm mt-1"
               />
             ) : (
-              <p className="font-medium text-gray-900">{user?.website || "Not provided"}</p>
-            )}
-          </div>
-          <div className="border border-gray-200 rounded-xl p-4">
-            <p className="text-sm text-gray-500">LinkedIn</p>
-            {editing ? (
-              <input
-                type="url"
-                value={formData.linkedin}
-                onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
-                className="font-medium text-gray-900 bg-transparent border-b border-gray-300 focus:border-cyan-400 outline-none w-full"
-              />
-            ) : (
-              <p className="font-medium text-gray-900">{user?.linkedin || "Not provided"}</p>
-            )}
-          </div>
-          <div className="border border-gray-200 rounded-xl p-4">
-            <p className="text-sm text-gray-500">GitHub</p>
-            {editing ? (
-              <input
-                type="url"
-                value={formData.github}
-                onChange={(e) => setFormData({ ...formData, github: e.target.value })}
-                className="font-medium text-gray-900 bg-transparent border-b border-gray-300 focus:border-cyan-400 outline-none w-full"
-              />
-            ) : (
-              <p className="font-medium text-gray-900">{user?.github || "Not provided"}</p>
+              <p className="font-medium text-white text-sm mt-1">{user?.website || "Not provided"}</p>
             )}
           </div>
         </div>
 
-        <div className="border border-gray-200 rounded-xl p-4 mt-4">
-          <p className="text-sm text-gray-500">Bio</p>
+        <div className="border border-slate-800 rounded-2xl p-4 bg-[#0b132b]/85 mt-4">
+          <p className="text-xs font-semibold text-slate-400">Bio & Summary</p>
           {editing ? (
             <textarea
               value={formData.bio}
               onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
               rows={3}
-              className="font-medium text-gray-900 bg-transparent border border-gray-300 focus:border-cyan-400 outline-none w-full mt-2 rounded-lg p-2"
+              className="font-medium text-white bg-[#0a1128] border border-slate-700 focus:border-[#00D2FF] outline-none w-full mt-2 rounded-xl p-3 text-sm resize-none"
             />
           ) : (
-            <p className="font-medium text-gray-900 mt-1">{user?.bio || "No bio provided"}</p>
+            <p className="font-normal text-slate-300 text-sm mt-1">{user?.bio || "No summary added yet."}</p>
           )}
         </div>
-        
-        <div className="border border-gray-200 rounded-xl p-4 mt-4">
-          <p className="text-sm text-gray-500">Skills</p>
+
+        <div className="border border-slate-800 rounded-2xl p-4 bg-[#0b132b]/85 mt-4">
+          <p className="text-xs font-semibold text-slate-400">Technical Skills</p>
           {editing ? (
             <div className="mt-2">
               <div className="flex flex-wrap gap-2 mb-2">
                 {formData.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="bg-cyan-50 text-cyan-700 px-3 py-1 rounded-full text-sm flex items-center gap-2"
+                    className="border border-cyan-500/30 bg-cyan-950/40 text-cyan-300 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1.5"
                   >
                     {skill}
                     <button
                       onClick={() => handleSkillRemove(skill)}
-                      className="text-cyan-700 hover:text-red-500"
+                      className="text-cyan-300 hover:text-rose-400"
                     >
                       ×
                     </button>
@@ -250,36 +234,39 @@ const CandidateProfile = () => {
                     e.currentTarget.value = "";
                   }
                 }}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-cyan-400 outline-none"
+                className="w-full rounded-xl border border-slate-700 bg-[#0a1128] px-3 py-2 text-xs text-white focus:border-[#00D2FF] outline-none"
               />
             </div>
           ) : (
-            <div className="flex flex-wrap gap-2 mt-1">
+            <div className="flex flex-wrap gap-2 mt-2">
               {user?.skills?.length > 0 ? (
                 user.skills.map((skill: string) => (
-                  <span key={skill} className="bg-cyan-50 text-cyan-700 px-3 py-1 rounded-full text-sm">
+                  <span
+                    key={skill}
+                    className="border border-cyan-500/30 bg-cyan-950/40 text-cyan-300 px-3 py-1 rounded-full text-xs font-semibold"
+                  >
                     {skill}
                   </span>
                 ))
               ) : (
-                <p className="text-gray-400">No skills added</p>
+                <p className="text-xs text-slate-500">No skills added</p>
               )}
             </div>
           )}
         </div>
 
         {editing && (
-          <div className="flex gap-4 mt-6">
+          <div className="flex gap-3 mt-6">
             <button
               onClick={handleSave}
               disabled={saving}
-              className="rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-violet-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl disabled:opacity-50"
+              className="rounded-full bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] px-8 py-3 text-xs font-bold text-white shadow-xl shadow-cyan-500/25 transition-all hover:scale-105 disabled:opacity-50"
             >
-              {saving ? "Saving..." : "Save Changes"}
+              {saving ? "Saving Changes..." : "Save Profile"}
             </button>
             <button
               onClick={() => setEditing(false)}
-              className="rounded-xl border border-gray-300 px-6 py-2.5 text-sm font-semibold text-gray-700 transition-all duration-300 hover:border-cyan-400 hover:text-cyan-600"
+              className="rounded-full border border-slate-700 bg-[#0a1128] px-8 py-3 text-xs font-bold text-slate-300 transition-all hover:border-[#00D2FF]"
             >
               Cancel
             </button>

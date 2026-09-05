@@ -1,24 +1,23 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-
-// Try different paths - one of these will work
-
-// Path 1: From src folder (if image is in src/assets/logo/)
 import logo from "../../assets/logo/NexoraLabTechnologies.png";
-
-// OR Path 2: From public folder (if image is in public/assets/logo/)
-// import logo from "/assets/logo/NexoraLabTechnologies.png";
-
-// OR Path 3: Direct from public folder
-// const logo = "/NexoraLabTechnologies.png";
 
 interface LogoProps {
   className?: string;
-  showText?: boolean;
   onClick?: () => void;
+  size?: "sm" | "md" | "lg" | "xl";
 }
 
-const Logo = ({ className = "", showText = true, onClick }: LogoProps) => {
+const Logo = ({ className = "", onClick, size = "md" }: LogoProps) => {
+  const heightClass =
+    size === "sm"
+      ? "h-9 sm:h-10"
+      : size === "lg"
+      ? "h-13 sm:h-15"
+      : size === "xl"
+      ? "h-16 sm:h-20"
+      : "h-11 sm:h-12 md:h-13";
+
   return (
     <Link
       to="/"
@@ -26,80 +25,32 @@ const Logo = ({ className = "", showText = true, onClick }: LogoProps) => {
       className={`
         flex
         items-center
-        gap-2.5
         group
+        shrink-0
         ${className}
       `}
       aria-label="Nexora Lab Technologies Home"
     >
-      {/* Logo Image */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
-        animate={{ opacity: 1, scale: 1, rotate: 0 }}
-        transition={{ duration: 0.6 }}
-        whileHover={{ scale: 1.05, rotate: 2 }}
-        className="flex items-center justify-center shrink-0"
+        whileHover={{ scale: 1.03 }}
+        transition={{ duration: 0.2 }}
+        className="flex items-center"
       >
         <img
           src={logo}
           alt="Nexora Lab Technologies"
-          className="
-            h-10
+          className={`
+            ${heightClass}
             w-auto
+            max-w-[280px]
             object-contain
+            drop-shadow-[0_0_16px_rgba(0,210,255,0.35)]
             transition-all
             duration-300
-            xs:h-11
-            sm:h-10
-            md:h-12
-            lg:h-14
-            xl:h-16
-          "
+            group-hover:drop-shadow-[0_0_24px_rgba(0,210,255,0.6)]
+          `}
         />
       </motion.div>
-
-      {/* Company Name */}
-      {showText && (
-        <motion.div
-          initial={{ opacity: 0, x: -8 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.15, duration: 0.5 }}
-          className="
-            hidden
-            xs:flex
-            flex-col
-            leading-tight
-          "
-        >
-          <span
-            className="
-              text-base
-              font-extrabold
-              text-gray-900
-              tracking-tight
-              sm:text-base
-              md:text-lg
-              lg:text-xl
-            "
-          >
-            NexoraLab
-          </span>
-          <span
-            className="
-              text-[8px]
-              uppercase
-              tracking-[0.2em]
-              text-cyan-600
-              font-semibold
-              sm:text-[8px]
-              md:text-[9px]
-              lg:text-[10px]
-            "
-          >
-            Technologies
-          </span>
-        </motion.div>
-      )}
     </Link>
   );
 };

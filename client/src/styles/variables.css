@@ -6,24 +6,29 @@
 
 :root {
   /* ==============================
-      Brand Colors
+      Nexora Brand Logo Colors
   ============================== */
-  --primary: #2563EB;
-  --primary-dark: #1D4ED8;
-  --primary-light: #60A5FA;
+  --nexora-cyan: #00D2FF;
+  --nexora-blue: #0066FF;
+  --nexora-violet: #7C3AED;
+  --nexora-purple: #9333EA;
+
+  --primary: #0066FF;
+  --primary-dark: #004ecc;
+  --primary-light: #388bff;
   
-  --secondary: #22D3EE;
-  --secondary-dark: #06B6D4;
-  --secondary-light: #67E8F9;
+  --secondary: #00D2FF;
+  --secondary-dark: #00a8e8;
+  --secondary-light: #67e8f9;
   
   --accent: #7C3AED;
   --accent-dark: #6D28D9;
   --accent-light: #A78BFA;
 
-  --success: #22C55E;
+  --success: #10B981;
   --warning: #F59E0B;
   --danger: #EF4444;
-  --info: #38BDF8;
+  --info: #00D2FF;
 
   /* ==============================
       Light Theme Colors
@@ -39,42 +44,44 @@
   --card: #ffffff;
   --card-hover: #f8fafc;
 
-  --text: #111827;
-  --text-primary: #111827;
-  --text-secondary: #4B5563;
-  --text-light: #6B7280;
-  --text-muted: #9CA3AF;
+  --text: #0f172a;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-light: #64748b;
+  --text-muted: #94a3b8;
   --text-white: #ffffff;
 
-  --border: #E5E7EB;
-  --border-light: #F3F4F6;
-  --border-dark: #D1D5DB;
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  --border-dark: #cbd5e1;
 
   /* ==============================
       Shadows - Light
   ============================== */
-  --shadow-sm: 0 4px 10px rgba(0, 0, 0, .05);
-  --shadow-md: 0 15px 35px rgba(0, 0, 0, .08);
-  --shadow-lg: 0 25px 60px rgba(0, 0, 0, .12);
-  --shadow-xl: 0 35px 80px rgba(0, 0, 0, .15);
+  --shadow-sm: 0 4px 10px rgba(0, 102, 255, .04);
+  --shadow-md: 0 15px 35px rgba(0, 102, 255, .08);
+  --shadow-lg: 0 25px 60px rgba(0, 102, 255, .12);
+  --shadow-xl: 0 35px 80px rgba(0, 102, 255, .16);
 
-  --shadow-primary: 0 4px 20px rgba(37, 99, 235, .25);
-  --shadow-cyan: 0 4px 20px rgba(34, 211, 238, .25);
-  --shadow-purple: 0 4px 20px rgba(124, 58, 237, .25);
+  --shadow-primary: 0 4px 24px rgba(0, 102, 255, .28);
+  --shadow-cyan: 0 4px 24px rgba(0, 210, 255, .28);
+  --shadow-purple: 0 4px 24px rgba(124, 58, 237, .28);
+  --shadow-nexora: 0 8px 32px rgba(0, 210, 255, 0.2), 0 4px 20px rgba(124, 58, 237, 0.2);
 
   /* ==============================
       Glow Effects
   ============================== */
-  --glow-blue: 0 0 45px rgba(37, 99, 235, .35);
-  --glow-cyan: 0 0 45px rgba(34, 211, 238, .30);
-  --glow-purple: 0 0 45px rgba(124, 58, 237, .30);
+  --glow-blue: 0 0 45px rgba(0, 102, 255, .4);
+  --glow-cyan: 0 0 45px rgba(0, 210, 255, .4);
+  --glow-purple: 0 0 45px rgba(124, 58, 237, .4);
+  --glow-nexora: 0 0 50px rgba(0, 210, 255, 0.35), 0 0 35px rgba(124, 58, 237, 0.35);
 
   /* ==============================
       Glass Effects - Light
   ============================== */
-  --glass-bg: rgba(255, 255, 255, .6);
-  --glass-border: rgba(255, 255, 255, .3);
-  --glass-blur: blur(12px);
+  --glass-bg: rgba(255, 255, 255, .7);
+  --glass-border: rgba(255, 255, 255, .4);
+  --glass-blur: blur(14px);
 
   /* ==============================
       Radius
@@ -88,42 +95,27 @@
   --radius-full: 9999px;
 
   /* ==============================
-      Gradients
+      Signature Nexora Gradients
   ============================== */
-  --gradient-primary: linear-gradient(135deg, #22D3EE, #2563EB, #7C3AED);
-  --gradient-secondary: linear-gradient(135deg, #2563EB, #7C3AED);
-  --gradient-accent: linear-gradient(135deg, #7C3AED, #22D3EE);
-  --gradient-cyan: linear-gradient(135deg, #22D3EE, #06B6D4);
-  --gradient-blue: linear-gradient(135deg, #2563EB, #1D4ED8);
+  --gradient-nexora: linear-gradient(135deg, #00D2FF 0%, #0066FF 45%, #7C3AED 80%, #9333EA 100%);
+  --gradient-primary: linear-gradient(135deg, #00D2FF 0%, #0066FF 50%, #7C3AED 100%);
+  --gradient-secondary: linear-gradient(135deg, #0066FF 0%, #7C3AED 100%);
+  --gradient-accent: linear-gradient(135deg, #7C3AED 0%, #9333EA 50%, #00D2FF 100%);
+  --gradient-cyan: linear-gradient(135deg, #00D2FF 0%, #0099ff 100%);
+  --gradient-blue: linear-gradient(135deg, #0066FF 0%, #004ecc 100%);
 
   /* ==============================
       Fonts
   ============================== */
-  --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
   /* ==============================
       Transitions
   ============================== */
-  --transition-fast: 0.15s ease;
-  --transition-normal: 0.3s ease;
-  --transition-slow: 0.5s ease;
-  --transition-slower: 0.8s ease;
-
-  /* ==============================
-      Spacing
-  ============================== */
-  --spacing-1: 4px;
-  --spacing-2: 8px;
-  --spacing-3: 12px;
-  --spacing-4: 16px;
-  --spacing-5: 20px;
-  --spacing-6: 24px;
-  --spacing-8: 32px;
-  --spacing-10: 40px;
-  --spacing-12: 48px;
-  --spacing-16: 64px;
-  --spacing-20: 80px;
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 
   /* ==============================
       Container
@@ -136,47 +128,48 @@
 /* DARK THEME */
 /* ============================================ */
 
-[data-theme="dark"] {
+.dark, [data-theme="dark"] {
   /* ==============================
       Dark Theme Colors
   ============================== */
-  --bg: #050816;
-  --bg-secondary: #09111F;
-  --bg-tertiary: #0F1A2E;
+  --bg: #050814;
+  --bg-secondary: #080e22;
+  --bg-tertiary: #0c1533;
   
-  --surface: #09111F;
-  --surface-light: #101828;
+  --surface: #0a1128;
+  --surface-light: #101c42;
   --surface-dark: #040712;
   
-  --card: #101828;
-  --card-hover: #1A2538;
+  --card: #0c1430;
+  --card-hover: #121e45;
 
   --text: #ffffff;
   --text-primary: #ffffff;
-  --text-secondary: #94A3B8;
-  --text-light: #A1A1AA;
-  --text-muted: #6B7280;
+  --text-secondary: #cbd5e1;
+  --text-light: #94a3b8;
+  --text-muted: #64748b;
   --text-white: #ffffff;
 
   --border: rgba(255, 255, 255, .08);
   --border-light: rgba(255, 255, 255, .04);
-  --border-dark: rgba(255, 255, 255, .12);
+  --border-dark: rgba(255, 255, 255, .14);
 
   /* ==============================
       Shadows - Dark
   ============================== */
-  --shadow-sm: 0 4px 10px rgba(0, 0, 0, .3);
-  --shadow-md: 0 15px 35px rgba(0, 0, 0, .4);
-  --shadow-lg: 0 25px 60px rgba(0, 0, 0, .5);
-  --shadow-xl: 0 35px 80px rgba(0, 0, 0, .6);
+  --shadow-sm: 0 4px 10px rgba(0, 0, 0, .4);
+  --shadow-md: 0 15px 35px rgba(0, 0, 0, .55);
+  --shadow-lg: 0 25px 60px rgba(0, 0, 0, .7);
+  --shadow-xl: 0 35px 80px rgba(0, 0, 0, .85);
 
-  --shadow-primary: 0 4px 20px rgba(37, 99, 235, .15);
-  --shadow-cyan: 0 4px 20px rgba(34, 211, 238, .15);
-  --shadow-purple: 0 4px 20px rgba(124, 58, 237, .15);
+  --shadow-primary: 0 4px 24px rgba(0, 102, 255, .35);
+  --shadow-cyan: 0 4px 24px rgba(0, 210, 255, .35);
+  --shadow-purple: 0 4px 24px rgba(124, 58, 237, .35);
+  --shadow-nexora: 0 8px 36px rgba(0, 210, 255, 0.25), 0 4px 25px rgba(124, 58, 237, 0.25);
 
   /* ==============================
       Glass Effects - Dark
   ============================== */
-  --glass-bg: rgba(255, 255, 255, .04);
-  --glass-border: rgba(255, 255, 255, .06);
+  --glass-bg: rgba(12, 20, 48, .75);
+  --glass-border: rgba(0, 210, 255, .12);
 }

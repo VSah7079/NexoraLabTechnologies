@@ -196,9 +196,107 @@ const sendWelcomeEmail = async (email, name) => {
   }
 };
 
+// Send password reset email
+const sendPasswordResetEmail = async (email, name, token) => {
+  try {
+    const transporter = createTransporter();
+    
+    const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${token}`;
+    
+    const mailOptions = {
+      from: process.env.EMAIL_FROM,
+      to: email,
+      subject: 'Reset Your Password - NexoraLab Technologies',
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Reset Your Password</title>
+          <style>
+            body {
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+              line-height: 1.6;
+              color: #333;
+              max-width: 600px;
+              margin: 0 auto;
+              padding: 20px;
+            }
+            .container {
+              background: linear-gradient(135deg, #00D2FF 0%, #0066FF 50%, #7C3AED 100%);
+              border-radius: 12px;
+              padding: 30px;
+              color: white;
+              text-align: center;
+            }
+            .content {
+              background: #ffffff;
+              border: 1px solid #e2e8f0;
+              border-radius: 12px;
+              padding: 30px;
+              margin-top: 20px;
+              color: #1e293b;
+            }
+            .button {
+              display: inline-block;
+              background: linear-gradient(135deg, #00D2FF 0%, #0066FF 100%);
+              color: white !important;
+              padding: 14px 32px;
+              text-decoration: none;
+              border-radius: 50px;
+              margin: 24px 0;
+              font-weight: bold;
+              font-size: 15px;
+            }
+            .footer {
+              text-align: center;
+              margin-top: 25px;
+              font-size: 12px;
+              color: #94a3b8;
+            }
+          </style>
+        </head>
+        <body style="background-color: #f8fafc;">
+          <div class="container">
+            <h1 style="margin: 0; font-size: 24px;">NexoraLab Technologies</h1>
+            <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">Password Reset Request</p>
+          </div>
+          <div class="content">
+            <h2 style="color: #0f172a; margin-top: 0;">Hello ${name || 'User'},</h2>
+            <p>We received a request to reset the password for your NexoraLab Technologies account.</p>
+            <p>Click the button below to choose a new secure password:</p>
+            <div style="text-align: center;">
+              <a href="${resetUrl}" class="button" target="_blank">Reset My Password</a>
+            </div>
+            <p style="font-size: 13px; color: #64748b;">Or copy and paste this link into your browser:</p>
+            <p style="word-break: break-all; font-size: 12px; color: #0284c7; background: #f0f9ff; padding: 10px; border-radius: 8px;">${resetUrl}</p>
+            <p style="color: #e11d48; font-size: 13px;"><strong>⏱ This reset link will expire in 1 hour.</strong></p>
+            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 20px 0;" />
+            <p style="font-size: 12px; color: #64748b; margin: 0;">If you did not request this password reset, please ignore this email or contact support immediately if you suspect unauthorized access.</p>
+          </div>
+          <div class="footer">
+            <p>&copy; ${new Date().getFullYear()} NexoraLab Technologies. All rights reserved.</p>
+            <p>Siwan, Bihar, India • info@nexoralabtechnologies.in</p>
+          </div>
+        </body>
+        </html>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+    return true;
+  } catch (error) {
+    console.error('Error sending password reset email:', error);
+    return false;
+  }
+};
+
 module.exports = {
   createTransporter,
   generateVerificationToken,
   sendVerificationEmail,
   sendWelcomeEmail,
+  sendPasswordResetEmail,
 };
+

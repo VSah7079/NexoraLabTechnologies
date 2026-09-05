@@ -15,45 +15,40 @@ import {
   HiArrowUp,
 } from "react-icons/hi2";
 
-// ✅ Import from config
 import { navLinks } from "@/config/navigation";
-import { APP_NAME } from "@/config/constants";
 import Logo from "../Navbar/Logo";
 
-// ✅ Services
 const services = [
-  "Website Development",
+  "Full-Stack Web & SaaS",
+  "AI & Machine Learning",
   "Mobile App Development",
-  "Custom Software",
-  "ERP Solutions",
-  "CRM Development",
-  "Cloud Solutions",
+  "Enterprise ERP & CRM",
+  "Cloud Architecture & DevOps",
+  "Dedicated Engineering Staff",
 ];
 
-// ✅ Company links from config
 const companyLinks = navLinks.map((item) => ({
   name: item.title,
   link: item.path,
 }));
 
-// ✅ AI Tools
 const aiTools = [
   { name: "Resume Analyzer", path: "/resume-analyzer" },
   { name: "ATS Score Checker", path: "/ats-score" },
   { name: "AI Resume Builder", path: "/resume-builder" },
   { name: "Portfolio Builder", path: "/portfolio-builder" },
-  { name: "Skill Gap Analyzer", path: "/skill-gap" },
+  { name: "Skill Gap Benchmark", path: "/skill-gap" },
   { name: "AI Career Coach", path: "/career-coach" },
-  { name: "Mock Interview", path: "/interview" },
+  { name: "AI Mock Interview", path: "/interview" },
 ];
 
 const socialLinks = [
-  { icon: <FaLinkedinIn />, href: "#" },
-  { icon: <FaInstagram />, href: "#" },
+  { icon: <FaLinkedinIn />, href: "https://www.linkedin.com/company/nexoralab-technologies" },
+  { icon: <FaInstagram />, href: "https://www.instagram.com/nexoralabtechnologies" },
+  { icon: <FaXTwitter />, href: "https://x.com/nexoralab" },
   { icon: <FaFacebookF />, href: "#" },
-  { icon: <FaGithub />, href: "#" },
-  { icon: <FaYoutube />, href: "#" },
-  { icon: <FaXTwitter />, href: "#" },
+  { icon: <FaGithub />, href: "https://github.com" },
+  { icon: <FaYoutube />, href: "https://youtube.com" },
 ];
 
 const Footer = () => {
@@ -72,14 +67,14 @@ const Footer = () => {
         bg-transparent
         pt-20
         pb-10
+        border-t
+        border-white/[0.08]
       "
     >
-      {/* Background Effects - Removed to show NetworkBackground */}
-
       <div
         className="
           mx-auto
-          max-w-[1400px]
+          max-w-[1480px]
           px-4
           sm:px-6
           lg:px-8
@@ -87,7 +82,7 @@ const Footer = () => {
         "
       >
         {/* Top Section */}
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
           {/* Company Info */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -96,44 +91,44 @@ const Footer = () => {
             transition={{ duration: 0.5 }}
             className="lg:col-span-1"
           >
-            <Logo showText={true} className="mb-6" />
+            <Logo className="mb-4" />
 
-            <p className="mt-6 text-gray-600 leading-relaxed">
-              Building innovative digital solutions for startups and enterprises worldwide.
+            <p className="text-xs font-bold tracking-wider text-[#00D2FF] mb-2 uppercase">
+              Innovate • Build • Elevate
             </p>
 
-            {/* Social */}
-            <div className="mt-6 flex gap-3">
-              {socialLinks.map((item, index) => (
+            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-6 font-normal">
+              Premier software engineering and AI solutions agency building high-performance, secure, and scalable digital products.
+            </p>
+
+            {/* Social Links */}
+            <div className="flex flex-wrap gap-2.5">
+              {socialLinks.map((social, index) => (
                 <motion.a
                   key={index}
-                  href={item.href}
+                  href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  whileHover={{ y: -4, scale: 1.05 }}
+                  whileHover={{ y: -3, scale: 1.1 }}
                   className="
                     flex
-                    h-10
-                    w-10
+                    h-9
+                    w-9
                     items-center
                     justify-center
-                    rounded-lg
+                    rounded-full
                     border
-                    border-gray-200
-                    bg-gray-50
-                    text-gray-600
+                    border-white/[0.1]
+                    bg-white/[0.03]
+                    text-slate-300
                     transition-all
-                    duration-300
-                    hover:border-cyan-400
-                    hover:text-cyan-600
-                    hover:bg-cyan-50
+                    duration-200
+                    hover:border-[#00D2FF]/60
+                    hover:text-[#00D2FF]
+                    hover:shadow-[0_0_15px_rgba(0,210,255,0.3)]
                   "
                 >
-                  {item.icon}
+                  {social.icon}
                 </motion.a>
               ))}
             </div>
@@ -144,211 +139,156 @@ const Footer = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1, duration: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <h3 className="text-lg font-bold text-gray-900">
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
               Quick Links
-            </h3>
-
-            <div className="mt-6 flex flex-col gap-4">
-              {companyLinks.map((item, index) => (
-                <motion.div
-                  key={item.name}
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 + index * 0.05, duration: 0.3 }}
-                >
+            </h4>
+            <ul className="space-y-2.5 text-xs sm:text-sm">
+              {companyLinks.map((item) => (
+                <li key={item.name}>
                   <Link
                     to={item.link}
-                    className="
-                      text-gray-600
-                      transition-all
-                      duration-300
-                      hover:text-cyan-600
-                    "
+                    className="text-slate-400 transition-colors hover:text-[#00D2FF]"
                   >
                     {item.name}
                   </Link>
-                </motion.div>
+                </li>
               ))}
-            </div>
+            </ul>
           </motion.div>
 
-          {/* Services */}
+          {/* Core Services */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <h3 className="text-lg font-bold text-gray-900">
-              Services
-            </h3>
-
-            <div className="mt-6 flex flex-col gap-4">
-              {services.map((item, index) => (
-                <motion.div
-                  key={item}
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + index * 0.05, duration: 0.3 }}
-                >
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
+              Our Services
+            </h4>
+            <ul className="space-y-2.5 text-xs sm:text-sm">
+              {services.map((service) => (
+                <li key={service}>
                   <Link
                     to="/services"
-                    className="
-                      text-gray-600
-                      transition-all
-                      duration-300
-                      hover:text-cyan-600
-                    "
+                    className="text-slate-400 transition-colors hover:text-[#00D2FF]"
                   >
-                    {item}
+                    {service}
                   </Link>
-                </motion.div>
+                </li>
               ))}
-            </div>
+            </ul>
           </motion.div>
 
-          {/* AI Tools */}
+          {/* AI Intelligence Suite */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.25, duration: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <h3 className="text-lg font-bold text-gray-900">
-              AI Tools
-            </h3>
-
-            <div className="mt-6 flex flex-col gap-4">
-              {aiTools.map((item, index) => (
-                <motion.div
-                  key={item.name}
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + index * 0.05, duration: 0.3 }}
-                >
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
+              AI Tools & Suite
+            </h4>
+            <ul className="space-y-2.5 text-xs sm:text-sm">
+              {aiTools.map((tool) => (
+                <li key={tool.name}>
                   <Link
-                    to={item.path}
-                    className="
-                      text-gray-600
-                      transition-all
-                      duration-300
-                      hover:text-cyan-600
-                    "
+                    to={tool.path}
+                    className="text-slate-400 transition-colors hover:text-[#00D2FF]"
                   >
-                    {item.name}
+                    {tool.name}
                   </Link>
-                </motion.div>
+                </li>
               ))}
-            </div>
+            </ul>
           </motion.div>
 
-          {/* Contact */}
+          {/* Contact Information */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
           >
-            <h3 className="text-lg font-bold text-gray-900">
-              Contact
-            </h3>
-
-            <div className="mt-6 space-y-4">
-              <a
-                href="tel:+917079884369"
-                className="
-                  flex
-                  items-center
-                  gap-3
-                    text-gray-600
-                    transition-all
-                    duration-300
-                    hover:text-cyan-600
-                  "
-              >
-                <HiPhone className="text-cyan-600" size={18} />
-                <span>+91 7079884369</span>
-              </a>
-
-              <a
-                href="mailto:info@nexoralabtechnologies.in"
-                className="
-                  flex
-                  items-center
-                  gap-3
-                  text-gray-600
-                  transition-all
-                  duration-300
-                  hover:text-cyan-600
-                "
-              >
-                <HiEnvelope className="text-cyan-600" size={18} />
-                <span>info@nexoralabtechnologies.in</span>
-              </a>
-
-              <div className="flex items-center gap-3 text-gray-600">
-                <HiMapPin className="text-cyan-600" size={18} />
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
+              Get in Touch
+            </h4>
+            <ul className="space-y-3 text-xs sm:text-sm text-slate-400">
+              <li className="flex items-start gap-2.5">
+                <HiMapPin className="text-[#00D2FF] text-base shrink-0 mt-0.5" />
                 <span>Siwan, Bihar, India</span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <HiPhone className="text-[#00D2FF] text-base shrink-0" />
+                <a
+                  href="tel:+917079884369"
+                  className="hover:text-[#00D2FF] transition-colors"
+                >
+                  +91 70798 84369
+                </a>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <HiEnvelope className="text-[#00D2FF] text-base shrink-0" />
+                <a
+                  href="mailto:info@nexoralabtechnologies.in"
+                  className="hover:text-[#00D2FF] transition-colors"
+                >
+                  info@nexoralabtechnologies.in
+                </a>
+              </li>
+            </ul>
+
+            {/* Newsletter form */}
+            <div className="mt-5">
+              <div className="text-xs font-semibold text-white mb-2">Subscribe to Tech Insights</div>
+              <div className="flex rounded-full border border-white/[0.1] bg-white/[0.03] p-1">
+                <input
+                  type="email"
+                  placeholder="Your email..."
+                  className="w-full bg-transparent px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none"
+                />
+                <button
+                  type="button"
+                  className="rounded-full bg-gradient-to-r from-[#00D2FF] to-[#0066FF] px-3.5 py-1 text-xs font-semibold text-white hover:brightness-110"
+                >
+                  Join
+                </button>
               </div>
             </div>
           </motion.div>
         </div>
 
-        {/* Bottom Footer */}
-        <div className="mt-16 pt-8 border-t border-gray-200">
-          <div
+        {/* Bottom Section */}
+        <div className="mt-14 pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-slate-500 text-center sm:text-left">
+            © {new Date().getFullYear()} NexoraLab Technologies. All rights reserved. • Innovate. Build. Elevate.
+          </p>
+
+          <button
+            onClick={scrollToTop}
             className="
               flex
-              flex-col
-              gap-6
-              md:flex-row
-              md:items-center
-              md:justify-between
+              h-9
+              w-9
+              items-center
+              justify-center
+              rounded-full
+              border
+              border-white/[0.1]
+              bg-white/[0.03]
+              text-slate-300
+              transition-all
+              hover:border-[#00D2FF]
+              hover:text-[#00D2FF]
+              hover:scale-110
             "
+            aria-label="Back to top"
           >
-            {/* Copyright */}
-            <p className="text-sm text-gray-500">
-              © {new Date().getFullYear()} {" "}
-              <span className="font-semibold text-gray-900">
-                {APP_NAME}
-              </span>
-              . All Rights Reserved.
-            </p>
-
-            {/* Scroll To Top */}
-            <motion.button
-              whileHover={{ y: -4, scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={scrollToTop}
-              className="
-                flex
-                items-center
-                gap-2
-                rounded-xl
-                border
-                border-gray-200
-                bg-white
-                px-4
-                py-2
-                text-sm
-                font-semibold
-                text-gray-700
-                transition-all
-                duration-300
-                hover:border-cyan-400
-                hover:text-cyan-600
-                hover:bg-cyan-50
-              "
-            >
-              <HiArrowUp size={18} />
-              Back to Top
-            </motion.button>
-          </div>
+            <HiArrowUp size={16} />
+          </button>
         </div>
       </div>
     </footer>

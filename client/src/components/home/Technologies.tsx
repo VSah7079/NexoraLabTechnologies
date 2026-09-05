@@ -153,7 +153,7 @@ const Technologies = () => {
   return (
     <section
       id="technologies"
-      className="relative overflow-hidden bg-transparent py-16 md:py-20 lg:py-28"
+      className="relative overflow-hidden bg-transparent py-16 md:py-20 lg:py-28 transition-colors duration-300"
     >
       <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 xl:px-10">
         {/* Header */}
@@ -163,7 +163,7 @@ const Technologies = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2.5 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-5 py-2 md:px-6 md:py-2.5 text-xs md:text-sm font-medium text-cyan-600"
+            className="inline-flex items-center gap-2.5 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-5 py-2 md:px-6 md:py-2.5 text-xs md:text-sm font-semibold text-[#00D2FF]"
           >
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
@@ -177,10 +177,10 @@ const Technologies = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1, duration: 0.6 }}
-            className="mt-4 md:mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 leading-tight"
+            className="mt-4 md:mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight font-['Outfit']"
           >
-            Modern Technology
-            <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 bg-clip-text text-transparent">
+            Modern Technology{" "}
+            <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
               Powerful Solutions
             </span>
           </motion.h2>
@@ -190,7 +190,7 @@ const Technologies = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="mt-3 md:mt-4 max-w-2xl mx-auto text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed"
+            className="mt-3 md:mt-4 max-w-2xl mx-auto text-sm md:text-base lg:text-lg text-slate-300 leading-relaxed font-normal"
           >
             We leverage cutting-edge technologies to build secure, scalable and
             future-ready software solutions for startups, enterprises and
@@ -208,10 +208,10 @@ const Technologies = () => {
               viewport={{ once: true }}
               transition={{ delay: index * 0.04, duration: 0.5 }}
               whileHover={{ y: -8 }}
-              className="group relative overflow-hidden rounded-2xl md:rounded-3xl border border-gray-300 p-6 md:p-8 transition-all duration-500 hover:border-cyan-400"
+              className="group relative overflow-hidden rounded-2xl md:rounded-3xl border border-slate-800 bg-[#0b132b]/85 p-6 md:p-8 backdrop-blur-xl transition-all duration-500 hover:border-cyan-400/60 hover:shadow-[0_15px_40px_rgba(0,210,255,0.15)]"
             >
               {/* Category Badge */}
-              <span className="absolute right-4 top-4 md:right-6 md:top-6 rounded-full border border-gray-300 px-2.5 py-1 text-[9px] md:text-[10px] font-semibold uppercase tracking-wider text-gray-600 transition-all duration-300 group-hover:border-cyan-400 group-hover:text-cyan-600">
+              <span className="absolute right-4 top-4 md:right-6 md:top-6 rounded-full border border-slate-700/80 bg-[#070e1b] px-2.5 py-1 text-[9px] md:text-[10px] font-semibold uppercase tracking-wider text-[#00D2FF] transition-all duration-300 group-hover:border-cyan-400">
                 {tech.category}
               </span>
 
@@ -221,23 +221,23 @@ const Technologies = () => {
               </div>
 
               {/* Title */}
-              <h3 className="relative z-10 mt-5 md:mt-6 text-xl md:text-2xl font-bold text-gray-900 group-hover:text-cyan-600 transition-colors">
+              <h3 className="relative z-10 mt-5 md:mt-6 text-xl md:text-2xl font-bold text-white group-hover:text-[#00D2FF] transition-colors font-['Outfit']">
                 {tech.title}
               </h3>
 
               {/* Description */}
-              <p className="relative z-10 mt-3 md:mt-4 text-sm md:text-base text-gray-700 leading-relaxed">
+              <p className="relative z-10 mt-3 md:mt-4 text-sm md:text-base text-slate-300 leading-relaxed font-normal">
                 {tech.description}
               </p>
 
               {/* Footer */}
-              <div className="relative z-10 mt-5 md:mt-6 flex items-center justify-between border-t border-gray-200 pt-4 md:pt-5">
-                <span className="text-[10px] md:text-xs font-semibold uppercase tracking-[0.25em] text-cyan-600">
+              <div className="relative z-10 mt-5 md:mt-6 flex items-center justify-between border-t border-slate-800 pt-4 md:pt-5">
+                <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.25em] text-[#00D2FF]">
                   Technology
                 </span>
                 <motion.div
                   whileHover={{ x: 5 }}
-                  className="flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full border border-gray-300 text-gray-900 transition-all duration-300 group-hover:border-cyan-400 group-hover:text-cyan-600"
+                  className="flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full border border-slate-700 bg-[#060b18] text-slate-300 transition-all duration-300 group-hover:border-cyan-400 group-hover:text-white group-hover:bg-cyan-500/20"
                 >
                   <HiArrowRight className="text-sm md:text-base" />
                 </motion.div>
@@ -267,13 +267,13 @@ const Technologies = () => {
               viewport={{ once: true }}
               transition={{ delay: index * 0.08 }}
               whileHover={{ y: -6 }}
-              className="rounded-2xl border border-gray-300 p-5 md:p-6 text-center transition-all duration-300 hover:border-cyan-400"
+              className="rounded-2xl border border-slate-800 bg-[#0b132b]/85 p-5 md:p-6 text-center backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50 hover:shadow-[0_10px_30px_rgba(0,210,255,0.15)]"
             >
               <div className="text-2xl md:text-3xl mb-1">{item.icon}</div>
-              <h3 className="text-2xl md:text-3xl lg:text-4xl font-black text-cyan-600">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-black bg-gradient-to-r from-[#00D2FF] to-[#7C3AED] bg-clip-text text-transparent font-['Outfit']">
                 {item.value}
               </h3>
-              <p className="mt-1 text-sm text-gray-600">{item.label}</p>
+              <p className="mt-1 text-sm text-slate-300 font-medium">{item.label}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -287,16 +287,16 @@ const Technologies = () => {
           className="mt-12 md:mt-16 lg:mt-20 grid gap-10 md:gap-14 lg:grid-cols-2 lg:items-center"
         >
           <div>
-            <span className="inline-block rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-medium text-cyan-600">
+            <span className="inline-block rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-semibold text-[#00D2FF]">
               Why Our Technology Stack
             </span>
-            <h2 className="mt-4 md:mt-5 text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
-              Built With
-              <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 bg-clip-text text-transparent">
+            <h2 className="mt-4 md:mt-5 text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight font-['Outfit']">
+              Built With{" "}
+              <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
                 Industry Leading Tools
               </span>
             </h2>
-            <p className="mt-4 text-sm md:text-base text-gray-700 leading-relaxed max-w-lg">
+            <p className="mt-4 text-sm md:text-base text-slate-300 leading-relaxed max-w-lg font-normal">
               Every technology we use is selected for performance, scalability,
               security and long-term maintainability. This allows us to build
               enterprise applications that remain reliable as businesses grow.
@@ -317,12 +317,12 @@ const Technologies = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.06 }}
-                  className="flex items-center gap-3 rounded-xl border border-gray-300 p-3 transition-all duration-300 hover:border-cyan-400"
+                  className="flex items-center gap-3 rounded-xl border border-slate-800 bg-[#060b18]/80 p-3 transition-all duration-300 hover:border-cyan-400/50"
                 >
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 text-white text-sm font-bold">
                     ✓
                   </div>
-                  <span className="text-sm text-gray-700">{item}</span>
+                  <span className="text-sm text-slate-200 font-medium">{item}</span>
                 </motion.div>
               ))}
             </div>
@@ -342,10 +342,10 @@ const Technologies = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.08 }}
                 whileHover={{ y: -6 }}
-                className="rounded-2xl border border-gray-300 p-6 text-center transition-all duration-300 hover:border-cyan-400"
+                className="rounded-2xl border border-slate-800 bg-[#0b132b]/85 p-6 text-center backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50"
               >
                 <div className="text-4xl md:text-5xl">{item.icon}</div>
-                <h3 className="mt-3 text-base font-bold text-gray-900">{item.label}</h3>
+                <h3 className="mt-3 text-base font-bold text-white">{item.label}</h3>
               </motion.div>
             ))}
           </div>
@@ -360,12 +360,12 @@ const Technologies = () => {
           className="mt-12 md:mt-16 lg:mt-20"
         >
           <div className="text-center">
-            <span className="inline-block rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-medium text-cyan-600">
+            <span className="inline-block rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-semibold text-[#00D2FF]">
               Our Expertise
             </span>
-            <h2 className="mt-4 md:mt-5 text-3xl md:text-4xl lg:text-5xl font-black text-gray-900">
-              Complete Technology
-              <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 bg-clip-text text-transparent">
+            <h2 className="mt-4 md:mt-5 text-3xl md:text-4xl lg:text-5xl font-black text-white font-['Outfit']">
+              Complete Technology{" "}
+              <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
                 Ecosystem
               </span>
             </h2>
@@ -389,7 +389,7 @@ const Technologies = () => {
                 desc: "AWS, Azure, Docker, CI/CD, DevOps Infrastructure",
               },
               {
-                title: "AI",
+                title: "AI & ML",
                 icon: "🤖",
                 desc: "OpenAI, Python, AI Automation, LLM Integration",
               },
@@ -401,13 +401,13 @@ const Technologies = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.06 }}
                 whileHover={{ y: -6 }}
-                className="rounded-2xl border border-gray-300 p-6 md:p-8 transition-all duration-300 hover:border-cyan-400"
+                className="rounded-2xl border border-slate-800 bg-[#0b132b]/85 p-6 md:p-8 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50"
               >
                 <div className="flex h-16 w-16 md:h-20 md:w-20 items-center justify-center rounded-2xl md:rounded-3xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 text-3xl md:text-4xl shadow-lg shadow-cyan-500/20">
                   {item.icon}
                 </div>
-                <h3 className="mt-5 md:mt-6 text-xl md:text-2xl font-bold text-gray-900">{item.title}</h3>
-                <p className="mt-2 md:mt-3 text-sm text-gray-700 leading-relaxed">{item.desc}</p>
+                <h3 className="mt-5 md:mt-6 text-xl md:text-2xl font-bold text-white font-['Outfit']">{item.title}</h3>
+                <p className="mt-2 md:mt-3 text-sm text-slate-300 leading-relaxed font-normal">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -428,13 +428,13 @@ const Technologies = () => {
               viewport={{ once: true }}
               transition={{ delay: index * 0.08 }}
               whileHover={{ y: -6 }}
-              className="rounded-2xl border border-gray-300 p-5 md:p-6 text-center transition-all duration-300 hover:border-cyan-400"
+              className="rounded-2xl border border-slate-800 bg-[#0b132b]/85 p-5 md:p-6 text-center backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50"
             >
               <div className="text-2xl md:text-3xl mb-1">{item.icon}</div>
-              <span className="text-3xl md:text-4xl font-black text-cyan-400/30">
+              <span className="text-3xl md:text-4xl font-black text-cyan-400/30 font-['Outfit']">
                 {item.step}
               </span>
-              <h3 className="mt-2 text-sm md:text-base font-bold text-gray-900">{item.title}</h3>
+              <h3 className="mt-2 text-sm md:text-base font-bold text-white">{item.title}</h3>
             </motion.div>
           ))}
         </div>
@@ -445,21 +445,21 @@ const Technologies = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="relative mt-10 md:mt-12 overflow-hidden rounded-3xl border border-gray-300 p-8 md:p-12 transition-all duration-300 hover:border-cyan-400"
+          className="relative mt-12 md:mt-16 overflow-hidden rounded-3xl border border-slate-800 bg-[#0b132b]/85 p-8 md:p-12 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50"
         >
           <div className="relative z-10 text-center">
-            <span className="inline-block rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-medium text-cyan-600">
+            <span className="inline-block rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-semibold text-[#00D2FF]">
               Future Ready Technology
             </span>
 
-            <h2 className="mt-4 md:mt-6 text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-gray-900 leading-tight">
-              Technology That Powers
-              <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 bg-clip-text text-transparent">
+            <h2 className="mt-4 md:mt-6 text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-white leading-tight font-['Outfit']">
+              Technology That Powers{" "}
+              <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
                 Business Growth
               </span>
             </h2>
 
-            <p className="mt-4 max-w-2xl mx-auto text-sm md:text-base text-gray-700 leading-relaxed">
+            <p className="mt-4 max-w-2xl mx-auto text-sm md:text-base text-slate-300 leading-relaxed font-normal">
               We continuously adopt modern frameworks, cloud platforms, AI
               technologies and enterprise tools to deliver scalable, secure and
               high-performance digital products that grow with your business.
@@ -480,7 +480,7 @@ const Technologies = () => {
               ].map((item) => (
                 <span
                   key={item}
-                  className="rounded-full border border-gray-300 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium text-gray-700 transition-all duration-300 hover:border-cyan-400 hover:text-cyan-600"
+                  className="rounded-full border border-slate-700 bg-[#060b18]/80 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium text-slate-300 transition-all duration-300 hover:border-cyan-400 hover:text-white"
                 >
                   {item}
                 </span>
@@ -490,65 +490,17 @@ const Technologies = () => {
             <div className="mt-6 md:mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-violet-600 px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/40 active:scale-95"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 via-blue-600 to-violet-600 px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:scale-105"
               >
                 Start Your Project
                 <HiArrowRight className="text-lg" />
               </Link>
               <Link
                 to="/services"
-                className="inline-flex items-center gap-2 rounded-xl border border-gray-300 px-8 py-3.5 text-sm font-semibold text-gray-700 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400 hover:text-cyan-600"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-[#060b18]/80 px-8 py-3.5 text-sm font-semibold text-slate-200 transition-all duration-300 hover:border-cyan-400 hover:text-white"
               >
                 Explore Services
               </Link>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Bottom Note */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mt-10 md:mt-12"
-        >
-          <div className="rounded-2xl md:rounded-3xl border border-gray-300 p-6 md:p-8 lg:p-10 text-center transition-all duration-300 hover:border-cyan-400">
-            <h3 className="text-xl md:text-2xl lg:text-3xl font-black text-gray-900">
-              Modern Technology Stack
-              <span className="block md:inline md:ml-3 bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 bg-clip-text text-transparent">
-                For Enterprise Solutions
-              </span>
-            </h3>
-
-            <p className="mt-3 md:mt-4 max-w-3xl mx-auto text-sm md:text-base text-gray-700 leading-relaxed">
-              We use the latest technologies to build secure, scalable and
-              high-performance digital products that drive business growth
-              and deliver exceptional user experiences.
-            </p>
-
-            <div className="mt-6 md:mt-8 flex flex-wrap justify-center gap-2 md:gap-3">
-              {[
-                "React.js",
-                "Next.js",
-                "TypeScript",
-                "Node.js",
-                "MongoDB",
-                "PostgreSQL",
-                "AWS",
-                "Docker",
-                "OpenAI",
-                "Tailwind CSS",
-                "Framer Motion",
-                "Python",
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-gray-300 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium text-gray-700 transition-all duration-300 hover:border-cyan-400 hover:text-cyan-600"
-                >
-                  {item}
-                </span>
-              ))}
             </div>
           </div>
         </motion.div>

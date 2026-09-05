@@ -1,15 +1,33 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { HiEnvelope, HiArrowRight, HiCheckCircle, HiExclamationCircle } from "react-icons/hi2";
+import Logo from "@/layouts/Navbar/Logo";
+import { authAPI } from "@/services/api";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    console.log("Reset password for:", email);
+    setError("");
+    setLoading(true);
+
+    try {
+      const res = await authAPI.forgotPassword(email.trim().toLowerCase());
+      if (res.success) {
+        setSubmitted(true);
+      } else {
+        setError(res.message || "Failed to send reset link. Please check the email address.");
+      }
+    } catch (err: any) {
+      setError(err.message || "Failed to send reset link. Please verify your email and try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -17,56 +35,88 @@ const ForgotPassword = () => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="w-full max-w-md mx-auto"
+      className="w-full max-w-md mx-auto py-8"
     >
-      <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 md:p-10">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Reset Password</h1>
-          <p className="text-gray-500 mt-2">
-            Enter your email and we'll send you a reset link
+      <div className="rounded-3xl border border-slate-800 bg-[#070e1e]/95 p-8 sm:p-10 backdrop-blur-2xl shadow-2xl">
+        <div className="text-center mb-6">
+          <div className="flex justify-center mb-5">
+            <Logo size="lg" />
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-black text-white font-['Outfit']">Reset Password</h1>
+          <p className="text-xs sm:text-sm text-slate-300 mt-1 font-normal">
+            Enter your email and we&apos;ll send you a password recovery link
           </p>
         </div>
 
+        {error && (
+          <div className="mb-5 flex items-start gap-2.5 p-3.5 rounded-2xl bg-red-950/40 border border-red-500/30 text-xs text-red-300">
+            <HiExclamationCircle className="text-base text-red-400 shrink-0 mt-0.5" />
+            <span>{error}</span>
+          </div>
+        )}
+
         {!submitted ? (
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="text-sm font-medium text-gray-700">Email Address</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                className="mt-1.5 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-cyan-400 transition-colors"
-                required
-              />
+              <label className="text-xs font-semibold text-slate-300">Email Address *</label>
+              <div className="relative mt-1.5">
+                <HiEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-base" />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  className="w-full rounded-2xl border border-slate-700 bg-[#0a1128] pl-11 pr-4 py-3.5 text-sm text-white placeholder:text-slate-500 focus:border-[#00D2FF] focus:outline-none transition-colors"
+                  required
+                />
+              </div>
             </div>
 
             <button
               type="submit"
-              className="w-full rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-violet-600 py-3.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/40 active:scale-95"
+              disabled={loading}
+              className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] py-4 text-sm font-bold text-white shadow-xl shadow-cyan-500/25 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Send Reset Link
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  <span className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                  <span>Dispatching Email...</span>
+                </span>
+              ) : (
+                <>
+                  <span>Send Password Reset Link</span>
+                  <HiArrowRight />
+                </>
+              )}
             </button>
           </form>
         ) : (
-          <div className="text-center">
-            <div className="text-6xl mb-4">📧</div>
-            <h3 className="text-xl font-bold text-gray-900">Check Your Email</h3>
-            <p className="text-gray-500 mt-2">
-              We've sent a password reset link to <strong>{email}</strong>
+          <div className="text-center space-y-3">
+            <div className="flex justify-center">
+              <HiCheckCircle className="text-5xl text-emerald-400" />
+            </div>
+            <h3 className="text-xl font-bold text-white">Reset Link Dispatched</h3>
+            <p className="text-xs sm:text-sm text-slate-300 font-normal">
+              We&apos;ve sent password reset instructions to <strong className="text-cyan-400">{email}</strong>.
+            </p>
+            <p className="text-[11px] text-slate-400">
+              Please check your inbox (and spam folder). The link is valid for 1 hour.
             </p>
             <button
-              onClick={() => setSubmitted(false)}
-              className="mt-6 text-cyan-600 hover:text-cyan-700 font-medium"
+              onClick={() => {
+                setSubmitted(false);
+                setError("");
+              }}
+              className="mt-4 text-xs text-cyan-400 hover:text-cyan-300 font-bold"
             >
-              ← Try again with different email
+              ← Try another email address
             </button>
           </div>
         )}
 
-        <p className="text-center text-gray-500 mt-6 text-sm">
-          Remember your password?{" "}
-          <Link to="/login" className="text-cyan-600 hover:text-cyan-700 font-medium">
+        <p className="text-center text-slate-400 mt-6 text-xs">
+          Remember your credentials?{" "}
+          <Link to="/login" className="text-[#00D2FF] hover:text-cyan-300 font-bold ml-1">
             Sign In
           </Link>
         </p>

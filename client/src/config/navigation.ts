@@ -8,4 +8,5 @@ export const navLinks = [
   { title: "Contact", path: "/contact" },
 ] as const;
 
-export type NavLink = typeof navLinks[number];
+export type NavLink = (typeof navLinks)[number];
+

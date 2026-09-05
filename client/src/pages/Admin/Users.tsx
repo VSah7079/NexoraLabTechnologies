@@ -3,9 +3,9 @@ import { HiMagnifyingGlass, HiPencil, HiTrash } from "react-icons/hi2";
 
 const Users = () => {
   const users = [
-    { id: 1, name: "John Doe", email: "john@example.com", role: "Candidate", status: "Active" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", role: "Recruiter", status: "Active" },
-    { id: 3, name: "Bob Johnson", email: "bob@example.com", role: "Admin", status: "Active" },
+    { id: 1, name: "Alexander Mitchell", email: "alex@enterprise.com", role: "Candidate", status: "Active" },
+    { id: 2, name: "Sophia Reynolds", email: "sophia@talentpartners.com", role: "Recruiter", status: "Active" },
+    { id: 3, name: "Vikram Sah", email: "admin@nexoralabtechnologies.in", role: "SuperAdmin", status: "Active" },
   ];
 
   return (
@@ -15,60 +15,67 @@ const Users = () => {
       transition={{ duration: 0.5 }}
       className="space-y-6"
     >
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">Manage Users</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-black text-white font-['Outfit']">User Management</h1>
+          <p className="text-xs sm:text-sm text-slate-300 mt-1 font-normal">
+            Platform accounts, permission levels, and authentication security
+          </p>
+        </div>
         <div className="flex items-center gap-2">
           <div className="relative">
-            <HiMagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <HiMagnifyingGlass className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm" />
             <input
               type="text"
               placeholder="Search users..."
-              className="pl-10 pr-4 py-2 rounded-xl border border-gray-300 bg-gray-50 text-gray-900 focus:outline-none focus:border-cyan-400"
+              className="pl-10 pr-4 py-2 rounded-full border border-slate-700 bg-[#0a1128] text-xs sm:text-sm text-white focus:outline-none focus:border-[#00D2FF]"
             />
           </div>
         </div>
       </div>
 
-      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="text-left p-4 text-sm font-medium text-gray-500">Name</th>
-              <th className="text-left p-4 text-sm font-medium text-gray-500">Email</th>
-              <th className="text-left p-4 text-sm font-medium text-gray-500">Role</th>
-              <th className="text-left p-4 text-sm font-medium text-gray-500">Status</th>
-              <th className="text-left p-4 text-sm font-medium text-gray-500">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id} className="border-t border-gray-100">
-                <td className="p-4 font-medium text-gray-900">{user.name}</td>
-                <td className="p-4 text-gray-600">{user.email}</td>
-                <td className="p-4">
-                  <span className="px-3 py-1 rounded-full text-xs font-medium bg-cyan-100 text-cyan-700">
-                    {user.role}
-                  </span>
-                </td>
-                <td className="p-4">
-                  <span className="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                    {user.status}
-                  </span>
-                </td>
-                <td className="p-4">
-                  <div className="flex items-center gap-2">
-                    <button className="p-2 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors">
-                      <HiPencil />
-                    </button>
-                    <button className="p-2 rounded-lg hover:bg-red-50 text-red-600 transition-colors">
-                      <HiTrash />
-                    </button>
-                  </div>
-                </td>
+      <div className="rounded-3xl border border-slate-800 bg-[#070e1e]/95 shadow-xl overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left">
+            <thead className="bg-[#0b132b]/90 border-b border-slate-800">
+              <tr>
+                <th className="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider">User</th>
+                <th className="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Email</th>
+                <th className="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Role</th>
+                <th className="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Status</th>
+                <th className="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider text-right">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-slate-800/60">
+              {users.map((user) => (
+                <tr key={user.id} className="hover:bg-slate-800/30 transition-colors">
+                  <td className="p-4 font-bold text-white text-sm">{user.name}</td>
+                  <td className="p-4 text-slate-300 text-xs font-normal">{user.email}</td>
+                  <td className="p-4">
+                    <span className="inline-flex px-3 py-1 rounded-full text-xs font-bold border border-cyan-500/30 bg-cyan-950/40 text-cyan-300">
+                      {user.role}
+                    </span>
+                  </td>
+                  <td className="p-4">
+                    <span className="inline-flex px-3 py-1 rounded-full text-xs font-bold border border-emerald-500/30 bg-emerald-950/40 text-emerald-400">
+                      {user.status}
+                    </span>
+                  </td>
+                  <td className="p-4 text-right">
+                    <div className="inline-flex items-center gap-2">
+                      <button className="p-2 rounded-xl bg-[#0a1128] border border-slate-800 text-slate-300 hover:text-[#00D2FF] hover:border-[#00D2FF] transition-all">
+                        <HiPencil className="text-sm" />
+                      </button>
+                      <button className="p-2 rounded-xl bg-[#0a1128] border border-slate-800 text-slate-300 hover:text-rose-400 hover:border-rose-500 transition-all">
+                        <HiTrash className="text-sm" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </motion.div>
   );

@@ -1,65 +1,76 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   HiEnvelope,
   HiMapPin,
   HiPhone,
   HiArrowRight,
-  HiChatBubbleLeftRight,
+  HiCheckCircle,
 } from "react-icons/hi2";
-import { FaWhatsapp } from "react-icons/fa";
-import { Link, useLocation } from "react-router-dom";
+import { FaWhatsapp } from "react-icons/fa6";
+import { useLocation } from "react-router-dom";
 import SEO from "@/components/common/SEO";
 
 const contactCards = [
   {
     id: 1,
-    title: "Call Us",
-    value: "+91 9023971338",
-    description: "Talk directly with our experts.",
-    icon: <HiPhone />,
-    href: "tel:+919023971338",
-    color: "from-blue-500 to-cyan-400",
+    title: "Direct Phone Call",
+    value: "+91 70798 84369",
+    description: "Connect with our principal solutions architect.",
+    icon: HiPhone,
+    href: "tel:+917079884369",
+    color: "from-[#00D2FF] to-[#0066FF]",
   },
   {
     id: 2,
-    title: "Email Us",
-    value: "info@nexoralabtech.in",
-    description: "Send us your project details.",
-    icon: <HiEnvelope />,
+    title: "Official Email",
+    value: "info@nexoralabtechnologies.in",
+    description: "Send project briefs and RFP documents.",
+    icon: HiEnvelope,
     href: "mailto:info@nexoralabtechnologies.in",
-    color: "from-purple-500 to-pink-500",
+    color: "from-[#0066FF] to-[#7C3AED]",
   },
   {
     id: 3,
-    title: "WhatsApp",
-    value: "Chat Now",
-    description: "Instant business support.",
-    icon: <FaWhatsapp />,
-    href: "https://wa.me/919023971338?text=Hi%20NexoraLab%20Technologies%2C%20I%20would%20like%20to%20discuss%20a%20project%20with%20you.",
-    color: "from-green-500 to-emerald-400",
+    title: "Instant WhatsApp",
+    value: "+91 70798 84369",
+    description: "Quick chat & instant estimation support.",
+    icon: FaWhatsapp,
+    href: "https://wa.me/917079884369?text=Hi%20NexoraLab%20Technologies%2C%20I%20would%20like%20to%20discuss%20a%20project.",
+    color: "from-[#10B981] to-[#00D2FF]",
   },
   {
     id: 4,
-    title: "Visit Us",
-    value: "Siwan, Bihar",
-    description: "India",
-    icon: <HiMapPin />,
-    href: "/contact",
-    color: "from-orange-500 to-red-400",
+    title: "Global Headquarters",
+    value: "Siwan, Bihar, India",
+    description: "Serving clients across USA, Europe, & India.",
+    icon: HiMapPin,
+    href: "#",
+    color: "from-[#7C3AED] to-[#9333EA]",
   },
 ];
 
 const ContactCTA = () => {
   const location = useLocation();
   const isStandalone = location.pathname === "/contact";
-  // Default WhatsApp message
-  const whatsappMessage = "Hi NexoraLab Technologies, I would like to discuss a project with you.";
-  const whatsappUrl = `https://wa.me/919023971338?text=${encodeURIComponent(whatsappMessage)}`;
+  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    service: "AI Solution",
+    message: "",
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
 
   return (
     <section
       id="contact-cta"
-      className="relative overflow-hidden bg-transparent py-24 md:py-32 transition-colors duration-300"
+      className="relative overflow-hidden bg-transparent py-20 md:py-28"
     >
       {isStandalone && (
         <SEO
@@ -67,315 +78,214 @@ const ContactCTA = () => {
           description="Ready to turn your idea into reality? Contact NexoraLab Technologies for a free technical consultation on your custom software, app, or AI project."
         />
       )}
-      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 xl:px-10">
+      <div className="mx-auto max-w-[1480px] px-4 sm:px-6 lg:px-8 xl:px-10">
+        
         {/* Section Header */}
         <div className="text-center mb-16 md:mb-20">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-6 py-2.5 text-sm font-medium text-cyan-600"
+            className="inline-flex items-center gap-2.5 rounded-full border border-cyan-500/30 bg-[#070e1b]/90 px-5 py-2 text-xs sm:text-sm font-bold tracking-wide bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent shadow-[0_0_25px_rgba(0,210,255,0.15)]"
           >
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-cyan-400" />
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#00D2FF] opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#00D2FF]" />
             </span>
-            Let's Work Together
+            INNOVATE • BUILD • ELEVATE
           </motion.div>
 
           <motion.h2
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1, duration: 0.6 }}
-            className="mt-6 text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-gray-900 leading-tight"
+            transition={{ delay: 0.1 }}
+            className="mt-5 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight"
           >
-            Ready To Build
-            <span className="block bg-linear-to-r from-cyan-400 via-blue-500 to-violet-600 bg-clip-text text-transparent">
-              Something Amazing?
-            </span>
+            Let's Build Something{" "}
+            <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
+              Extraordinary
+            </span>{" "}
+            Together
           </motion.h2>
 
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="mt-4 max-w-2xl mx-auto text-base md:text-lg text-gray-700 leading-relaxed"
+            transition={{ delay: 0.2 }}
+            className="mt-4 max-w-2xl mx-auto text-base sm:text-lg text-slate-300 leading-relaxed font-normal"
           >
-            Whether you're launching a startup, scaling an enterprise, or building
-            an AI-powered platform — our experts are ready to turn your vision into reality.
+            Tell us about your product goals. Receive a comprehensive architecture plan and timeline estimate within 24 hours.
           </motion.p>
         </div>
 
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3, duration: 0.6 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20"
-        >
-          <Link
-            to="/contact"
-            className="group inline-flex items-center gap-2 rounded-2xl bg-linear-to-r from-cyan-500 via-blue-500 to-violet-600 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/40 active:scale-95"
-          >
-            Start Your Project
-            <HiArrowRight className="text-lg group-hover:translate-x-1 transition-transform" />
-          </Link>
-
-          <Link
-            to="/portfolio"
-            className="group inline-flex items-center gap-2 rounded-2xl border border-gray-300 px-8 py-4 text-base font-semibold text-gray-700 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400 hover:text-cyan-600"
-          >
-            View Our Portfolio
-            <span className="text-cyan-600 group-hover:translate-x-1 transition-transform">→</span>
-          </Link>
-        </motion.div>
-
-        {/* Contact Cards */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {contactCards.map((card, index) => (
-            <motion.a
-              key={card.id}
-              href={card.href}
-              target={card.href.startsWith("http") ? "_blank" : undefined}
-              rel={card.href.startsWith("http") ? "noopener noreferrer" : undefined}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.08, duration: 0.5 }}
-              whileHover={{ y: -8 }}
-              className="group relative overflow-hidden rounded-2xl border border-gray-300 p-6 transition-all duration-300 hover:border-cyan-400"
-            >
-              {/* Icon */}
-              <div className={`relative z-10 flex h-14 w-14 items-center justify-center rounded-xl bg-linear-to-r ${card.color} text-2xl text-white shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:rotate-3`}>
-                {card.icon}
-              </div>
-
-              {/* Content */}
-              <div className="relative z-10 mt-5">
-                <span className="text-xs font-semibold uppercase tracking-widest text-cyan-600">
-                  {card.title}
-                </span>
-                <h3 className="mt-2 text-lg font-bold text-gray-900 transition-colors group-hover:text-cyan-600">
-                  {card.value}
-                </h3>
-                <p className="mt-1.5 text-sm text-gray-600">
-                  {card.description}
-                </p>
-              </div>
-
-              {/* Footer */}
-              <div className="relative z-10 mt-5 flex items-center justify-between border-t border-gray-200 pt-4">
-                <span className="text-xs font-medium text-gray-400">Contact</span>
-                <span className="text-cyan-600 group-hover:translate-x-1 transition-transform">→</span>
-              </div>
-            </motion.a>
-          ))}
-        </div>
-
-        {/* Stats Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="mt-20 grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
-        >
-          {[
-            { value: "250+", label: "Projects Completed", icon: "🚀" },
-            { value: "120+", label: "Happy Clients", icon: "⭐" },
-            { value: "99%", label: "Client Satisfaction", icon: "💯" },
-            { value: "24/7", label: "Support Available", icon: "🛡️" },
-          ].map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.08, duration: 0.4 }}
-              whileHover={{ y: -6 }}
-              className="rounded-2xl border border-gray-300 p-6 text-center transition-all duration-300 hover:border-cyan-400"
-            >
-              <div className="text-3xl mb-2">{item.icon}</div>
-              <h3 className="text-3xl font-black text-cyan-600">{item.value}</h3>
-              <p className="mt-1.5 text-sm text-gray-600">{item.label}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Why Choose Us */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="mt-20 grid gap-12 lg:grid-cols-2 lg:items-center"
-        >
-          <div>
-            <span className="inline-block rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-medium text-cyan-600">
-              Why NexoraLab
-            </span>
-            <h2 className="mt-5 text-3xl md:text-4xl font-black text-gray-900 leading-tight">
-              Your Trusted
-              <span className="block bg-linear-to-r from-cyan-400 via-blue-500 to-violet-600 bg-clip-text text-transparent">
-                Technology Partner
-              </span>
-            </h2>
-            <p className="mt-4 text-base text-gray-700 leading-relaxed max-w-lg">
-              From startup MVPs to enterprise digital transformation, we deliver
-              secure, scalable, and high-performance software that drives growth.
-            </p>
-
-            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {[
-                "Free Consultation",
-                "Dedicated Project Manager",
-                "Enterprise Architecture",
-                "Modern Tech Stack",
-                "Agile Development",
-                "Lifetime Support",
-              ].map((feature, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.06 }}
-                  className="flex items-center gap-3 rounded-xl border border-gray-300 p-3 transition-all duration-300 hover:border-cyan-400"
-                >
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-linear-to-r from-cyan-400 via-blue-500 to-violet-600 text-white text-sm font-bold">
-                    ✓
-                  </div>
-                  <span className="text-sm text-gray-700">{feature}</span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right Side - Feature Cards */}
-          <div className="grid grid-cols-2 gap-4">
-            {[
-              { icon: "🚀", label: "Fast Delivery" },
-              { icon: "🔒", label: "Secure Solutions" },
-              { icon: "🤖", label: "AI Powered" },
-              { icon: "☁️", label: "Cloud Ready" },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.08 }}
-                whileHover={{ y: -6 }}
-                className="rounded-2xl border border-gray-300 p-6 text-center transition-all duration-300 hover:border-cyan-400"
-              >
-                <div className="text-4xl">{item.icon}</div>
-                <h3 className="mt-3 text-base font-bold text-gray-900">{item.label}</h3>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Final CTA Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="relative mt-20 overflow-hidden rounded-3xl border border-gray-300 p-8 md:p-12 transition-all duration-300 hover:border-cyan-400"
-        >
-          <div className="relative z-10 text-center">
-            <span className="inline-block rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-medium text-cyan-600">
-              Free Consultation
-            </span>
-
-            <h2 className="mt-6 text-2xl md:text-3xl lg:text-4xl font-black text-gray-900 leading-tight">
-              Let's Build Your
-              <span className="block bg-linear-to-r from-cyan-400 via-blue-500 to-violet-600 bg-clip-text text-transparent">
-                Next Digital Success
-              </span>
-            </h2>
-
-            <p className="mt-4 max-w-2xl mx-auto text-sm md:text-base text-gray-700 leading-relaxed">
-              From websites to enterprise software, ERP, CRM, mobile apps, and AI platforms —
-              we're ready to turn your ideas into reality.
-            </p>
-
-            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                to="/meeting"
-                className="inline-flex items-center gap-2 rounded-xl bg-linear-to-r from-cyan-500 via-blue-500 to-violet-600 px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/40 active:scale-95"
-              >
-                Book Free Meeting
-                <HiChatBubbleLeftRight className="text-lg" />
-              </Link>
-
+        {/* 2-Column Split: Info Cards + Proposal Form */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+          
+          {/* Left Column: Direct Channels & Confidence */}
+          <div className="lg:col-span-5 space-y-4">
+            {contactCards.map((card) => (
               <a
-                href={whatsappUrl}
-                target="_blank"
+                key={card.id}
+                href={card.href}
+                target={card.href.startsWith("http") ? "_blank" : undefined}
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl border border-gray-300 px-8 py-3.5 text-sm font-semibold text-gray-700 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400 hover:text-cyan-600"
+                className="group flex items-center gap-4 rounded-3xl border border-slate-800 bg-[#070e1e]/95 p-5 backdrop-blur-xl transition-all duration-300 hover:border-[#00D2FF]/40 hover:shadow-xl hover:shadow-cyan-500/10"
               >
-                <FaWhatsapp className="text-green-500 text-lg" />
-                WhatsApp Us
+                <div className={`flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-r ${card.color} text-xl text-white shadow-md shadow-cyan-500/20 group-hover:scale-110 transition-transform`}>
+                  <card.icon />
+                </div>
+                <div>
+                  <div className="text-xs font-semibold text-slate-400">
+                    {card.title}
+                  </div>
+                  <div className="text-base font-bold text-white group-hover:text-[#00D2FF] transition-colors">
+                    {card.value}
+                  </div>
+                  <div className="text-[11px] text-slate-400 font-normal">
+                    {card.description}
+                  </div>
+                </div>
               </a>
+            ))}
+
+            {/* SLA Box */}
+            <div className="rounded-3xl border border-slate-800 bg-[#0b132b]/85 p-6 backdrop-blur-xl">
+              <h4 className="text-sm font-bold text-white flex items-center gap-2">
+                <HiCheckCircle className="text-[#00D2FF] text-lg" />
+                <span>Our Guaranteed Engagement Model</span>
+              </h4>
+              <ul className="mt-3 space-y-2 text-xs text-slate-300">
+                <li className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#00D2FF]" />
+                  <span>Strict NDA Signed before project discussion</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#0066FF]" />
+                  <span>Fixed-Price milestones or flexible dedicated team model</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#7C3AED]" />
+                  <span>24/7 direct communication via Slack, Teams, or WhatsApp</span>
+                </li>
+              </ul>
             </div>
           </div>
-        </motion.div>
 
-        {/* Bottom Trust Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mt-20"
-        >
-          <div className="rounded-3xl border border-gray-300 p-8 md:p-12 text-center transition-all duration-300 hover:border-cyan-400">
-            <h3 className="text-2xl md:text-3xl font-black text-gray-900">
-              Let's Create Something
-              <span className="block md:inline md:ml-3 bg-linear-to-r from-cyan-400 via-blue-500 to-violet-600 bg-clip-text text-transparent">
-                Extraordinary Together
-              </span>
-            </h3>
-
-            <p className="mt-4 max-w-3xl mx-auto text-sm md:text-base text-gray-700 leading-relaxed">
-              NexoraLab Technologies helps startups, SMEs, and enterprises build scalable,
-              secure, and future-ready digital products — from ideation to deployment and beyond.
-            </p>
-
-            <div className="mt-8 flex flex-wrap justify-center gap-2.5">
-              {[
-                "Web Development",
-                "Mobile Apps",
-                "ERP Solutions",
-                "CRM Platforms",
-                "AI Integration",
-                "Cloud Solutions",
-                "UI/UX Design",
-                "Enterprise Software",
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-gray-300 px-4 py-2 text-xs font-medium text-gray-700 transition-all duration-300 hover:border-cyan-400 hover:text-cyan-600"
+          {/* Right Column: Interactive Proposal Form */}
+          <div className="lg:col-span-7 rounded-3xl border border-slate-800 bg-[#070e1e]/95 p-6 sm:p-10 backdrop-blur-2xl shadow-2xl">
+            {submitted ? (
+              <div className="py-12 text-center space-y-4">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 border border-emerald-400 text-3xl text-emerald-400">
+                  ✓
+                </div>
+                <h3 className="text-2xl font-black text-white">
+                  Proposal Request Received!
+                </h3>
+                <p className="max-w-md mx-auto text-sm text-slate-300">
+                  Thank you for contacting NexoraLab Technologies. Our principal architect will analyze your requirements and reach out within 24 hours.
+                </p>
+                <button
+                  onClick={() => setSubmitted(false)}
+                  className="mt-4 rounded-full bg-slate-800 px-6 py-2.5 text-xs font-semibold text-white hover:bg-slate-700"
                 >
-                  {item}
-                </span>
-              ))}
-            </div>
+                  Send Another Message
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <h3 className="text-xl font-bold text-white mb-2">
+                  Request Technical Proposal & Estimation
+                </h3>
 
-            <div className="mt-8 rounded-2xl border border-gray-300 p-6 transition-all duration-300 hover:border-cyan-400">
-              <h4 className="text-lg font-bold text-gray-900">Innovation • Quality • Trust</h4>
-              <p className="mt-2 text-sm text-gray-700 leading-relaxed">
-                Every project is built with modern architecture, scalable infrastructure,
-                and industry best practices to ensure exceptional performance and long-term success.
-              </p>
-            </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      Your Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. John Doe"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full rounded-2xl border border-slate-700 bg-[#0a1128] px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-[#00D2FF] focus:outline-none focus:ring-1 focus:ring-[#00D2FF] transition-all"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      Business Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="e.g. john@company.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full rounded-2xl border border-slate-700 bg-[#0a1128] px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-[#00D2FF] focus:outline-none focus:ring-1 focus:ring-[#00D2FF] transition-all"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      Phone Number (with country code)
+                    </label>
+                    <input
+                      type="tel"
+                      placeholder="e.g. +1 (555) 000-0000"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full rounded-2xl border border-slate-700 bg-[#0a1128] px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-[#00D2FF] focus:outline-none focus:ring-1 focus:ring-[#00D2FF] transition-all"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      Primary Service Requirement
+                    </label>
+                    <select
+                      value={formData.service}
+                      onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                      className="w-full rounded-2xl border border-slate-700 bg-[#070e1e] px-4 py-3 text-sm text-white focus:border-[#00D2FF] focus:outline-none focus:ring-1 focus:ring-[#00D2FF] transition-all"
+                    >
+                      <option value="AI Solution">Generative AI & ATS Resume Engine</option>
+                      <option value="Enterprise SaaS">Full-Stack SaaS & Web App</option>
+                      <option value="Mobile App">React Native Mobile App</option>
+                      <option value="ERP System">Custom Enterprise ERP & CRM</option>
+                      <option value="Cloud DevOps">Cloud Architecture & DevOps</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                    Project Overview & Objectives *
+                  </label>
+                  <textarea
+                    required
+                    rows={4}
+                    placeholder="Briefly describe your project goals, scope, desired timeline, or tech stack requirements..."
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className="w-full rounded-2xl border border-slate-700 bg-[#0a1128] px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-[#00D2FF] focus:outline-none focus:ring-1 focus:ring-[#00D2FF] transition-all resize-none"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] py-4 text-sm font-bold text-white shadow-xl shadow-cyan-500/30 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <span>Submit Project Inquiry</span>
+                  <HiArrowRight />
+                </button>
+              </form>
+            )}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

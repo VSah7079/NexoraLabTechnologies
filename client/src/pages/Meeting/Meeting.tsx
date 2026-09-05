@@ -28,9 +28,9 @@ const Meeting = () => {
   const [error, setError] = useState("");
 
   const meetingTypes = [
-    { id: "video", label: "Video Call", icon: "📹", description: "Google Meet / Zoom" },
-    { id: "phone", label: "Phone Call", icon: "📞", description: "Direct call" },
-    { id: "whatsapp", label: "WhatsApp", icon: "💬", description: "Chat or call" },
+    { id: "video", label: "Google Meet / Zoom", icon: "📹", description: "Video Consultation" },
+    { id: "phone", label: "Direct Phone Call", icon: "📞", description: "Audio Briefing" },
+    { id: "whatsapp", label: "WhatsApp Chat / Call", icon: "💬", description: "Instant Chat Session" },
   ];
 
   const timeSlots = [
@@ -48,12 +48,10 @@ const Meeting = () => {
       setIsSubmitting(false);
       setIsSubmitted(true);
       
-      // Create WhatsApp message with meeting details
-      const whatsappMessage = `Hi NexoraLab Technologies,%0A%0AI would like to book a meeting:%0A%0A👤 Name: ${formData.name}%0A📧 Email: ${formData.email}%0A📱 Phone: ${formData.phone}%0A📅 Date: ${formData.date}%0A⏰ Time: ${formData.time}%0A📹 Meeting Type: ${formData.meetingType}%0A💬 Message: ${formData.message}%0A%0APlease confirm the meeting.`;
+      const whatsappMessage = `Hi NexoraLab Technologies,%0A%0AI would like to book a technical consultation:%0A%0A👤 Name: ${formData.name}%0A📧 Email: ${formData.email}%0A📱 Phone: ${formData.phone}%0A📅 Date: ${formData.date}%0A⏰ Time: ${formData.time}%0A📹 Meeting Type: ${formData.meetingType}%0A💬 Message: ${formData.message}%0A%0APlease confirm my booking.`;
       
-      // Open WhatsApp with the message
-      window.open(`https://wa.me/919023971338?text=${whatsappMessage}`, "_blank");
-    }, 1500);
+      window.open(`https://wa.me/917079884369?text=${whatsappMessage}`, "_blank");
+    }, 1200);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -74,22 +72,22 @@ const Meeting = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="text-center p-8 rounded-3xl border border-gray-200/60 bg-white/70 backdrop-blur-xl shadow-lg shadow-gray-200/30"
+            className="text-center p-8 sm:p-12 rounded-3xl border border-slate-800 bg-[#070e1e]/95 backdrop-blur-2xl shadow-2xl space-y-4"
           >
-            <div className="flex justify-center mb-6">
-              <HiCheckCircle className="text-6xl text-green-500" />
+            <div className="flex justify-center mb-4">
+              <HiCheckCircle className="text-6xl text-emerald-400" />
             </div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Meeting Request Sent!
+            <h2 className="text-3xl font-black text-white font-['Outfit']">
+              Meeting Request Dispatched!
             </h2>
-            <p className="text-gray-600 mb-6">
-              Thank you for your interest. We've received your meeting request and will contact you shortly to confirm the details.
+            <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-normal">
+              Thank you for choosing NexoraLab Technologies. We've routed your booking to our lead solutions architect and sent a calendar invite.
             </p>
             <button
               onClick={() => setIsSubmitted(false)}
-              className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-8 py-4 font-semibold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(34,211,238,.35)]"
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] px-8 py-3.5 text-sm font-bold text-white shadow-xl shadow-cyan-500/25 transition-all hover:scale-105 active:scale-95"
             >
-              Book Another Meeting
+              Book Another Session
             </button>
           </motion.div>
         </div>
@@ -98,7 +96,7 @@ const Meeting = () => {
   }
 
   return (
-    <div className="min-h-screen pt-24 pb-16 px-4">
+    <div className="min-h-screen pt-20 pb-16 px-4">
       <SEO
         title="Schedule a Technical Consultation | Book an Online Meeting"
         description="Select a date and time to meet with our senior engineers and discuss your business goals, custom software requirements, and project scope."
@@ -108,20 +106,20 @@ const Meeting = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          className="text-center mb-10"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-500/10 backdrop-blur-md px-6 py-2 text-sm font-medium text-cyan-600">
-            <HiCalendar className="text-lg" />
-            Book a Meeting
-          </span>
-          <h1 className="mt-6 text-4xl md:text-5xl font-black text-gray-900 leading-tight">
-            Let's Connect &{" "}
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 bg-clip-text text-transparent">
-              Discuss Your Project
+          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-[#070e1b] px-5 py-2 text-xs font-bold text-cyan-400 mb-4">
+            <HiCalendar className="text-sm" />
+            <span>SCHEDULE TECHNICAL DISCOVERY</span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight font-['Outfit']">
+            Book an Engineering{" "}
+            <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
+              Consultation
             </span>
           </h1>
-          <p className="mt-4 text-lg text-gray-600">
-            Schedule a free consultation with our experts to discuss your requirements
+          <p className="mt-3 text-sm sm:text-base text-slate-300 max-w-xl mx-auto font-normal">
+            Select your preferred time slot for an in-depth architecture, scoping, and feasibility review with our team.
           </p>
         </motion.div>
 
@@ -130,19 +128,19 @@ const Meeting = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="rounded-3xl border border-gray-200/60 bg-white/70 backdrop-blur-xl shadow-lg shadow-gray-200/30 p-8 md:p-12"
+          className="rounded-3xl border border-slate-800 bg-[#070e1e]/95 backdrop-blur-2xl shadow-2xl p-6 sm:p-10 md:p-12"
         >
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Personal Information */}
             <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <HiUser className="text-cyan-600" />
-                Personal Information
+              <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <HiUser className="text-[#00D2FF]" />
+                <span>1. Contact Details</span>
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Full Name *
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                    Your Name *
                   </label>
                   <input
                     type="text"
@@ -150,12 +148,12 @@ const Meeting = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full rounded-xl border border-gray-200 bg-white/50 backdrop-blur-sm px-4 py-3 text-gray-900 transition-all duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
-                    placeholder="John Doe"
+                    className="w-full rounded-2xl border border-slate-700 bg-[#0a1128] px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-[#00D2FF] focus:outline-none"
+                    placeholder="e.g. Rachel Adams"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
                     Email Address *
                   </label>
                   <input
@@ -164,12 +162,12 @@ const Meeting = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full rounded-xl border border-gray-200 bg-white/50 backdrop-blur-sm px-4 py-3 text-gray-900 transition-all duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
-                    placeholder="john@example.com"
+                    className="w-full rounded-2xl border border-slate-700 bg-[#0a1128] px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-[#00D2FF] focus:outline-none"
+                    placeholder="e.g. rachel@enterprise.com"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
                     Phone Number *
                   </label>
                   <input
@@ -178,8 +176,8 @@ const Meeting = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     required
-                    className="w-full rounded-xl border border-gray-200 bg-white/50 backdrop-blur-sm px-4 py-3 text-gray-900 transition-all duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
-                    placeholder="+91 9023971338"
+                    className="w-full rounded-2xl border border-slate-700 bg-[#0a1128] px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-[#00D2FF] focus:outline-none"
+                    placeholder="+91 70798 84369"
                   />
                 </div>
               </div>
@@ -187,18 +185,18 @@ const Meeting = () => {
 
             {/* Meeting Type Selection */}
             <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <HiChatBubbleLeftRight className="text-cyan-600" />
-                Meeting Type
+              <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <HiChatBubbleLeftRight className="text-[#00D2FF]" />
+                <span>2. Preferred Communication Channel</span>
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {meetingTypes.map((type) => (
                   <label
                     key={type.id}
-                    className={`relative cursor-pointer rounded-xl border-2 p-4 transition-all duration-300 ${
+                    className={`relative cursor-pointer rounded-2xl border p-4 transition-all duration-300 ${
                       formData.meetingType === type.id
-                        ? "border-cyan-400 bg-cyan-50/50"
-                        : "border-gray-200 bg-white/50 hover:border-cyan-300"
+                        ? "border-[#00D2FF] bg-[#0b132b] shadow-lg shadow-cyan-500/20 scale-[1.02]"
+                        : "border-slate-800 bg-[#0a1128]/70 hover:border-slate-700"
                     }`}
                   >
                     <input
@@ -210,15 +208,10 @@ const Meeting = () => {
                       className="sr-only"
                     />
                     <div className="text-center">
-                      <div className="text-3xl mb-2">{type.icon}</div>
-                      <h4 className="font-semibold text-gray-900">{type.label}</h4>
-                      <p className="text-sm text-gray-600 mt-1">{type.description}</p>
+                      <div className="text-2xl mb-1">{type.icon}</div>
+                      <h4 className="font-bold text-sm text-white">{type.label}</h4>
+                      <p className="text-xs text-slate-400 mt-0.5">{type.description}</p>
                     </div>
-                    {formData.meetingType === type.id && (
-                      <div className="absolute top-2 right-2">
-                        <HiCheckCircle className="text-cyan-500 text-xl" />
-                      </div>
-                    )}
                   </label>
                 ))}
               </div>
@@ -226,13 +219,13 @@ const Meeting = () => {
 
             {/* Date & Time Selection */}
             <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <HiClock className="text-cyan-600" />
-                Select Date & Time
+              <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <HiClock className="text-[#00D2FF]" />
+                <span>3. Date & Time Window</span>
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
                     Preferred Date *
                   </label>
                   <input
@@ -242,24 +235,24 @@ const Meeting = () => {
                     onChange={handleChange}
                     required
                     min={new Date().toISOString().split('T')[0]}
-                    className="w-full rounded-xl border border-gray-200 bg-white/50 backdrop-blur-sm px-4 py-3 text-gray-900 transition-all duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+                    className="w-full rounded-2xl border border-slate-700 bg-[#0a1128] px-4 py-3 text-sm text-white focus:border-[#00D2FF] focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Preferred Time *
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                    Time Slot *
                   </label>
                   <select
                     name="time"
                     value={formData.time}
                     onChange={handleChange}
                     required
-                    className="w-full rounded-xl border border-gray-200 bg-white/50 backdrop-blur-sm px-4 py-3 text-gray-900 transition-all duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+                    className="w-full rounded-2xl border border-slate-700 bg-[#0a1128] px-4 py-3 text-sm text-white focus:border-[#00D2FF] focus:outline-none"
                   >
-                    <option value="">Select a time slot</option>
+                    <option value="">Select a preferred time slot</option>
                     {timeSlots.map((slot) => (
-                      <option key={slot} value={slot}>
-                        {slot}
+                      <option key={slot} value={slot} className="bg-[#070e1e] text-white">
+                        {slot} (IST / UTC+5:30)
                       </option>
                     ))}
                   </select>
@@ -269,23 +262,23 @@ const Meeting = () => {
 
             {/* Message */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Tell us about your project (optional)
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                Project Overview & Core Requirements (Optional)
               </label>
               <textarea
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                rows={4}
-                className="w-full rounded-xl border border-gray-200 bg-white/50 backdrop-blur-sm px-4 py-3 text-gray-900 transition-all duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 resize-none"
-                placeholder="Briefly describe your project requirements..."
+                rows={3}
+                className="w-full rounded-2xl border border-slate-700 bg-[#0a1128] px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-[#00D2FF] focus:outline-none resize-none font-normal"
+                placeholder="Share any background details or specific architecture challenges you want to review..."
               />
             </div>
 
-            {/* Error Message */}
+            {/* Error */}
             {error && (
-              <div className="flex items-center gap-2 text-red-600 bg-red-50 border border-red-200 rounded-xl p-4">
-                <HiXCircle className="text-xl" />
+              <div className="flex items-center gap-2 text-red-400 bg-red-950/30 border border-red-800 rounded-2xl p-4 text-xs">
+                <HiXCircle className="text-lg shrink-0" />
                 <span>{error}</span>
               </div>
             )}
@@ -294,34 +287,34 @@ const Meeting = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(34,211,238,.35)] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] py-4 text-sm font-bold text-white shadow-xl shadow-cyan-500/25 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>
                   <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                  Processing...
+                  <span>Reserving Consultation Slot...</span>
                 </>
               ) : (
                 <>
                   <HiCalendar className="text-lg" />
-                  Book Free Meeting
+                  <span>Confirm Free Engineering Consultation</span>
                 </>
               )}
             </button>
 
-            {/* Alternative Contact */}
-            <div className="text-center pt-4 border-t border-gray-200">
-              <p className="text-sm text-gray-600 mb-3">
-                Or connect with us directly
+            {/* Direct WhatsApp Option */}
+            <div className="text-center pt-4 border-t border-slate-800">
+              <p className="text-xs text-slate-400 mb-3 font-normal">
+                Prefer immediate technical chat without scheduling?
               </p>
               <a
-                href="https://wa.me/919023971338?text=Hi%20NexoraLab%20Technologies%2C%20I%20would%20like%20to%20discuss%20a%20project%20with%20you."
+                href="https://wa.me/917079884369?text=Hi%20NexoraLab%20Technologies%2C%20I%20would%20like%20to%20discuss%20a%20project."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl border border-green-500/30 bg-green-50 px-6 py-3 text-sm font-semibold text-green-600 transition-all duration-300 hover:bg-green-100"
+                className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-950/20 px-6 py-2.5 text-xs font-bold text-emerald-400 transition-all hover:border-emerald-400 hover:bg-emerald-900/30"
               >
-                <FaWhatsapp className="text-lg" />
-                Chat on WhatsApp
+                <FaWhatsapp className="text-base" />
+                <span>Instant WhatsApp Direct Chat</span>
               </a>
             </div>
           </form>

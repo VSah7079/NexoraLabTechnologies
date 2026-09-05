@@ -15,20 +15,22 @@ interface ThemeProviderProps {
 }
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  // ✅ Force light theme only
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>(() => {
+    const saved = localStorage.getItem('theme') as Theme;
+    if (saved === 'light' || saved === 'dark') return saved;
+    return 'dark'; // default to dark theme for modern glass aesthetic
+  });
 
   useEffect(() => {
     const root = document.documentElement;
-    
-    // ✅ Always remove dark class - force light theme
-    root.classList.remove('dark');
-    
-    // ✅ Always set data-theme to light
-    root.setAttribute('data-theme', 'light');
-    
-    // ✅ Save to localStorage
-    localStorage.setItem('theme', 'light');
+    if (theme === 'dark') {
+      root.classList.add('dark');
+      root.setAttribute('data-theme', 'dark');
+    } else {
+      root.classList.remove('dark');
+      root.setAttribute('data-theme', 'light');
+    }
+    localStorage.setItem('theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {

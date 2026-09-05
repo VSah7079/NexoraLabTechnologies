@@ -8,10 +8,18 @@ const getToken = () => {
   return null;
 };
 
+// Dispatch auth change event helper
+const dispatchAuthChange = () => {
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('auth-change'));
+  }
+};
+
 // Set token in localStorage
 const setToken = (token: string) => {
   if (typeof window !== 'undefined') {
     localStorage.setItem('token', token);
+    dispatchAuthChange();
   }
 };
 
@@ -19,6 +27,7 @@ const setToken = (token: string) => {
 const removeToken = () => {
   if (typeof window !== 'undefined') {
     localStorage.removeItem('token');
+    dispatchAuthChange();
   }
 };
 
@@ -35,6 +44,7 @@ const getUser = () => {
 const setUser = (user: any) => {
   if (typeof window !== 'undefined') {
     localStorage.setItem('user', JSON.stringify(user));
+    dispatchAuthChange();
   }
 };
 
@@ -42,6 +52,7 @@ const setUser = (user: any) => {
 const removeUser = () => {
   if (typeof window !== 'undefined') {
     localStorage.removeItem('user');
+    dispatchAuthChange();
   }
 };
 
@@ -118,6 +129,20 @@ export const authAPI = {
 
   getCurrentUser: async () => {
     return await apiRequest('/auth/me');
+  },
+
+  forgotPassword: async (email: string) => {
+    return await apiRequest('/auth/forgot-password', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    });
+  },
+
+  resetPassword: async (data: { token: string; password: string }) => {
+    return await apiRequest('/auth/reset-password', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
   },
 
   isAuthenticated: () => {

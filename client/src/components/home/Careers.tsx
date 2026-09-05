@@ -241,7 +241,6 @@ const Careers = () => {
           description="Build the future of digital software and AI platforms. Explore job openings, remote work options, and career opportunities at NexoraLab Technologies."
         />
       )}
-      {/* Background Effects - Removed to show NetworkBackground */}
 
       <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 xl:px-10">
         {/* Header */}
@@ -251,7 +250,7 @@ const Careers = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2.5 rounded-full border border-cyan-400/20 bg-cyan-500/10 px-5 py-2 md:px-6 md:py-2.5 text-xs md:text-sm font-medium text-cyan-600"
+            className="inline-flex items-center gap-2.5 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-5 py-2 md:px-6 md:py-2.5 text-xs md:text-sm font-semibold text-[#00D2FF]"
           >
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
@@ -265,10 +264,10 @@ const Careers = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1, duration: 0.6 }}
-            className="mt-4 md:mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 leading-tight"
+            className="mt-4 md:mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight font-['Outfit']"
           >
-            Build Your
-            <span className="block bg-linear-to-r from-cyan-400 via-blue-500 to-violet-600 bg-clip-text text-transparent">
+            Build Your{" "}
+            <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
               Career With Us
             </span>
           </motion.h1>
@@ -278,10 +277,10 @@ const Careers = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="mt-3 md:mt-4 max-w-2xl mx-auto text-sm md:text-base lg:text-lg text-gray-600 leading-relaxed"
+            className="mt-3 md:mt-4 max-w-2xl mx-auto text-sm md:text-base lg:text-lg text-slate-300 leading-relaxed font-normal"
           >
-            Join a team of passionate innovators building the future of technology.
-            We're looking for talented individuals who want to make an impact.
+            Join a team of passionate innovators building the future of enterprise software and AI platforms.
+            We're looking for talented individuals who want to create a global impact.
           </motion.p>
         </div>
 
@@ -306,12 +305,12 @@ const Careers = () => {
               viewport={{ once: true }}
               transition={{ delay: index * 0.08 }}
               whileHover={{ y: -6, scale: 1.03 }}
-              className="rounded-2xl border border-white/20 bg-white/10 p-5 md:p-6 text-center backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50 hover:bg-white/20 hover:shadow-[0_10px_40px_rgba(34,211,238,.15)]"
+              className="rounded-2xl border border-slate-800 bg-[#0b132b]/85 p-5 md:p-6 text-center backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50 hover:shadow-[0_10px_40px_rgba(0,210,255,0.15)]"
             >
-              <div className={`text-3xl md:text-4xl bg-linear-to-r ${item.color} bg-clip-text text-transparent`}>
+              <div className={`text-3xl md:text-4xl bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}>
                 {item.icon}
               </div>
-              <h3 className="mt-3 text-sm md:text-base font-bold text-gray-900">{item.label}</h3>
+              <h3 className="mt-3 text-sm md:text-base font-bold text-white">{item.label}</h3>
             </motion.div>
           ))}
         </motion.div>
@@ -319,9 +318,9 @@ const Careers = () => {
         {/* Open Positions */}
         <div className="mt-12 md:mt-16">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 md:mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+            <h2 className="text-2xl md:text-3xl font-bold text-white font-['Outfit']">
               Open Positions
-              <span className="ml-2 text-sm text-cyan-600">({filteredJobs.length})</span>
+              <span className="ml-2 text-sm text-[#00D2FF]">({filteredJobs.length})</span>
             </h2>
             
             {/* Department Filter */}
@@ -331,10 +330,10 @@ const Careers = () => {
                   key={dept}
                   onClick={() => setActiveTab(dept)}
                   className={`
-                    rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-300
+                    rounded-full px-4 py-1.5 text-xs font-semibold transition-all duration-300
                     ${activeTab === dept
-                      ? "bg-linear-to-r from-cyan-500 via-blue-500 to-violet-600 text-white shadow-lg shadow-cyan-500/25"
-                      : "border border-white/20 bg-white/10 text-gray-600 backdrop-blur-sm hover:border-cyan-400/50 hover:bg-white/20 hover:text-cyan-600"
+                      ? "bg-gradient-to-r from-cyan-500 via-blue-600 to-violet-600 text-white shadow-lg shadow-cyan-500/25"
+                      : "border border-slate-800 bg-[#060b18]/80 text-slate-300 backdrop-blur-sm hover:border-cyan-400/50 hover:text-white"
                     }
                   `}
                 >
@@ -344,7 +343,7 @@ const Careers = () => {
             </div>
           </div>
 
-          {/* Job Cards - Enhanced Glass Effect */}
+          {/* Job Cards */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-6">
             {filteredJobs.map((job, index) => (
               <motion.div
@@ -355,42 +354,36 @@ const Careers = () => {
                 transition={{ delay: index * 0.06 }}
                 whileHover={{ 
                   y: -6,
-                  scale: 1.02,
+                  scale: 1.01,
                   transition: { duration: 0.3 }
                 }}
-                className="group relative overflow-hidden rounded-2xl border border-white/20 bg-white/10 p-6 md:p-7 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50 hover:bg-white/20 hover:shadow-[0_15px_50px_rgba(34,211,238,.15)]"
+                className="group relative overflow-hidden rounded-2xl border border-slate-800 bg-[#0b132b]/85 p-6 md:p-7 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50 hover:shadow-[0_15px_50px_rgba(0,210,255,0.15)]"
               >
-                {/* Glass Reflection Effect */}
-                <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                
-                {/* Shimmer Border Effect */}
-                <div className="absolute inset-0 rounded-2xl p-px bg-linear-to-r from-cyan-400/0 via-cyan-400/20 to-cyan-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
                 <div className="flex flex-col h-full relative z-10">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <h3 className="text-lg md:text-xl font-bold text-gray-900 group-hover:text-cyan-600 transition-colors duration-300">
+                      <h3 className="text-lg md:text-xl font-bold text-white group-hover:text-[#00D2FF] transition-colors duration-300">
                         {job.title}
                       </h3>
-                      <p className="mt-1 text-sm text-cyan-500 font-medium">{job.department}</p>
+                      <p className="mt-1 text-sm text-[#00D2FF] font-medium">{job.department}</p>
                     </div>
-                    <span className="shrink-0 rounded-full bg-emerald-500/20 backdrop-blur-sm px-3 py-1 text-xs font-semibold text-emerald-600 border border-emerald-500/20">
+                    <span className="shrink-0 rounded-full bg-emerald-500/20 backdrop-blur-sm px-3 py-1 text-xs font-semibold text-emerald-400 border border-emerald-500/30">
                       {job.type}
                     </span>
                   </div>
 
-                  <div className="mt-3 flex flex-wrap gap-3 text-sm text-gray-600">
-                    <span className="flex items-center gap-1.5 bg-white/20 px-2.5 py-1 rounded-full backdrop-blur-sm">
-                      <HiMapPin className="text-cyan-500" />
+                  <div className="mt-3 flex flex-wrap gap-3 text-xs sm:text-sm text-slate-300">
+                    <span className="flex items-center gap-1.5 bg-[#060b18]/80 border border-slate-800 px-3 py-1 rounded-full">
+                      <HiMapPin className="text-[#00D2FF]" />
                       {job.location}
                     </span>
-                    <span className="flex items-center gap-1.5 bg-white/20 px-2.5 py-1 rounded-full backdrop-blur-sm">
-                      <HiClock className="text-cyan-500" />
+                    <span className="flex items-center gap-1.5 bg-[#060b18]/80 border border-slate-800 px-3 py-1 rounded-full">
+                      <HiClock className="text-[#00D2FF]" />
                       {job.experience}
                     </span>
                   </div>
 
-                  <p className="mt-3 text-sm text-gray-600 leading-relaxed line-clamp-2">
+                  <p className="mt-3 text-sm text-slate-300 leading-relaxed line-clamp-2">
                     {job.description}
                   </p>
 
@@ -398,29 +391,30 @@ const Careers = () => {
                     {job.requirements.slice(0, 3).map((req) => (
                       <span 
                         key={req} 
-                        className="rounded-full border border-cyan-400/20 bg-cyan-500/10 backdrop-blur-sm px-2.5 py-1 text-[10px] text-cyan-700 font-medium"
+                        className="rounded-full border border-slate-700/80 bg-[#070e1b] px-2.5 py-1 text-[11px] text-slate-300 font-medium"
                       >
                         {req}
                       </span>
                     ))}
                     {job.requirements.length > 3 && (
-                      <span className="text-[10px] text-cyan-500 font-medium bg-white/20 px-2.5 py-1 rounded-full backdrop-blur-sm">
+                      <span className="text-[11px] text-[#00D2FF] font-medium bg-[#060b18] px-2.5 py-1 rounded-full border border-slate-800">
                         +{job.requirements.length - 3} more
                       </span>
                     )}
                   </div>
 
-                  <div className="mt-4 flex items-center justify-between border-t border-white/20 pt-4">
-                    <span className="text-xs text-cyan-500 font-medium bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm">
-                      Apply Now
+                  <div className="mt-5 flex items-center justify-between border-t border-slate-800 pt-4">
+                    <span className="text-xs text-[#00D2FF] font-bold tracking-wider uppercase">
+                      Open Position
                     </span>
                     <button
                       onClick={() => {
                         setSelectedJob(job.id);
                         setShowApplicationForm(true);
                       }}
-                      className="flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/20 text-gray-700 backdrop-blur-sm transition-all duration-300 hover:border-cyan-400 hover:text-cyan-600 hover:bg-cyan-500/20 hover:shadow-[0_0_20px_rgba(34,211,238,.2)] group-hover:rotate-12"
+                      className="flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2 text-xs font-bold text-white shadow-[0_0_15px_rgba(0,210,255,0.3)] transition-all duration-300 hover:scale-105 active:scale-95"
                     >
+                      <span>Apply Now</span>
                       <HiArrowRight className="text-sm" />
                     </button>
                   </div>
@@ -432,77 +426,80 @@ const Careers = () => {
 
         {/* Application Form Modal */}
         {showApplicationForm && selectedJobData && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border border-white/20 bg-white/10 p-6 md:p-8 backdrop-blur-xl shadow-2xl"
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border border-slate-800 bg-[#0b132b]/95 p-6 md:p-8 backdrop-blur-2xl shadow-2xl text-slate-100"
             >
               <button
                 onClick={() => setShowApplicationForm(false)}
-                className="absolute right-4 top-4 text-gray-400 hover:text-white transition-colors"
+                className="absolute right-5 top-5 text-slate-400 hover:text-white transition-colors text-lg"
               >
                 ✕
               </button>
 
-              <h2 className="text-2xl font-bold text-gray-900">Apply for {selectedJobData.title}</h2>
-              <p className="mt-1 text-sm text-cyan-500">{selectedJobData.department}</p>
+              <h2 className="text-2xl font-bold text-white font-['Outfit']">Apply for {selectedJobData.title}</h2>
+              <p className="mt-1 text-sm text-[#00D2FF] font-medium">{selectedJobData.department} • {selectedJobData.location}</p>
 
-              <form className="mt-6 space-y-4">
+              <form className="mt-6 space-y-4" onSubmit={(e) => { e.preventDefault(); alert("Application submitted successfully!"); setShowApplicationForm(false); }}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm font-medium text-gray-700">Full Name</label>
+                    <label className="text-sm font-semibold text-slate-200">Full Name</label>
                     <input
                       type="text"
+                      required
                       placeholder="Your full name"
-                      className="mt-1.5 w-full rounded-xl border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-cyan-400 focus:bg-white/20 transition-colors"
+                      className="mt-1.5 w-full rounded-xl border border-slate-700 bg-[#060b18] px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#00D2FF] transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-700">Email Address</label>
+                    <label className="text-sm font-semibold text-slate-200">Email Address</label>
                     <input
                       type="email"
+                      required
                       placeholder="you@example.com"
-                      className="mt-1.5 w-full rounded-xl border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-cyan-400 focus:bg-white/20 transition-colors"
+                      className="mt-1.5 w-full rounded-xl border border-slate-700 bg-[#060b18] px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#00D2FF] transition-colors"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Phone Number</label>
+                  <label className="text-sm font-semibold text-slate-200">Phone Number</label>
                   <input
                     type="tel"
+                    required
                     placeholder="+91 98765 43210"
-                    className="mt-1.5 w-full rounded-xl border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-cyan-400 focus:bg-white/20 transition-colors"
+                    className="mt-1.5 w-full rounded-xl border border-slate-700 bg-[#060b18] px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#00D2FF] transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-gray-700">LinkedIn Profile</label>
+                  <label className="text-sm font-semibold text-slate-200">LinkedIn Profile</label>
                   <input
                     type="url"
                     placeholder="https://linkedin.com/in/yourprofile"
-                    className="mt-1.5 w-full rounded-xl border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-cyan-400 focus:bg-white/20 transition-colors"
+                    className="mt-1.5 w-full rounded-xl border border-slate-700 bg-[#060b18] px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#00D2FF] transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Cover Letter</label>
+                  <label className="text-sm font-semibold text-slate-200">Cover Letter</label>
                   <textarea
                     rows={4}
                     placeholder="Tell us why you're interested in this role..."
-                    className="mt-1.5 w-full rounded-xl border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-cyan-400 focus:bg-white/20 transition-colors"
+                    className="mt-1.5 w-full rounded-xl border border-slate-700 bg-[#060b18] px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#00D2FF] transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Resume / CV</label>
-                  <div className="mt-1.5 flex items-center justify-center rounded-xl border-2 border-dashed border-white/20 bg-white/10 backdrop-blur-sm p-6 hover:border-cyan-400/50 transition-colors cursor-pointer">
+                  <label className="text-sm font-semibold text-slate-200">Resume / CV</label>
+                  <div className="mt-1.5 relative flex items-center justify-center rounded-xl border-2 border-dashed border-slate-700 bg-[#060b18] p-6 hover:border-[#00D2FF] transition-colors cursor-pointer">
                     <div className="text-center">
                       <div className="text-3xl mb-2">📄</div>
-                      <p className="text-sm text-gray-500">Drop your resume here or click to browse</p>
-                      <p className="text-xs text-gray-400 mt-1">PDF, DOC, DOCX (Max 5MB)</p>
+                      <p className="text-sm text-slate-300 font-medium">Drop your resume here or click to browse</p>
+                      <p className="text-xs text-slate-500 mt-1">PDF, DOC, DOCX (Max 5MB)</p>
                     </div>
                     <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" />
                   </div>
@@ -510,7 +507,7 @@ const Careers = () => {
 
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-linear-to-r from-cyan-500 via-blue-500 to-violet-600 py-3.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/40 active:scale-95"
+                  className="w-full rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-violet-600 py-3.5 text-sm font-bold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
                 >
                   Submit Application
                 </button>
@@ -527,11 +524,11 @@ const Careers = () => {
           transition={{ duration: 0.6 }}
           className="mt-12 md:mt-16"
         >
-          <div className="rounded-3xl border border-white/20 bg-white/10 p-6 md:p-8 backdrop-blur-xl">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center">
-              Our Culture
-              <span className="block bg-linear-to-r from-cyan-400 via-blue-500 to-violet-600 bg-clip-text text-transparent">
-                Built on Innovation & Trust
+          <div className="rounded-3xl border border-slate-800 bg-[#0b132b]/85 p-6 md:p-8 backdrop-blur-xl">
+            <h2 className="text-2xl md:text-3xl font-bold text-white text-center font-['Outfit']">
+              Our Culture & Values
+              <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 bg-clip-text text-transparent">
+                Built on Innovation & Engineering Excellence
               </span>
             </h2>
 
@@ -540,19 +537,19 @@ const Careers = () => {
                 {
                   icon: "🚀",
                   title: "Innovation First",
-                  desc: "We encourage creative thinking and innovative solutions.",
+                  desc: "We encourage creative architecture, deep AI exploration, and bold problem-solving.",
                   color: "from-cyan-400 to-blue-500"
                 },
                 {
                   icon: "🤝",
                   title: "Collaborative Culture",
-                  desc: "Teamwork and open communication drive our success.",
+                  desc: "Radical transparency, empathetic teamwork, and open communication drive our success.",
                   color: "from-blue-500 to-violet-500"
                 },
                 {
                   icon: "📈",
                   title: "Continuous Growth",
-                  desc: "Learning and development opportunities for everyone.",
+                  desc: "Dedicated learning stipends, conference budgets, and mentorship for every team member.",
                   color: "from-violet-500 to-cyan-400"
                 }
               ].map((item, index) => (
@@ -563,20 +560,20 @@ const Careers = () => {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.08 }}
                   whileHover={{ y: -4, scale: 1.02 }}
-                  className="rounded-2xl border border-white/20 bg-white/10 p-6 text-center backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50 hover:bg-white/20 hover:shadow-[0_10px_40px_rgba(34,211,238,.1)]"
+                  className="rounded-2xl border border-slate-800 bg-[#060b18]/80 p-6 text-center backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50 hover:shadow-[0_10px_40px_rgba(0,210,255,0.1)]"
                 >
-                  <div className={`text-4xl bg-linear-to-r ${item.color} bg-clip-text text-transparent`}>
+                  <div className={`text-4xl bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}>
                     {item.icon}
                   </div>
-                  <h3 className="mt-4 text-lg font-bold text-gray-900">{item.title}</h3>
-                  <p className="mt-2 text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+                  <h3 className="mt-4 text-lg font-bold text-white">{item.title}</h3>
+                  <p className="mt-2 text-sm text-slate-300 leading-relaxed font-normal">{item.desc}</p>
                 </motion.div>
               ))}
             </div>
           </div>
         </motion.div>
 
-        {/* Contact Section */}
+        {/* Contact CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -584,27 +581,27 @@ const Careers = () => {
           transition={{ duration: 0.6 }}
           className="mt-10 md:mt-12"
         >
-          <div className="rounded-3xl border border-white/20 bg-linear-to-r from-cyan-500/10 via-blue-500/10 to-violet-500/10 backdrop-blur-xl p-6 md:p-8 text-center">
-            <h3 className="text-xl md:text-2xl font-bold text-gray-900">
+          <div className="rounded-3xl border border-slate-800 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-violet-500/10 backdrop-blur-xl p-6 md:p-8 text-center">
+            <h3 className="text-xl md:text-2xl font-bold text-white font-['Outfit']">
               Don't See a Role That Fits?
             </h3>
-            <p className="mt-2 text-sm text-gray-600">
-              Send us your resume and we'll keep you in mind for future opportunities.
+            <p className="mt-2 text-sm text-slate-300 max-w-lg mx-auto">
+              Send us your portfolio or resume directly, and we'll keep you in mind for upcoming enterprise engineering roles.
             </p>
-            <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
                 href="mailto:careers@nexoralabtechnologies.in"
-                className="inline-flex items-center gap-2 rounded-xl bg-linear-to-r from-cyan-500 via-blue-500 to-violet-600 px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(34,211,238,.3)]"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 via-blue-600 to-violet-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:scale-105"
               >
                 <HiEnvelope className="text-lg" />
-                careers@nexoralabtech.in
+                careers@nexoralabtechnologies.in
               </a>
               <a
-                href="tel:+919876543210"
-                className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 backdrop-blur-sm px-6 py-2.5 text-sm font-semibold text-gray-700 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400 hover:bg-white/20"
+                href="tel:+917079884369"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-[#060b18]/80 px-6 py-3 text-sm font-semibold text-slate-200 transition-all duration-300 hover:border-cyan-400 hover:text-white"
               >
-                <HiPhone className="text-lg" />
-                +91 98765 43210
+                <HiPhone className="text-lg text-[#00D2FF]" />
+                +91 70798 84369
               </a>
             </div>
           </div>

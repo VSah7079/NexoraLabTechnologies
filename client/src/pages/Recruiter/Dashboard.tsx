@@ -1,19 +1,19 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { HiBriefcase, HiUsers, HiDocumentText, HiChartBar } from "react-icons/hi2";
+import { HiBriefcase, HiUsers, HiDocumentText, HiChartBar, HiPlus } from "react-icons/hi2";
 
 const RecruiterDashboard = () => {
   const stats = [
-    { title: "Total Jobs", value: "18", icon: <HiBriefcase />, color: "text-cyan-600" },
-    { title: "Active Jobs", value: "8", icon: <HiDocumentText />, color: "text-green-600" },
-    { title: "Total Applicants", value: "89", icon: <HiUsers />, color: "text-blue-600" },
-    { title: "Interviews", value: "12", icon: <HiChartBar />, color: "text-purple-600" },
+    { title: "Total Job Openings", value: "18", icon: <HiBriefcase />, color: "text-cyan-400" },
+    { title: "Active Requisitions", value: "8", icon: <HiDocumentText />, color: "text-emerald-400" },
+    { title: "Total Applicants", value: "89", icon: <HiUsers />, color: "text-blue-400" },
+    { title: "Interviews Scheduled", value: "12", icon: <HiChartBar />, color: "text-violet-400" },
   ];
 
   const recentJobs = [
-    { id: 1, title: "Senior React Developer", applicants: 32, status: "Active" },
-    { id: 2, title: "Backend Engineer", applicants: 24, status: "Active" },
-    { id: 3, title: "DevOps Specialist", applicants: 8, status: "Closed" },
+    { id: 1, title: "Senior React Architect", applicants: 32, status: "Active" },
+    { id: 2, title: "Backend Systems Engineer", applicants: 24, status: "Active" },
+    { id: 3, title: "Cloud DevOps Specialist", applicants: 8, status: "Closed" },
   ];
 
   return (
@@ -23,64 +23,77 @@ const RecruiterDashboard = () => {
       transition={{ duration: 0.5 }}
       className="space-y-6"
     >
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">Recruiter Dashboard</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-black text-white font-['Outfit']">Recruiter Command Center</h1>
+          <p className="text-xs sm:text-sm text-slate-300 mt-1 font-normal">
+            Monitor applicant intake pipelines, open requisitions, and interviews
+          </p>
+        </div>
         <Link
           to="/recruiter/jobs/post"
-          className="rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-violet-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:-translate-y-1"
+          className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-cyan-500/25 transition-all hover:scale-105 active:scale-95"
         >
-          + Post New Job
+          <HiPlus />
+          <span>Post New Job</span>
         </Link>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: index * 0.08 }}
-                        className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-gray-200"
+            className="rounded-3xl border border-slate-800 bg-[#0b132b]/85 p-6 backdrop-blur-xl shadow-xl hover:border-[#00D2FF]/40 transition-all"
           >
-            <div className={`text-3xl ${stat.color}`}>{stat.icon}</div>
-            <p className="text-2xl font-bold text-gray-900 mt-2">{stat.value}</p>
-            <p className="text-sm text-gray-500">{stat.title}</p>
+            <div className={`text-2xl ${stat.color}`}>{stat.icon}</div>
+            <p className="text-3xl font-black text-white mt-2 font-['Outfit']">{stat.value}</p>
+            <p className="text-xs text-slate-400 mt-0.5">{stat.title}</p>
           </motion.div>
         ))}
       </div>
 
       {/* Recent Jobs */}
-      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-        <div className="p-6 border-b border-gray-200">
-          <h2 className="text-lg font-bold text-gray-900">Recent Job Postings</h2>
+      <div className="rounded-3xl border border-slate-800 bg-[#070e1e]/95 shadow-xl overflow-hidden">
+        <div className="p-6 border-b border-slate-800 flex justify-between items-center">
+          <h2 className="text-base sm:text-lg font-bold text-white font-['Outfit']">Recent Job Postings</h2>
+          <Link to="/recruiter/jobs" className="text-xs text-cyan-400 hover:text-cyan-300 font-bold">
+            View All →
+          </Link>
         </div>
-        <table className="w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="text-left p-4 text-sm font-medium text-gray-500">Job Title</th>
-              <th className="text-left p-4 text-sm font-medium text-gray-500">Applicants</th>
-              <th className="text-left p-4 text-sm font-medium text-gray-500">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {recentJobs.map((job) => (
-              <tr key={job.id} className="border-t border-gray-100">
-                <td className="p-4 font-medium text-gray-900">{job.title}</td>
-                <td className="p-4 text-gray-600">{job.applicants}</td>
-                <td className="p-4">
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                    job.status === "Active" 
-                      ? "bg-green-100 text-green-700" 
-                      : "bg-gray-100 text-gray-700"
-                  }`}>
-                    {job.status}
-                  </span>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left">
+            <thead className="bg-[#0b132b]/90 border-b border-slate-800">
+              <tr>
+                <th className="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Job Title</th>
+                <th className="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Applicants</th>
+                <th className="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Status</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-slate-800/60">
+              {recentJobs.map((job) => (
+                <tr key={job.id} className="hover:bg-slate-800/30 transition-colors">
+                  <td className="p-4 font-bold text-white text-sm">{job.title}</td>
+                  <td className="p-4 text-slate-300 text-sm font-semibold">{job.applicants} candidates</td>
+                  <td className="p-4">
+                    <span
+                      className={`inline-flex px-3 py-1 rounded-full text-xs font-bold border ${
+                        job.status === "Active"
+                          ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
+                          : "bg-slate-800 border-slate-700 text-slate-400"
+                      }`}
+                    >
+                      {job.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </motion.div>
   );

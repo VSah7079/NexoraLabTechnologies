@@ -69,7 +69,7 @@ const Process = () => {
   return (
     <section
       id="process"
-      className="relative overflow-hidden bg-transparent py-16 md:py-20 lg:py-28"
+      className="relative overflow-hidden bg-transparent py-16 md:py-20 lg:py-28 transition-colors duration-300"
     >
       <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 xl:px-10">
         {/* Header */}
@@ -79,13 +79,13 @@ const Process = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2.5 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-5 py-2 md:px-6 md:py-2.5 text-xs md:text-sm font-medium text-cyan-600"
+            className="inline-flex items-center gap-2.5 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-5 py-2 md:px-6 md:py-2.5 text-xs md:text-sm font-semibold text-[#00D2FF]"
           >
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-400" />
             </span>
-            Our Development Process
+            How We Work
           </motion.div>
 
           <motion.h2
@@ -93,10 +93,10 @@ const Process = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1, duration: 0.6 }}
-            className="mt-4 md:mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 leading-tight"
+            className="mt-4 md:mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight font-['Outfit']"
           >
-            Our Proven
-            <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 bg-clip-text text-transparent">
+            Our Proven{" "}
+            <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
               Development Process
             </span>
           </motion.h2>
@@ -106,7 +106,7 @@ const Process = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="mt-3 md:mt-4 max-w-2xl mx-auto text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed"
+            className="mt-3 md:mt-4 max-w-2xl mx-auto text-sm md:text-base lg:text-lg text-slate-300 leading-relaxed font-normal"
           >
             From idea to deployment, we follow a structured, transparent and agile
             workflow that ensures quality, performance and successful project delivery.
@@ -123,10 +123,10 @@ const Process = () => {
               viewport={{ once: true }}
               transition={{ delay: index * 0.06, duration: 0.5 }}
               whileHover={{ y: -8 }}
-              className="group relative overflow-hidden rounded-2xl md:rounded-3xl border border-gray-300 p-6 md:p-8 transition-all duration-500 hover:border-cyan-400"
+              className="group relative overflow-hidden rounded-2xl md:rounded-3xl border border-slate-800 bg-[#0b132b]/85 p-6 md:p-8 backdrop-blur-xl transition-all duration-500 hover:border-cyan-400/60 hover:shadow-[0_15px_40px_rgba(0,210,255,0.15)]"
             >
               {/* Step Number */}
-              <span className="absolute right-4 top-4 md:right-6 md:top-6 text-4xl md:text-5xl lg:text-6xl font-black text-cyan-400/10">
+              <span className="absolute right-4 top-4 md:right-6 md:top-6 text-4xl md:text-5xl lg:text-6xl font-black text-cyan-400/15 font-['Outfit']">
                 {item.step}
               </span>
 
@@ -136,31 +136,31 @@ const Process = () => {
               </div>
 
               {/* Title */}
-              <h3 className="relative z-10 mt-5 md:mt-6 text-xl md:text-2xl font-bold text-gray-900 group-hover:text-cyan-600 transition-colors">
+              <h3 className="relative z-10 mt-5 md:mt-6 text-xl md:text-2xl font-bold text-white group-hover:text-[#00D2FF] transition-colors font-['Outfit']">
                 {item.title}
               </h3>
 
               {/* Subtitle */}
-              <p className="mt-1.5 text-sm md:text-base font-medium text-cyan-600">
+              <p className="mt-1.5 text-sm md:text-base font-semibold text-[#00D2FF]">
                 {item.subtitle}
               </p>
 
               {/* Description */}
-              <p className="mt-3 md:mt-4 text-sm md:text-base text-gray-700 leading-relaxed">
+              <p className="mt-3 md:mt-4 text-sm md:text-base text-slate-300 leading-relaxed font-normal">
                 {item.description}
               </p>
 
               {/* Divider */}
-              <div className="mt-5 md:mt-6 h-px w-full bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
+              <div className="mt-5 md:mt-6 h-px w-full bg-gradient-to-r from-transparent via-slate-800 to-transparent" />
 
               {/* Footer */}
               <div className="mt-4 md:mt-5 flex items-center justify-between">
-                <span className="text-[10px] md:text-xs font-semibold uppercase tracking-[0.25em] text-cyan-600">
+                <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.25em] text-[#00D2FF]">
                   Step {item.step}
                 </span>
                 <motion.div
                   whileHover={{ x: 5 }}
-                  className="flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full border border-gray-300 text-gray-900 transition-all duration-300 group-hover:border-cyan-400 group-hover:text-cyan-600"
+                  className="flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full border border-slate-700 bg-[#060b18] text-slate-300 transition-all duration-300 group-hover:border-cyan-400 group-hover:text-white group-hover:bg-cyan-500/20"
                 >
                   <HiArrowRight className="text-sm md:text-base" />
                 </motion.div>
@@ -190,13 +190,13 @@ const Process = () => {
               viewport={{ once: true }}
               transition={{ delay: index * 0.08 }}
               whileHover={{ y: -6 }}
-              className="rounded-2xl border border-gray-300 p-5 md:p-6 text-center transition-all duration-300 hover:border-cyan-400"
+              className="rounded-2xl border border-slate-800 bg-[#0b132b]/85 p-5 md:p-6 text-center backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50 hover:shadow-[0_10px_30px_rgba(0,210,255,0.15)]"
             >
               <div className="text-2xl md:text-3xl mb-1">{item.icon}</div>
-              <h3 className="text-2xl md:text-3xl lg:text-4xl font-black text-cyan-600">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-black bg-gradient-to-r from-[#00D2FF] to-[#7C3AED] bg-clip-text text-transparent font-['Outfit']">
                 {item.value}
               </h3>
-              <p className="mt-1 text-sm text-gray-600">{item.label}</p>
+              <p className="mt-1 text-sm text-slate-300 font-medium">{item.label}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -210,16 +210,16 @@ const Process = () => {
           className="mt-12 md:mt-16 lg:mt-20 grid gap-10 md:gap-14 lg:grid-cols-2 lg:items-center"
         >
           <div>
-            <span className="inline-block rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-medium text-cyan-600">
+            <span className="inline-block rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-semibold text-[#00D2FF]">
               Why Our Process Works
             </span>
-            <h2 className="mt-4 md:mt-5 text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
-              Smart Planning
-              <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 bg-clip-text text-transparent">
+            <h2 className="mt-4 md:mt-5 text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight font-['Outfit']">
+              Smart Planning{" "}
+              <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
                 Better Results
               </span>
             </h2>
-            <p className="mt-4 text-sm md:text-base text-gray-700 leading-relaxed max-w-lg">
+            <p className="mt-4 text-sm md:text-base text-slate-300 leading-relaxed max-w-lg font-normal">
               Every project follows a structured, transparent and agile development
               workflow that minimizes risk, improves quality and ensures on-time
               delivery for every client.
@@ -240,12 +240,12 @@ const Process = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.06 }}
-                  className="flex items-center gap-3 rounded-xl border border-gray-300 p-3 transition-all duration-300 hover:border-cyan-400"
+                  className="flex items-center gap-3 rounded-xl border border-slate-800 bg-[#060b18]/80 p-3 transition-all duration-300 hover:border-cyan-400/50"
                 >
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 text-white text-sm font-bold">
                     ✓
                   </div>
-                  <span className="text-sm text-gray-700">{item}</span>
+                  <span className="text-sm text-slate-200 font-medium">{item}</span>
                 </motion.div>
               ))}
             </div>
@@ -265,10 +265,10 @@ const Process = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.08 }}
                 whileHover={{ y: -6 }}
-                className="rounded-2xl border border-gray-300 p-6 text-center transition-all duration-300 hover:border-cyan-400"
+                className="rounded-2xl border border-slate-800 bg-[#0b132b]/85 p-6 text-center backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50"
               >
                 <div className="text-4xl md:text-5xl">{item.icon}</div>
-                <h3 className="mt-3 text-base font-bold text-gray-900">{item.label}</h3>
+                <h3 className="mt-3 text-base font-bold text-white">{item.label}</h3>
               </motion.div>
             ))}
           </div>
@@ -280,21 +280,21 @@ const Process = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="relative mt-12 md:mt-16 lg:mt-20 overflow-hidden rounded-3xl border border-gray-300 p-8 md:p-12 transition-all duration-300 hover:border-cyan-400"
+          className="relative mt-12 md:mt-16 lg:mt-20 overflow-hidden rounded-3xl border border-slate-800 bg-[#0b132b]/85 p-8 md:p-12 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50"
         >
           <div className="relative z-10 text-center">
-            <span className="inline-block rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-medium text-cyan-600">
+            <span className="inline-block rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-semibold text-[#00D2FF]">
               Ready To Start?
             </span>
 
-            <h2 className="mt-4 md:mt-6 text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-gray-900 leading-tight">
-              From Idea To
-              <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 bg-clip-text text-transparent">
+            <h2 className="mt-4 md:mt-6 text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-white leading-tight font-['Outfit']">
+              From Idea To{" "}
+              <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
                 Successful Product
               </span>
             </h2>
 
-            <p className="mt-4 max-w-2xl mx-auto text-sm md:text-base text-gray-700 leading-relaxed">
+            <p className="mt-4 max-w-2xl mx-auto text-sm md:text-base text-slate-300 leading-relaxed font-normal">
               Every successful product starts with a structured development process.
               We combine business strategy, premium design and modern engineering to
               deliver world-class software.
@@ -303,85 +303,17 @@ const Process = () => {
             <div className="mt-6 md:mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-violet-600 px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/40 active:scale-95"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 via-blue-600 to-violet-600 px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95"
               >
                 Start Your Project
                 <HiArrowRight className="text-lg" />
               </Link>
               <Link
                 to="/services"
-                className="inline-flex items-center gap-2 rounded-xl border border-gray-300 px-8 py-3.5 text-sm font-semibold text-gray-700 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400 hover:text-cyan-600"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-[#060b18]/80 px-8 py-3.5 text-sm font-semibold text-slate-200 transition-all duration-300 hover:border-cyan-400 hover:text-white"
               >
                 Explore Services
               </Link>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Workflow Highlights */}
-        <div className="mt-10 md:mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
-          {[
-            { icon: "💬", label: "Transparent Communication" },
-            { icon: "📊", label: "Weekly Progress Reports" },
-            { icon: "👨‍💼", label: "Dedicated Project Manager" },
-            { icon: "🛠️", label: "Post Launch Support" },
-          ].map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.08 }}
-              whileHover={{ y: -6 }}
-              className="rounded-2xl border border-gray-300 p-5 md:p-6 text-center transition-all duration-300 hover:border-cyan-400"
-            >
-              <div className="text-3xl md:text-4xl mb-2">{item.icon}</div>
-              <h3 className="text-xs md:text-sm font-bold text-gray-900 leading-tight">{item.label}</h3>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Bottom Note */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mt-10 md:mt-12"
-        >
-          <div className="rounded-2xl md:rounded-3xl border border-gray-300 p-6 md:p-8 lg:p-10 text-center transition-all duration-300 hover:border-cyan-400">
-            <h3 className="text-xl md:text-2xl lg:text-3xl font-black text-gray-900">
-              A Process Built For{" "}
-              <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 bg-clip-text text-transparent">
-                Long-Term Success
-              </span>
-            </h3>
-
-            <p className="mt-3 md:mt-4 max-w-3xl mx-auto text-sm md:text-base text-gray-700 leading-relaxed">
-              Our mission is not only to deliver software, but to build digital products
-              that continuously generate value for your business. Every phase of our
-              workflow is designed to maximize quality, scalability, security and
-              long-term growth.
-            </p>
-
-            <div className="mt-6 md:mt-8 flex flex-wrap justify-center gap-2 md:gap-3">
-              {[
-                "Agile Development",
-                "Secure Coding",
-                "Modern Architecture",
-                "Cloud Ready",
-                "Performance Optimized",
-                "AI Enabled",
-                "Enterprise Grade",
-                "Continuous Improvement",
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-gray-300 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium text-gray-700 transition-all duration-300 hover:border-cyan-400 hover:text-cyan-600"
-                >
-                  {item}
-                </span>
-              ))}
             </div>
           </div>
         </motion.div>

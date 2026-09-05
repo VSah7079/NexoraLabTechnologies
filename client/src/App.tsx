@@ -9,7 +9,7 @@ function App() {
     <>
       <NetworkBackground />
       <Navbar />
-      <main className="pt-20 min-h-screen bg-transparent text-gray-900 transition-colors duration-300">
+      <main className="pt-24 md:pt-28 min-h-screen bg-transparent text-slate-100 transition-colors duration-300">
         <AppRoutes />
       </main>
       <Footer />

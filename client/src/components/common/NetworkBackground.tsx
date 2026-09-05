@@ -20,23 +20,18 @@ const NetworkBackground = () => {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // Detect mobile view
     const isMobile = window.innerWidth < 768;
-
-    // Enhanced particle configuration - reduced for mobile
-    const particleCount = isMobile ? 50 : 120;
+    const particleCount = isMobile ? 45 : 110;
     const connectionDistance = isMobile ? 120 : 160;
     const mouseDistance = isMobile ? 200 : 280;
-
-    // Mobile opacity multiplier
     const mobileOpacityMultiplier = isMobile ? 0.4 : 1;
 
-    // Premium color palette
+    // Exact Nexora Brand Spectrum
     const colors = [
-      { r: 6, g: 182, b: 212 },   // Cyan
-      { r: 59, g: 130, b: 246 }, // Blue
-      { r: 124, g: 58, b: 237 }, // Violet
-      { r: 168, g: 85, b: 247 }, // Purple
+      { r: 0, g: 210, b: 255 },   // Electric Cyan #00D2FF
+      { r: 0, g: 102, b: 255 },   // Nexora Royal Blue #0066FF
+      { r: 124, g: 58, b: 237 },  // Electric Violet #7C3AED
+      { r: 147, g: 51, b: 234 },  // Deep Purple #9333EA
     ];
 
     const particles: {
@@ -51,7 +46,6 @@ const NetworkBackground = () => {
       layer: number;
     }[] = [];
 
-    // Initialize particles with layers for depth
     for (let i = 0; i < particleCount; i++) {
       const layer = Math.random() > 0.5 ? 1 : 0;
       particles.push({
@@ -67,15 +61,12 @@ const NetworkBackground = () => {
       });
     }
 
-    // Mouse position
     const mouse = { x: -1000, y: -1000 };
     const mouseTrail: { x: number; y: number; alpha: number }[] = [];
 
     const handleMouseMove = (e: MouseEvent) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
-      
-      // Add to trail
       mouseTrail.push({ x: mouse.x, y: mouse.y, alpha: 1 });
       if (mouseTrail.length > 15) mouseTrail.shift();
     };
@@ -85,7 +76,7 @@ const NetworkBackground = () => {
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw subtle gradient background
+      // Draw subtle radial glow background in Nexora colors
       const gradient = ctx.createRadialGradient(
         canvas.width / 2,
         canvas.height / 2,
@@ -94,14 +85,14 @@ const NetworkBackground = () => {
         canvas.height / 2,
         canvas.width
       );
-      gradient.addColorStop(0, `rgba(6, 182, 212, ${0.03 * mobileOpacityMultiplier})`);
-      gradient.addColorStop(0.5, `rgba(124, 58, 237, ${0.02 * mobileOpacityMultiplier})`);
+      gradient.addColorStop(0, `rgba(0, 210, 255, ${0.03 * mobileOpacityMultiplier})`);
+      gradient.addColorStop(0.5, `rgba(124, 58, 237, ${0.025 * mobileOpacityMultiplier})`);
       gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Draw mouse trail
-      mouseTrail.forEach((point, index) => {
+      mouseTrail.forEach((point) => {
         point.alpha -= 0.06;
         if (point.alpha > 0) {
           ctx.beginPath();
@@ -113,20 +104,17 @@ const NetworkBackground = () => {
 
       // Update and draw particles
       particles.forEach((particle, i) => {
-        // Update position
         particle.x += particle.vx;
         particle.y += particle.vy;
 
-        // Bounce off edges
         if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
         if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
 
-        // Update pulse
         particle.pulse += particle.pulseSpeed;
         const pulseScale = 1 + Math.sin(particle.pulse) * 0.2;
         const currentRadius = particle.radius * pulseScale;
 
-        // Draw particle with glow
+        // Draw particle glow
         const glowGradient = ctx.createRadialGradient(
           particle.x,
           particle.y,
@@ -135,7 +123,7 @@ const NetworkBackground = () => {
           particle.y,
           currentRadius * 3
         );
-        glowGradient.addColorStop(0, `rgba(${particle.color.r}, ${particle.color.g}, ${particle.color.b}, ${0.4 * particle.layer * mobileOpacityMultiplier})`);
+        glowGradient.addColorStop(0, `rgba(${particle.color.r}, ${particle.color.g}, ${particle.color.b}, ${0.45 * particle.layer * mobileOpacityMultiplier})`);
         glowGradient.addColorStop(0.5, `rgba(${particle.color.r}, ${particle.color.g}, ${particle.color.b}, ${0.2 * particle.layer * mobileOpacityMultiplier})`);
         glowGradient.addColorStop(1, "rgba(0, 0, 0, 0)");
         
@@ -147,7 +135,7 @@ const NetworkBackground = () => {
         // Draw particle core
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, currentRadius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${particle.color.r}, ${particle.color.g}, ${particle.color.b}, ${(0.8 + Math.sin(particle.pulse) * 0.2) * mobileOpacityMultiplier})`;
+        ctx.fillStyle = `rgba(${particle.color.r}, ${particle.color.g}, ${particle.color.b}, ${(0.85 + Math.sin(particle.pulse) * 0.15) * mobileOpacityMultiplier})`;
         ctx.fill();
 
         // Connect to nearby particles with gradient lines
@@ -157,9 +145,8 @@ const NetworkBackground = () => {
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < connectionDistance) {
-            const opacity = (1 - distance / connectionDistance) * 0.4 * mobileOpacityMultiplier;
+            const opacity = (1 - distance / connectionDistance) * 0.45 * mobileOpacityMultiplier;
             
-            // Create gradient line
             const lineGradient = ctx.createLinearGradient(
               particle.x,
               particle.y,
@@ -173,20 +160,18 @@ const NetworkBackground = () => {
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(particles[j].x, particles[j].y);
             ctx.strokeStyle = lineGradient;
-            ctx.lineWidth = 0.5 + particle.layer * 0.5;
+            ctx.lineWidth = 0.6 + particle.layer * 0.4;
             ctx.stroke();
           }
         }
 
-        // Connect to mouse with enhanced effect
+        // Connect to mouse
         const dx = particle.x - mouse.x;
         const dy = particle.y - mouse.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance < mouseDistance) {
-          const opacity = (1 - distance / mouseDistance) * 0.8 * mobileOpacityMultiplier;
-          
-          // Gradient line to mouse
+          const opacity = (1 - distance / mouseDistance) * 0.85 * mobileOpacityMultiplier;
           const mouseGradient = ctx.createLinearGradient(
             particle.x,
             particle.y,
@@ -194,7 +179,7 @@ const NetworkBackground = () => {
             mouse.y
           );
           mouseGradient.addColorStop(0, `rgba(${particle.color.r}, ${particle.color.g}, ${particle.color.b}, ${opacity})`);
-          mouseGradient.addColorStop(1, `rgba(124, 58, 237, ${opacity})`);
+          mouseGradient.addColorStop(1, `rgba(0, 210, 255, ${opacity})`);
           
           ctx.beginPath();
           ctx.moveTo(particle.x, particle.y);
@@ -205,37 +190,23 @@ const NetworkBackground = () => {
         }
       });
 
-      // Draw enhanced mouse glow with ripple
+      // Draw mouse glow
       const mouseGlow = ctx.createRadialGradient(
         mouse.x,
         mouse.y,
         0,
         mouse.x,
         mouse.y,
-        30
+        35
       );
-      mouseGlow.addColorStop(0, `rgba(124, 58, 237, ${0.4 * mobileOpacityMultiplier})`);
-      mouseGlow.addColorStop(0.3, `rgba(124, 58, 237, ${0.2 * mobileOpacityMultiplier})`);
-      mouseGlow.addColorStop(0.6, `rgba(6, 182, 212, ${0.1 * mobileOpacityMultiplier})`);
+      mouseGlow.addColorStop(0, `rgba(0, 210, 255, ${0.45 * mobileOpacityMultiplier})`);
+      mouseGlow.addColorStop(0.4, `rgba(124, 58, 237, ${0.25 * mobileOpacityMultiplier})`);
       mouseGlow.addColorStop(1, "rgba(0, 0, 0, 0)");
       
       ctx.beginPath();
-      ctx.arc(mouse.x, mouse.y, 30, 0, Math.PI * 2);
+      ctx.arc(mouse.x, mouse.y, 35, 0, Math.PI * 2);
       ctx.fillStyle = mouseGlow;
       ctx.fill();
-
-      // Mouse ripple effect
-      const time = Date.now() / 1000;
-      for (let i = 0; i < 3; i++) {
-        const rippleRadius = 10 + (time * 20 + i * 15) % 45;
-        const rippleOpacity = 1 - (rippleRadius / 45);
-        
-        ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, rippleRadius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(124, 58, 237, ${rippleOpacity * 0.3 * mobileOpacityMultiplier})`;
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-      }
 
       animationFrameId = requestAnimationFrame(animate);
     };
