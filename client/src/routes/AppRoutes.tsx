@@ -121,7 +121,11 @@ const HomePageWithSEO = () => {
       "email": "info@nexoralabtechnologies.in"
     },
     "sameAs": [
-      "https://www.linkedin.com/company/nexoralab-technologies"
+      "https://www.linkedin.com/company/135297535/",
+      "https://www.instagram.com/nexoralabtechnology/",
+      "https://www.facebook.com/profile.php?id=61592465423073",
+      "https://www.youtube.com/@NexoraLabTechnologies",
+      "https://x.com/nexoralab"
     ]
   };
 

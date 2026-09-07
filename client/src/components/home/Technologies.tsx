@@ -1,507 +1,386 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { HiArrowRight } from "react-icons/hi2";
+import { HiArrowRight, HiOutlineSparkles } from "react-icons/hi2";
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiTailwindcss,
+  SiFramer,
+  SiNodedotjs,
+  SiExpress,
+  SiPython,
+  SiFastapi,
+  SiMongodb,
+  SiPostgresql,
+  SiRedis,
+  SiFirebase,
+  SiDocker,
+  SiKubernetes,
+} from "react-icons/si";
+import { FaAws } from "react-icons/fa6";
+import { RiOpenaiFill } from "react-icons/ri";
 
-const technologies = [
+type CategoryType = "all" | "frontend" | "backend" | "database" | "cloud_ai";
+
+interface TechItem {
+  name: string;
+  category: CategoryType;
+  categoryLabel: string;
+  icon: React.ReactNode;
+  tagline: string;
+  glowColor: string;
+  accentBg: string;
+}
+
+const techStack: TechItem[] = [
+  // Frontend
   {
-    id: 1,
-    title: "React.js",
-    icon: "⚛️",
-    category: "Frontend",
-    description:
-      "Modern interactive user interfaces with React ecosystem.",
-    color: "from-cyan-400 to-blue-500",
+    name: "React.js",
+    category: "frontend",
+    categoryLabel: "Frontend",
+    icon: <SiReact className="text-[#61DAFB]" />,
+    tagline: "Component UI & State Architecture",
+    glowColor: "rgba(97, 218, 251, 0.3)",
+    accentBg: "from-cyan-500/10 to-blue-500/10",
   },
   {
-    id: 2,
-    title: "Next.js",
-    icon: "▲",
-    category: "Framework",
-    description:
-      "High-performance SSR and SEO optimized web applications.",
-    color: "from-blue-500 to-indigo-500",
+    name: "Next.js 15",
+    category: "frontend",
+    categoryLabel: "Framework",
+    icon: <SiNextdotjs className="text-white" />,
+    tagline: "SSR, Micro-Frontends & SEO",
+    glowColor: "rgba(255, 255, 255, 0.25)",
+    accentBg: "from-slate-700/20 to-slate-900/20",
   },
   {
-    id: 3,
-    title: "TypeScript",
-    icon: "📘",
-    category: "Language",
-    description:
-      "Scalable and type-safe enterprise application development.",
-    color: "from-indigo-500 to-purple-500",
+    name: "TypeScript",
+    category: "frontend",
+    categoryLabel: "Language",
+    icon: <SiTypescript className="text-[#3178C6]" />,
+    tagline: "Type-Safe Enterprise Reliability",
+    glowColor: "rgba(49, 120, 198, 0.3)",
+    accentBg: "from-blue-600/10 to-indigo-600/10",
   },
   {
-    id: 4,
-    title: "Node.js",
-    icon: "🟢",
-    category: "Backend",
-    description:
-      "Fast and scalable backend services with JavaScript runtime.",
-    color: "from-purple-500 to-pink-500",
+    name: "Tailwind CSS",
+    category: "frontend",
+    categoryLabel: "Styling",
+    icon: <SiTailwindcss className="text-[#38BDF8]" />,
+    tagline: "Modern Dynamic Design Systems",
+    glowColor: "rgba(56, 189, 248, 0.3)",
+    accentBg: "from-cyan-500/10 to-teal-500/10",
   },
   {
-    id: 5,
-    title: "Express.js",
-    icon: "🚀",
-    category: "API",
-    description:
-      "RESTful APIs and enterprise backend architecture.",
-    color: "from-pink-500 to-rose-500",
+    name: "Framer Motion",
+    category: "frontend",
+    categoryLabel: "Animation",
+    icon: <SiFramer className="text-[#EA4C89]" />,
+    tagline: "60FPS Fluid Micro-Interactions",
+    glowColor: "rgba(234, 76, 137, 0.3)",
+    accentBg: "from-pink-500/10 to-purple-500/10",
+  },
+
+  // Backend
+  {
+    name: "Node.js",
+    category: "backend",
+    categoryLabel: "Runtime",
+    icon: <SiNodedotjs className="text-[#68A063]" />,
+    tagline: "High-Throughput Distributed I/O",
+    glowColor: "rgba(104, 160, 99, 0.3)",
+    accentBg: "from-emerald-500/10 to-green-500/10",
   },
   {
-    id: 6,
-    title: "MongoDB",
-    icon: "🍃",
-    category: "Database",
-    description:
-      "Flexible NoSQL database for scalable applications.",
-    color: "from-rose-500 to-orange-500",
+    name: "Express.js",
+    category: "backend",
+    categoryLabel: "API Framework",
+    icon: <SiExpress className="text-slate-200" />,
+    tagline: "Resilient RESTful Microservices",
+    glowColor: "rgba(255, 255, 255, 0.2)",
+    accentBg: "from-slate-800/20 to-slate-900/20",
   },
   {
-    id: 7,
-    title: "PostgreSQL",
-    icon: "🐘",
-    category: "Database",
-    description:
-      "Reliable relational database with enterprise performance.",
-    color: "from-orange-500 to-yellow-500",
+    name: "Python",
+    category: "backend",
+    categoryLabel: "AI & Scripting",
+    icon: <SiPython className="text-[#3776AB]" />,
+    tagline: "Data Pipelines & Automation",
+    glowColor: "rgba(55, 118, 171, 0.3)",
+    accentBg: "from-blue-500/10 to-yellow-500/10",
   },
   {
-    id: 8,
-    title: "Docker",
-    icon: "🐳",
-    category: "DevOps",
-    description:
-      "Containerized deployment for consistent environments.",
-    color: "from-yellow-500 to-cyan-400",
+    name: "FastAPI",
+    category: "backend",
+    categoryLabel: "High Speed API",
+    icon: <SiFastapi className="text-[#059669]" />,
+    tagline: "Async AI Microservices",
+    glowColor: "rgba(5, 150, 105, 0.3)",
+    accentBg: "from-teal-500/10 to-emerald-500/10",
+  },
+
+  // Database
+  {
+    name: "PostgreSQL",
+    category: "database",
+    categoryLabel: "Relational DB",
+    icon: <SiPostgresql className="text-[#336791]" />,
+    tagline: "ACID-Compliant Complex Queries",
+    glowColor: "rgba(51, 103, 145, 0.3)",
+    accentBg: "from-blue-600/10 to-cyan-600/10",
   },
   {
-    id: 9,
-    title: "AWS",
-    icon: "☁️",
-    category: "Cloud",
-    description:
-      "Scalable cloud infrastructure and hosting solutions.",
-    color: "from-cyan-400 to-blue-500",
+    name: "MongoDB",
+    category: "database",
+    categoryLabel: "NoSQL DB",
+    icon: <SiMongodb className="text-[#47A248]" />,
+    tagline: "Flexible Document Sharding",
+    glowColor: "rgba(71, 162, 72, 0.3)",
+    accentBg: "from-green-600/10 to-emerald-600/10",
   },
   {
-    id: 10,
-    title: "Azure",
-    icon: "🌐",
-    category: "Cloud",
-    description:
-      "Enterprise cloud services and infrastructure management.",
-    color: "from-blue-500 to-indigo-500",
+    name: "Redis",
+    category: "database",
+    categoryLabel: "In-Memory Cache",
+    icon: <SiRedis className="text-[#DC382D]" />,
+    tagline: "Sub-Millisecond Data Caching",
+    glowColor: "rgba(220, 56, 45, 0.3)",
+    accentBg: "from-rose-600/10 to-red-600/10",
   },
   {
-    id: 11,
-    title: "Firebase",
-    icon: "🔥",
-    category: "Backend",
-    description:
-      "Authentication, storage and realtime database solutions.",
-    color: "from-indigo-500 to-purple-500",
+    name: "Firebase",
+    category: "database",
+    categoryLabel: "BaaS & Auth",
+    icon: <SiFirebase className="text-[#FFCA28]" />,
+    tagline: "Real-Time Cloud Synchronization",
+    glowColor: "rgba(255, 202, 40, 0.3)",
+    accentBg: "from-amber-500/10 to-orange-500/10",
+  },
+
+  // Cloud & AI
+  {
+    name: "OpenAI GPT-4",
+    category: "cloud_ai",
+    categoryLabel: "Generative AI",
+    icon: <RiOpenaiFill className="text-[#10A37F]" />,
+    tagline: "LLM Agents & Resume NLP Pipelines",
+    glowColor: "rgba(16, 163, 127, 0.35)",
+    accentBg: "from-emerald-500/10 to-teal-500/10",
   },
   {
-    id: 12,
-    title: "Tailwind CSS",
-    icon: "🎨",
-    category: "UI",
-    description:
-      "Utility-first responsive interface development.",
-    color: "from-purple-500 to-pink-500",
+    name: "AWS Cloud",
+    category: "cloud_ai",
+    categoryLabel: "Cloud Platform",
+    icon: <FaAws className="text-[#FF9900]" />,
+    tagline: "EC2, S3, Lambda & High-Uptime Infra",
+    glowColor: "rgba(255, 153, 0, 0.3)",
+    accentBg: "from-orange-500/10 to-amber-500/10",
   },
   {
-    id: 13,
-    title: "Framer Motion",
-    icon: "✨",
-    category: "Animation",
-    description:
-      "Smooth UI animations and interactive experiences.",
-    color: "from-pink-500 to-rose-500",
-  },
-  {
-    id: 14,
-    title: "GSAP",
-    icon: "🎬",
-    category: "Animation",
-    description:
-      "Professional timeline based animations and effects.",
-    color: "from-rose-500 to-orange-500",
-  },
-  {
-    id: 15,
-    title: "Python",
-    icon: "🐍",
-    category: "Programming",
-    description:
-      "AI, automation and backend development solutions.",
-    color: "from-orange-500 to-yellow-500",
-  },
-  {
-    id: 16,
-    title: "OpenAI API",
-    icon: "🤖",
-    category: "Artificial Intelligence",
-    description:
-      "Generative AI, automation and intelligent business solutions.",
-    color: "from-yellow-500 to-cyan-400",
+    name: "Docker & K8s",
+    category: "cloud_ai",
+    categoryLabel: "DevOps & Containers",
+    icon: <SiDocker className="text-[#2496ED]" />,
+    tagline: "CI/CD & Scalable Orchestration",
+    glowColor: "rgba(36, 150, 237, 0.3)",
+    accentBg: "from-cyan-500/10 to-blue-500/10",
   },
 ];
 
+const categories = [
+  { key: "all", label: "All Technologies", count: "16+" },
+  { key: "frontend", label: "Frontend & UI", count: "5" },
+  { key: "backend", label: "Backend & APIs", count: "4" },
+  { key: "database", label: "Database & Cache", count: "4" },
+  { key: "cloud_ai", label: "Cloud & AI Pipelines", count: "3" },
+];
+
 const Technologies = () => {
+  const [activeCategory, setActiveCategory] = useState<CategoryType>("all");
+
+  const filteredTech =
+    activeCategory === "all"
+      ? techStack
+      : techStack.filter((t) => t.category === activeCategory);
+
   return (
     <section
       id="technologies"
-      className="relative overflow-hidden bg-transparent py-16 md:py-20 lg:py-28 transition-colors duration-300"
+      className="relative overflow-hidden bg-transparent py-16 md:py-24"
     >
-      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 xl:px-10">
-        {/* Header */}
-        <div className="text-center">
+      <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2.5 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-5 py-2 md:px-6 md:py-2.5 text-xs md:text-sm font-semibold text-[#00D2FF]"
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-semibold text-[#00D2FF]"
           >
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-400" />
             </span>
-            Technologies We Use
+            Enterprise Tech Matrix
           </motion.div>
 
           <motion.h2
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1, duration: 0.6 }}
-            className="mt-4 md:mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight font-['Outfit']"
+            transition={{ delay: 0.1, duration: 0.5 }}
+            className="mt-4 text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight font-['Outfit']"
           >
-            Modern Technology{" "}
+            Modern Technology Stack,{" "}
             <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
-              Powerful Solutions
+              Engineered to Scale
             </span>
           </motion.h2>
 
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="mt-3 md:mt-4 max-w-2xl mx-auto text-sm md:text-base lg:text-lg text-slate-300 leading-relaxed font-normal"
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="mt-3 text-sm md:text-base text-slate-300 leading-relaxed font-normal"
           >
-            We leverage cutting-edge technologies to build secure, scalable and
-            future-ready software solutions for startups, enterprises and
-            organizations worldwide.
+            From custom SaaS and mobile architectures to high-concurrency cloud infrastructure and proprietary generative AI pipelines.
           </motion.p>
         </div>
 
-        {/* Technologies Grid */}
-        <div className="mt-10 md:mt-14 lg:mt-20 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 md:gap-6 lg:gap-8">
-          {technologies.map((tech, index) => (
-            <motion.div
-              key={tech.id}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.04, duration: 0.5 }}
-              whileHover={{ y: -8 }}
-              className="group relative overflow-hidden rounded-2xl md:rounded-3xl border border-slate-800 bg-[#0b132b]/85 p-6 md:p-8 backdrop-blur-xl transition-all duration-500 hover:border-cyan-400/60 hover:shadow-[0_15px_40px_rgba(0,210,255,0.15)]"
-            >
-              {/* Category Badge */}
-              <span className="absolute right-4 top-4 md:right-6 md:top-6 rounded-full border border-slate-700/80 bg-[#070e1b] px-2.5 py-1 text-[9px] md:text-[10px] font-semibold uppercase tracking-wider text-[#00D2FF] transition-all duration-300 group-hover:border-cyan-400">
-                {tech.category}
-              </span>
-
-              {/* Icon */}
-              <div className={`relative z-10 flex h-16 w-16 md:h-20 md:w-20 items-center justify-center rounded-2xl md:rounded-3xl bg-gradient-to-r ${tech.color} text-3xl md:text-4xl shadow-lg shadow-cyan-500/20 transition-all duration-500 group-hover:rotate-6 group-hover:scale-110`}>
-                {tech.icon}
-              </div>
-
-              {/* Title */}
-              <h3 className="relative z-10 mt-5 md:mt-6 text-xl md:text-2xl font-bold text-white group-hover:text-[#00D2FF] transition-colors font-['Outfit']">
-                {tech.title}
-              </h3>
-
-              {/* Description */}
-              <p className="relative z-10 mt-3 md:mt-4 text-sm md:text-base text-slate-300 leading-relaxed font-normal">
-                {tech.description}
-              </p>
-
-              {/* Footer */}
-              <div className="relative z-10 mt-5 md:mt-6 flex items-center justify-between border-t border-slate-800 pt-4 md:pt-5">
-                <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.25em] text-[#00D2FF]">
-                  Technology
-                </span>
-                <motion.div
-                  whileHover={{ x: 5 }}
-                  className="flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full border border-slate-700 bg-[#060b18] text-slate-300 transition-all duration-300 group-hover:border-cyan-400 group-hover:text-white group-hover:bg-cyan-500/20"
-                >
-                  <HiArrowRight className="text-sm md:text-base" />
-                </motion.div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Statistics */}
+        {/* Interactive Category Filter Pills */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mt-12 md:mt-16 lg:mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5"
+          transition={{ delay: 0.3, duration: 0.5 }}
+          className="mt-8 md:mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3"
         >
-          {[
-            { value: "16+", label: "Core Technologies", icon: "💻" },
-            { value: "250+", label: "Projects Delivered", icon: "🚀" },
-            { value: "99%", label: "Deployment Success", icon: "📈" },
-            { value: "24/7", label: "Technical Support", icon: "🛡️" },
-          ].map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.08 }}
-              whileHover={{ y: -6 }}
-              className="rounded-2xl border border-slate-800 bg-[#0b132b]/85 p-5 md:p-6 text-center backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50 hover:shadow-[0_10px_30px_rgba(0,210,255,0.15)]"
-            >
-              <div className="text-2xl md:text-3xl mb-1">{item.icon}</div>
-              <h3 className="text-2xl md:text-3xl lg:text-4xl font-black bg-gradient-to-r from-[#00D2FF] to-[#7C3AED] bg-clip-text text-transparent font-['Outfit']">
-                {item.value}
-              </h3>
-              <p className="mt-1 text-sm text-slate-300 font-medium">{item.label}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Why Our Technology Stack */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="mt-12 md:mt-16 lg:mt-20 grid gap-10 md:gap-14 lg:grid-cols-2 lg:items-center"
-        >
-          <div>
-            <span className="inline-block rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-semibold text-[#00D2FF]">
-              Why Our Technology Stack
-            </span>
-            <h2 className="mt-4 md:mt-5 text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight font-['Outfit']">
-              Built With{" "}
-              <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
-                Industry Leading Tools
-              </span>
-            </h2>
-            <p className="mt-4 text-sm md:text-base text-slate-300 leading-relaxed max-w-lg font-normal">
-              Every technology we use is selected for performance, scalability,
-              security and long-term maintainability. This allows us to build
-              enterprise applications that remain reliable as businesses grow.
-            </p>
-
-            <div className="mt-6 md:mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {[
-                "Scalable Architecture",
-                "Enterprise Security",
-                "Cloud Native Infrastructure",
-                "AI Ready Development",
-                "Modern DevOps Workflow",
-                "Future Proof Technology",
-              ].map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.06 }}
-                  className="flex items-center gap-3 rounded-xl border border-slate-800 bg-[#060b18]/80 p-3 transition-all duration-300 hover:border-cyan-400/50"
-                >
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 text-white text-sm font-bold">
-                    ✓
-                  </div>
-                  <span className="text-sm text-slate-200 font-medium">{item}</span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            {[
-              { icon: "⚛️", label: "Frontend" },
-              { icon: "🟢", label: "Backend" },
-              { icon: "☁️", label: "Cloud" },
-              { icon: "🤖", label: "AI" },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.08 }}
-                whileHover={{ y: -6 }}
-                className="rounded-2xl border border-slate-800 bg-[#0b132b]/85 p-6 text-center backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50"
+          {categories.map((cat) => {
+            const isActive = activeCategory === cat.key;
+            return (
+              <button
+                key={cat.key}
+                onClick={() => setActiveCategory(cat.key as CategoryType)}
+                className={`
+                  flex items-center gap-2 rounded-full px-4 sm:px-5 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer
+                  ${
+                    isActive
+                      ? "bg-gradient-to-r from-[#00D2FF] to-[#0066FF] text-white shadow-[0_0_20px_rgba(0,210,255,0.35)] scale-105"
+                      : "border border-white/[0.08] bg-white/[0.03] text-slate-300 hover:border-cyan-400/50 hover:bg-white/[0.06] hover:text-white"
+                  }
+                `}
               >
-                <div className="text-4xl md:text-5xl">{item.icon}</div>
-                <h3 className="mt-3 text-base font-bold text-white">{item.label}</h3>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Core Expertise */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="mt-12 md:mt-16 lg:mt-20"
-        >
-          <div className="text-center">
-            <span className="inline-block rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-semibold text-[#00D2FF]">
-              Our Expertise
-            </span>
-            <h2 className="mt-4 md:mt-5 text-3xl md:text-4xl lg:text-5xl font-black text-white font-['Outfit']">
-              Complete Technology{" "}
-              <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
-                Ecosystem
-              </span>
-            </h2>
-          </div>
-
-          <div className="mt-10 md:mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-            {[
-              {
-                title: "Frontend",
-                icon: "⚛️",
-                desc: "React, Next.js, TypeScript, Tailwind CSS, Framer Motion",
-              },
-              {
-                title: "Backend",
-                icon: "🟢",
-                desc: "Node.js, Express.js, REST APIs, Authentication, Microservices",
-              },
-              {
-                title: "Cloud",
-                icon: "☁️",
-                desc: "AWS, Azure, Docker, CI/CD, DevOps Infrastructure",
-              },
-              {
-                title: "AI & ML",
-                icon: "🤖",
-                desc: "OpenAI, Python, AI Automation, LLM Integration",
-              },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.06 }}
-                whileHover={{ y: -6 }}
-                className="rounded-2xl border border-slate-800 bg-[#0b132b]/85 p-6 md:p-8 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50"
-              >
-                <div className="flex h-16 w-16 md:h-20 md:w-20 items-center justify-center rounded-2xl md:rounded-3xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 text-3xl md:text-4xl shadow-lg shadow-cyan-500/20">
-                  {item.icon}
-                </div>
-                <h3 className="mt-5 md:mt-6 text-xl md:text-2xl font-bold text-white font-['Outfit']">{item.title}</h3>
-                <p className="mt-2 md:mt-3 text-sm text-slate-300 leading-relaxed font-normal">{item.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Development Workflow */}
-        <div className="mt-10 md:mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
-          {[
-            { step: "01", title: "Planning", icon: "📋" },
-            { step: "02", title: "Design", icon: "🎨" },
-            { step: "03", title: "Development", icon: "💻" },
-            { step: "04", title: "Deployment", icon: "🚀" },
-          ].map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.08 }}
-              whileHover={{ y: -6 }}
-              className="rounded-2xl border border-slate-800 bg-[#0b132b]/85 p-5 md:p-6 text-center backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50"
-            >
-              <div className="text-2xl md:text-3xl mb-1">{item.icon}</div>
-              <span className="text-3xl md:text-4xl font-black text-cyan-400/30 font-['Outfit']">
-                {item.step}
-              </span>
-              <h3 className="mt-2 text-sm md:text-base font-bold text-white">{item.title}</h3>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Final CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="relative mt-12 md:mt-16 overflow-hidden rounded-3xl border border-slate-800 bg-[#0b132b]/85 p-8 md:p-12 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50"
-        >
-          <div className="relative z-10 text-center">
-            <span className="inline-block rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-semibold text-[#00D2FF]">
-              Future Ready Technology
-            </span>
-
-            <h2 className="mt-4 md:mt-6 text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-white leading-tight font-['Outfit']">
-              Technology That Powers{" "}
-              <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
-                Business Growth
-              </span>
-            </h2>
-
-            <p className="mt-4 max-w-2xl mx-auto text-sm md:text-base text-slate-300 leading-relaxed font-normal">
-              We continuously adopt modern frameworks, cloud platforms, AI
-              technologies and enterprise tools to deliver scalable, secure and
-              high-performance digital products that grow with your business.
-            </p>
-
-            <div className="mt-6 md:mt-8 flex flex-wrap justify-center gap-2 md:gap-3">
-              {[
-                "React",
-                "Next.js",
-                "Node.js",
-                "TypeScript",
-                "MongoDB",
-                "PostgreSQL",
-                "AWS",
-                "Docker",
-                "OpenAI",
-                "Tailwind CSS",
-              ].map((item) => (
+                <span>{cat.label}</span>
                 <span
-                  key={item}
-                  className="rounded-full border border-slate-700 bg-[#060b18]/80 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium text-slate-300 transition-all duration-300 hover:border-cyan-400 hover:text-white"
+                  className={`
+                    rounded-full px-2 py-0.5 text-[10px] font-bold
+                    ${
+                      isActive
+                        ? "bg-black/30 text-white"
+                        : "bg-white/[0.06] text-cyan-400"
+                    }
+                  `}
                 >
-                  {item}
+                  {cat.count}
                 </span>
-              ))}
-            </div>
+              </button>
+            );
+          })}
+        </motion.div>
 
-            <div className="mt-6 md:mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 via-blue-600 to-violet-600 px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:scale-105"
+        {/* Compact, High-End Tech Grid */}
+        <motion.div
+          layout
+          className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredTech.map((tech) => (
+              <motion.div
+                layout
+                key={tech.name}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.25 }}
+                whileHover={{ y: -4 }}
+                className="
+                  group relative overflow-hidden
+                  rounded-2xl
+                  border border-white/[0.08]
+                  bg-[#060c1d]/85
+                  p-5
+                  backdrop-blur-xl
+                  transition-all
+                  duration-300
+                  hover:border-cyan-400/50
+                  hover:shadow-[0_10px_30px_rgba(0,210,255,0.12)]
+                "
               >
-                Start Your Project
-                <HiArrowRight className="text-lg" />
-              </Link>
-              <Link
-                to="/services"
-                className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-[#060b18]/80 px-8 py-3.5 text-sm font-semibold text-slate-200 transition-all duration-300 hover:border-cyan-400 hover:text-white"
-              >
-                Explore Services
-              </Link>
+                {/* Subtle Hover Gradient Glow */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                  style={{
+                    background: `radial-gradient(circle at 50% 0%, ${tech.glowColor}, transparent 70%)`,
+                  }}
+                />
+
+                <div className="relative z-10 flex items-start justify-between">
+                  {/* Icon */}
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/[0.05] border border-white/[0.08] text-2xl group-hover:scale-110 transition-transform duration-300">
+                    {tech.icon}
+                  </div>
+
+                  {/* Category Pill */}
+                  <span className="rounded-full border border-white/[0.06] bg-white/[0.03] px-2.5 py-0.5 text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
+                    {tech.categoryLabel}
+                  </span>
+                </div>
+
+                <div className="relative z-10 mt-4">
+                  <h3 className="text-base font-bold text-white group-hover:text-cyan-300 transition-colors font-['Outfit']">
+                    {tech.name}
+                  </h3>
+                  <p className="mt-1 text-xs text-slate-400 font-normal leading-relaxed">
+                    {tech.tagline}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Compact Tech Architecture Highlights Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mt-10 rounded-3xl border border-white/[0.08] bg-[#070e22]/90 p-6 sm:p-8 backdrop-blur-2xl flex flex-col md:flex-row items-center justify-between gap-6"
+        >
+          <div className="space-y-1 text-center md:text-left">
+            <div className="inline-flex items-center gap-2 text-xs font-bold text-cyan-400">
+              <HiOutlineSparkles />
+              <span>Modern Microservice Architecture</span>
             </div>
+            <h4 className="text-lg sm:text-xl font-bold text-white font-['Outfit']">
+              Need custom tech architecture consultation for your startup?
+            </h4>
+            <p className="text-xs sm:text-sm text-slate-400 max-w-xl">
+              Our engineering team builds custom technical roadmaps tailored for 99.9% uptime, micro-frontend modularity, and AI integration.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3 shrink-0">
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] px-6 py-3 text-xs sm:text-sm font-bold text-white shadow-lg shadow-cyan-500/25 transition-all hover:scale-105 active:scale-95"
+            >
+              <span>Consult an Architect</span>
+              <HiArrowRight className="text-sm" />
+            </Link>
           </div>
         </motion.div>
       </div>

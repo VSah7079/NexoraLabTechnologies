@@ -170,4 +170,71 @@ export const userAPI = {
   },
 };
 
+// AI API (Connected with Google Gemini)
+export const aiAPI = {
+  analyzeResume: async (text: string, role?: string) => {
+    return await apiRequest('/ai/analyze-resume', {
+      method: 'POST',
+      body: JSON.stringify({ text, role }),
+    });
+  },
+
+  calculateATSScore: async (resumeText: string, jobDescription: string) => {
+    return await apiRequest('/ai/ats-score', {
+      method: 'POST',
+      body: JSON.stringify({ resumeText, jobDescription }),
+    });
+  },
+
+  chatCareerCoach: async (message: string, history?: { sender: string; text: string }[]) => {
+    return await apiRequest('/ai/career-coach', {
+      method: 'POST',
+      body: JSON.stringify({ message, history }),
+    });
+  },
+
+  evaluateInterview: async (params: {
+    question: string;
+    idealAnswer?: string;
+    userAnswer: string;
+    topic?: string;
+  }) => {
+    return await apiRequest('/ai/evaluate-interview', {
+      method: 'POST',
+      body: JSON.stringify(params),
+    });
+  },
+
+  benchmarkSkillGap: async (params: {
+    currentRole?: string;
+    targetRole: string;
+    currentSkills: string;
+    experienceYears?: string;
+  }) => {
+    return await apiRequest('/ai/skill-gap', {
+      method: 'POST',
+      body: JSON.stringify(params),
+    });
+  },
+
+  predictSalary: async (params: {
+    role: string;
+    experience: string;
+    location?: string;
+  }) => {
+    return await apiRequest('/ai/salary-prediction', {
+      method: 'POST',
+      body: JSON.stringify(params),
+    });
+  },
+
+  optimizeBullet: async (params: { text: string; context?: string }) => {
+    return await apiRequest('/ai/optimize-bullet', {
+      method: 'POST',
+      body: JSON.stringify(params),
+    });
+  },
+};
+
 export { getToken, setToken, removeToken, getUser, setUser, removeUser };
+

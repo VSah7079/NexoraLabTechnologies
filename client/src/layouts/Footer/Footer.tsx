@@ -43,12 +43,12 @@ const aiTools = [
 ];
 
 const socialLinks = [
-  { icon: <FaLinkedinIn />, href: "https://www.linkedin.com/company/nexoralab-technologies" },
-  { icon: <FaInstagram />, href: "https://www.instagram.com/nexoralabtechnologies" },
+  { icon: <FaLinkedinIn />, href: "https://www.linkedin.com/company/135297535/admin/dashboard/" },
+  { icon: <FaInstagram />, href: "https://www.instagram.com/nexoralabtechnology/" },
+  { icon: <FaFacebookF />, href: "https://www.facebook.com/profile.php?id=61592465423073" },
+  { icon: <FaYoutube />, href: "https://www.youtube.com/@NexoraLabTechnologies" },
   { icon: <FaXTwitter />, href: "https://x.com/nexoralab" },
-  { icon: <FaFacebookF />, href: "#" },
-  { icon: <FaGithub />, href: "https://github.com" },
-  { icon: <FaYoutube />, href: "https://youtube.com" },
+  { icon: <FaGithub />, href: "https://github.com/NexoraLab" },
 ];
 
 const Footer = () => {
