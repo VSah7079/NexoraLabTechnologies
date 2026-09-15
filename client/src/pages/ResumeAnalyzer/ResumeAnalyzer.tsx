@@ -145,11 +145,20 @@ const ResumeAnalyzer = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="max-w-4xl mx-auto py-10 px-4"
+      className="max-w-4xl mx-auto pt-36 sm:pt-40 md:pt-44 pb-20 px-4"
     >
       <SEO
         title="AI Resume Analyzer & Auditor | Real-Time PDF Parsing - NexoraLab"
-        description="Upload or paste your resume to get instant recruiter scoring, keyword density audits, formatting checks, and action-verb improvements."
+        description="Upload or paste your resume to get instant recruiter scoring, keyword density audits, formatting checks, and action-verb improvements from NexoraLab AI."
+        keywords={[
+          "AI resume analyzer",
+          "resume score checker online",
+          "free AI resume review",
+          "resume keyword optimizer",
+          "ATS resume parser tool",
+          "NexoraLab resume analyzer",
+        ]}
+        canonical="https://nexoralabtechnologies.in/resume-analyzer"
       />
 
       {/* Header */}

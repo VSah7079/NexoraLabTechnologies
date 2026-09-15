@@ -153,10 +153,18 @@ Would you like a tailored step-by-step 30-day action plan for this specific goal
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-10 px-4">
+    <div className="max-w-4xl mx-auto pt-36 sm:pt-40 md:pt-44 pb-20 px-4">
       <SEO
         title="AI Career Coach & Strategy Advisor | NexoraLab Technologies"
-        description="Chat with an AI-powered executive career coach to negotiate salary hikes, navigate career transitions, and master tech leadership interviews."
+        description="Chat with an AI-powered executive career coach to negotiate salary hikes, navigate career transitions, and master tech leadership interviews from NexoraLab."
+        keywords={[
+          "AI career coach",
+          "tech career counseling AI",
+          "salary negotiation coach online",
+          "software engineer career advice",
+          "NexoraLab career coach",
+        ]}
+        canonical="https://nexoralabtechnologies.in/career-coach"
       />
 
       <div className="text-center">

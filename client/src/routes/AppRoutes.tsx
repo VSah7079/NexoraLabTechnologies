@@ -7,18 +7,21 @@ import SEO from "@/components/common/SEO";
 // ============================================
 import { 
   Hero, 
+  TrustedCompanies,
   About, 
   Services, 
+  Process,
   Portfolio,
-  Process, 
-  Pricing, 
-  Testimonials, 
   Industries, 
-  Solutions, 
-  Technologies, 
-  TrustedCompanies, 
+  WhyChooseUs,
+  TechnologyPartners,
+  Insights,
   FAQ, 
-  ContactCTA 
+  ContactCTA,
+  Solutions,
+  Technologies,
+  Pricing,
+  Testimonials
 } from "@/components/home";
 
 // ✅ Career Page Import - components/home se
@@ -28,6 +31,17 @@ import Careers from "@/components/home/Careers";
 // PAGE COMPONENTS (Lazy Loaded)
 // ============================================
 const Landing = lazy(() => import("../pages/Landing/Landing"));
+
+// ✅ Dedicated Standalone Pages (Lazy Loaded)
+const AboutUs = lazy(() => import("../pages/About/AboutUs"));
+const ServicesPage = lazy(() => import("../pages/Services/ServicesPage"));
+const PortfolioPage = lazy(() => import("../pages/Portfolio/PortfolioPage"));
+const SolutionsPage = lazy(() => import("../pages/Solutions/SolutionsPage"));
+const ProductsPage = lazy(() => import("../pages/Products/ProductsPage"));
+const ResourcesPage = lazy(() => import("../pages/Resources/ResourcesPage"));
+const InsightsPage = lazy(() => import("../pages/Insights/InsightsPage"));
+const ContactPage = lazy(() => import("../pages/Contact/ContactPage"));
+const QuotePage = lazy(() => import("../pages/Quote/QuotePage"));
 
 // ✅ Auth Pages
 const Login = lazy(() => import("../pages/Auth/Login"));
@@ -91,16 +105,15 @@ const PageLoader = () => (
 const HomePage = () => (
   <>
     <Hero />
+    <TrustedCompanies />
     <About />
     <Services />
-    <Portfolio />
     <Process />
-    <Pricing />
-    <Testimonials />
+    <Portfolio />
     <Industries />
-    <Solutions />
-    <Technologies />
-    <TrustedCompanies />
+    <WhyChooseUs />
+    <TechnologyPartners />
+    <Insights />
     <FAQ />
     <ContactCTA />
   </>
@@ -112,13 +125,33 @@ const HomePageWithSEO = () => {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "NexoraLab Technologies",
+    "alternateName": ["NexoraLab", "NexoraLab Tech", "Nexora Lab Technologies"],
     "url": "https://nexoralabtechnologies.in",
     "logo": "https://nexoralabtechnologies.in/Circlelogo.png",
+    "description": "Premier software engineering & AI solutions agency headquartered in Siwan, Bihar, India. Specializing in custom full-stack web development, mobile apps, enterprise cloud systems, and AI hiring suites.",
+    "founder": {
+      "@type": "Person",
+      "name": "Vikram Sah"
+    },
+    "foundingLocation": {
+      "@type": "Place",
+      "name": "Siwan, Bihar, India"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Siwan",
+      "addressLocality": "Siwan",
+      "addressRegion": "Bihar",
+      "postalCode": "841226",
+      "addressCountry": "IN"
+    },
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+91 7079884369",
       "contactType": "customer service",
-      "email": "info@nexoralabtechnologies.in"
+      "email": "nexoralabtechnologies@gmail.com",
+      "areaServed": "IN",
+      "availableLanguage": ["English", "Hindi"]
     },
     "sameAs": [
       "https://www.linkedin.com/company/135297535/",
@@ -129,19 +162,79 @@ const HomePageWithSEO = () => {
     ]
   };
 
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "NexoraLab Technologies",
+    "image": "https://nexoralabtechnologies.in/Circlelogo.png",
+    "url": "https://nexoralabtechnologies.in",
+    "telephone": "+91 7079884369",
+    "email": "nexoralabtechnologies@gmail.com",
+    "priceRange": "₹₹",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Siwan",
+      "addressLocality": "Siwan",
+      "addressRegion": "Bihar",
+      "postalCode": "841226",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "26.2196",
+      "longitude": "84.3567"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "09:00",
+      "closes": "20:00"
+    }
+  };
+
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "NexoraLab Technologies",
-    "url": "https://nexoralabtechnologies.in"
+    "url": "https://nexoralabtechnologies.in",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://nexoralabtechnologies.in/services?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
   };
+
+  const homeKeywords = [
+    "NexoraLab Technologies",
+    "NexoraLab",
+    "software company in Siwan",
+    "software company in Bihar",
+    "best IT company in Bihar",
+    "IT company in Siwan Bihar",
+    "custom software development company India",
+    "full stack web development company",
+    "React 19 Next.js web application development",
+    "Flutter mobile app development India",
+    "React Native app developers Bihar",
+    "AI software development company",
+    "smart AI hiring platform",
+    "ATS resume analyzer AI",
+    "free ATS score checker",
+    "AI mock interview tool online",
+    "cloud DevOps AWS architecture services",
+    "hire dedicated software developers India",
+    "enterprise ERP CRM software solutions",
+    "Vikram Sah NexoraLab",
+    "software engineering agency Siwan",
+  ];
 
   return (
     <>
       <SEO
         title="NexoraLab Technologies | AI-Powered Smart Hiring & Custom Software Solutions"
-        description="NexoraLab Technologies builds custom enterprise software, mobile apps, CRM/ERP platforms, and AI hiring solutions (Resume Analyzer, ATS Check, Mock Interviews) to scale your business."
-        schema={[orgSchema, websiteSchema]}
+        description="NexoraLab Technologies is a premier software engineering & AI company in Siwan, Bihar, India. We build custom enterprise web apps, mobile solutions, cloud DevOps systems, and smart AI talent intelligence suites."
+        keywords={homeKeywords}
+        schema={[orgSchema, localBusinessSchema, websiteSchema]}
       />
       <HomePage />
     </>
@@ -154,6 +247,13 @@ const HomeRouteWrapper = () => (
     <SEO
       title="NexoraLab Technologies | AI-Powered Smart Hiring & Custom Software Solutions"
       description="NexoraLab Technologies builds custom enterprise software, mobile apps, CRM/ERP platforms, and AI hiring solutions (Resume Analyzer, ATS Check, Mock Interviews) to scale your business."
+      keywords={[
+        "NexoraLab Technologies",
+        "software company in Siwan Bihar",
+        "custom software development",
+        "web application development",
+        "AI solutions Bihar",
+      ]}
       canonical="https://nexoralabtechnologies.in"
     />
     <HomePage />
@@ -184,9 +284,8 @@ const DashboardRouteWrapper = ({ children, title }: { children: React.ReactNode;
   </>
 );
 
-// 404 Page with noindex
 const NotFound = () => (
-  <div className="flex min-h-[70vh] items-center justify-center bg-transparent px-4">
+  <div className="flex min-h-[75vh] items-center justify-center bg-transparent pt-36 sm:pt-40 md:pt-44 pb-20 px-4">
     <SEO
       title="404 - Page Not Found | NexoraLab Technologies"
       description="The page you are looking for does not exist on NexoraLab Technologies."
@@ -219,23 +318,27 @@ const AppRoutes = () => {
         <Route path="/landing" element={<Landing />} />
         
         {/* ✅ ABOUT ROUTE */}
-        <Route path="/about" element={<About />} />
+        <Route path="/about" element={<AboutUs />} />
         
         {/* ✅ SERVICES & DIVISIONS ROUTES */}
-        <Route path="/services" element={<Services />} />
-        <Route path="/divisions" element={<Services />} />
-        <Route path="/solutions" element={<Solutions />} />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/divisions" element={<ServicesPage />} />
+        <Route path="/solutions" element={<SolutionsPage />} />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/resources" element={<ResourcesPage />} />
         
         {/* ✅ PORTFOLIO & PROJECTS ROUTE */}
-        <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/projects" element={<Portfolio />} />
+        <Route path="/portfolio" element={<PortfolioPage />} />
+        <Route path="/projects" element={<PortfolioPage />} />
         
         {/* ✅ CAREERS & INSIGHTS ROUTE */}
         <Route path="/careers" element={<Careers />} />
-        <Route path="/insights" element={<Careers />} />
+        <Route path="/insights" element={<InsightsPage />} />
         
-        {/* ✅ CONTACT ROUTE */}
-        <Route path="/contact" element={<ContactCTA />} />
+        {/* ✅ CONTACT & QUOTE ROUTES */}
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/quote" element={<QuotePage />} />
+        <Route path="/request-quote" element={<QuotePage />} />
         
         {/* ✅ MEETING ROUTE */}
         <Route path="/meeting" element={<Meeting />} />

@@ -10,8 +10,8 @@ const CompanyProfile = () => {
     website: "https://technova.io",
     industry: "Enterprise AI & Cloud SaaS",
     size: "50-100",
-    description: "Architecting high-concurrency cloud systems and generative AI solutions for global clients.",
-    address: "Siwan, Bihar, India",
+    description: "Architecting high-concurrency cloud systems and generative AI solutions for modern businesses.",
+    address: "Siwan, Bihar 841226, India",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

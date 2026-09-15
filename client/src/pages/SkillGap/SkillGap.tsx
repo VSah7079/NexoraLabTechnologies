@@ -146,10 +146,18 @@ const SkillGap = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto py-10 px-4">
+    <div className="max-w-5xl mx-auto pt-36 sm:pt-40 md:pt-44 pb-20 px-4">
       <SEO
         title="AI Skill Gap Benchmark & Career Roadmap | NexoraLab Technologies"
-        description="Benchmark your current skillset against staff engineering requirements. Get an algorithmic 90-day learning roadmap and market compensation delta."
+        description="Benchmark your current skillset against staff engineering requirements. Get an algorithmic 90-day learning roadmap and market compensation delta from NexoraLab AI."
+        keywords={[
+          "skill gap analysis tool",
+          "tech skill benchmark online",
+          "career roadmap generator AI",
+          "software engineering learning path",
+          "NexoraLab skill gap",
+        ]}
+        canonical="https://nexoralabtechnologies.in/skill-gap"
       />
 
       <div className="text-center">

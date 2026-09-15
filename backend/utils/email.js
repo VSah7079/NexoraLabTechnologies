@@ -297,7 +297,7 @@ const sendPasswordResetEmail = async (email, name, token) => {
           </div>
           <div class="footer">
             <p>&copy; ${new Date().getFullYear()} NexoraLab Technologies. All rights reserved.</p>
-            <p>Siwan, Bihar, India • info@nexoralabtechnologies.in</p>
+            <p>Siwan, Bihar, India • nexoralabtechnologies@gmail.com</p>
           </div>
         </body>
         </html>

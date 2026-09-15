@@ -1,28 +1,28 @@
 /* src/styles/scrollbar.css */
 
 /* ============================================ */
-/* SCROLLBAR STYLES - Light Mode (Default) */
+/* SCROLLBAR STYLES - Modern Dark / Transparent */
 /* ============================================ */
 
 /* WebKit Browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: rgba(8, 15, 34, 0.6);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary, #2563EB);
+  background: rgba(0, 210, 255, 0.25);
   border-radius: 10px;
   transition: background 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--secondary, #22D3EE);
+  background: rgba(0, 210, 255, 0.6);
 }
 
 ::-webkit-scrollbar-corner {
@@ -35,106 +35,61 @@
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--primary, #2563EB) #f1f1f1;
+  scrollbar-color: rgba(0, 210, 255, 0.3) rgba(8, 15, 34, 0.6);
 }
 
 /* ============================================ */
-/* DARK MODE */
+/* HIDE SCROLLBAR UTILITIES (Cross-Browser) */
 /* ============================================ */
 
-.dark::-webkit-scrollbar-track {
-  background: #1a1a2e;
+.hide-scrollbar,
+.no-scrollbar,
+.scrollbar-none {
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important;     /* Firefox */
 }
 
-.dark::-webkit-scrollbar-thumb {
-  background: var(--primary, #2563EB);
-}
-
-.dark::-webkit-scrollbar-thumb:hover {
-  background: var(--secondary, #22D3EE);
-}
-
-/* Firefox Dark Mode */
-.dark {
-  scrollbar-color: var(--primary, #2563EB) #1a1a2e;
-}
-
-/* ============================================ */
-/* DATA-THEME DARK MODE */
-/* ============================================ */
-
-[data-theme="dark"]::-webkit-scrollbar-track {
-  background: #1a1a2e;
-}
-
-[data-theme="dark"]::-webkit-scrollbar-thumb {
-  background: var(--primary, #2563EB);
-}
-
-[data-theme="dark"]::-webkit-scrollbar-thumb:hover {
-  background: var(--secondary, #22D3EE);
-}
-
-[data-theme="dark"] {
-  scrollbar-color: var(--primary, #2563EB) #1a1a2e;
+.hide-scrollbar::-webkit-scrollbar,
+.no-scrollbar::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
 }
 
 /* ============================================ */
-/* HIDE SCROLLBAR (Optional) */
+/* CUSTOM SCROLLBAR UTILITIES */
 /* ============================================ */
 
-/* Hide scrollbar but keep functionality */
-.hide-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;     /* Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 210, 255, 0.3) rgba(8, 15, 34, 0.4);
 }
 
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;  /* Chrome, Safari, Opera */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
 }
 
-/* ============================================ */
-/* CUSTOM SCROLLBAR - Different Sizes */
-/* ============================================ */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(8, 15, 34, 0.4);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 210, 255, 0.25);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 210, 255, 0.5);
+}
 
 /* Thin Scrollbar */
 .scrollbar-thin::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-
-/* Thick Scrollbar */
-.scrollbar-thick::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
-}
-
-/* Rounded Scrollbar */
-.scrollbar-rounded::-webkit-scrollbar-track {
-  border-radius: 20px;
-}
-
-.scrollbar-rounded::-webkit-scrollbar-thumb {
-  border-radius: 20px;
-}
-
-/* ============================================ */
-/* CUSTOM COLORS */
-/* ============================================ */
-
-/* Primary Color Scrollbar */
-.scrollbar-primary::-webkit-scrollbar-thumb {
-  background: var(--primary, #2563EB);
-}
-
-/* Secondary Color Scrollbar */
-.scrollbar-secondary::-webkit-scrollbar-thumb {
-  background: var(--secondary, #22D3EE);
-}
-
-/* Accent Color Scrollbar */
-.scrollbar-accent::-webkit-scrollbar-thumb {
-  background: var(--accent, #7C3AED);
+  width: 3px;
+  height: 3px;
 }
 
 /* Transparent Scrollbar */

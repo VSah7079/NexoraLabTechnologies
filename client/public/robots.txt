@@ -2,9 +2,14 @@ User-agent: *
 Allow: /
 Allow: /about
 Allow: /services
+Allow: /products
+Allow: /solutions
+Allow: /resources
 Allow: /portfolio
+Allow: /insights
 Allow: /careers
 Allow: /contact
+Allow: /quote
 Allow: /meeting
 Allow: /resume-analyzer
 Allow: /ats-score
@@ -15,15 +20,13 @@ Allow: /career-coach
 Allow: /salary-prediction
 Allow: /interview
 
-# Block Auth Paths
+# Block Auth & Private Dashboard Paths
 Disallow: /login
 Disallow: /register
 Disallow: /forgot-password
 Disallow: /reset-password
 Disallow: /verify-otp
 Disallow: /verify-email
-
-# Block Restricted Area Dashboards
 Disallow: /candidate/
 Disallow: /recruiter/
 Disallow: /company/

@@ -139,11 +139,20 @@ Built scalable microservices and integrated frontend components with modern desi
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="max-w-4xl mx-auto py-10 px-4"
+      className="max-w-4xl mx-auto pt-36 sm:pt-40 md:pt-44 pb-20 px-4"
     >
       <SEO
         title="ATS Resume Match & Score Checker | Real-Time Compatibility Engine - NexoraLab"
-        description="Compare your resume against any job description to compute keyword match percentage, missing technical skills, and recruiter parsing odds."
+        description="Compare your resume against any job description to compute keyword match percentage, missing technical skills, and recruiter parsing odds with NexoraLab ATS Engine."
+        keywords={[
+          "ATS score checker",
+          "free ATS resume scanner",
+          "job description match calculator",
+          "ATS resume compatibility test",
+          "ATS keyword optimization tool",
+          "NexoraLab ATS score",
+        ]}
+        canonical="https://nexoralabtechnologies.in/ats-score"
       />
 
       <div className="text-center">

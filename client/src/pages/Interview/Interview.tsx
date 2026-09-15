@@ -231,10 +231,18 @@ const Interview = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-10 px-4">
+    <div className="max-w-4xl mx-auto pt-36 sm:pt-40 md:pt-44 pb-20 px-4">
       <SEO
         title="AI Mock Technical Interview Studio | Real-Time Live Scoring - NexoraLab"
-        description="Practice technical and architecture interview rounds with real-time scoring, keyword verification, and model ideal answers."
+        description="Practice technical and architecture interview rounds with real-time scoring, keyword verification, and model ideal answers from NexoraLab AI."
+        keywords={[
+          "AI mock interview tool",
+          "technical interview simulator",
+          "coding interview practice AI",
+          "system design mock interview",
+          "NexoraLab AI interview",
+        ]}
+        canonical="https://nexoralabtechnologies.in/interview"
       />
 
       <div className="text-center">

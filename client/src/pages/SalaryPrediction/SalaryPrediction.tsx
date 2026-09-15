@@ -92,11 +92,19 @@ const SalaryPrediction = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="max-w-4xl mx-auto py-10 px-4"
+      className="max-w-4xl mx-auto pt-36 sm:pt-40 md:pt-44 pb-20 px-4"
     >
       <SEO
         title="AI Salary Predictor | Live Tech Compensation Intelligence - NexoraLab"
-        description="Estimate your market salary range powered by Google Gemini AI based on role, location, years of experience, and premium tech stack skillset."
+        description="Estimate your market salary range powered by Google Gemini AI based on role, location, years of experience, and premium tech stack skillset from NexoraLab."
+        keywords={[
+          "AI salary predictor",
+          "software engineer salary calculator India",
+          "tech salary estimator",
+          "developer compensation benchmark",
+          "NexoraLab salary prediction",
+        ]}
+        canonical="https://nexoralabtechnologies.in/salary-prediction"
       />
       <div className="text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-[#070e1b] px-4 py-1.5 text-xs font-bold text-cyan-400 mb-4 shadow-[0_0_15px_rgba(0,210,255,0.2)]">

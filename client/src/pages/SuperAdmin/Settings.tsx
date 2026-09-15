@@ -5,7 +5,7 @@ import { HiCog6Tooth, HiShieldCheck } from "react-icons/hi2";
 const Settings = () => {
   const [settings, setSettings] = useState({
     siteName: "NexoraLab Technologies",
-    contactEmail: "info@nexoralabtechnologies.in",
+    contactEmail: "nexoralabtechnologies@gmail.com",
     supportPhone: "+91 70798 84369",
     maintenanceMode: false,
     allowRegistration: true,

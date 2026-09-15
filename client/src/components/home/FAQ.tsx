@@ -1,346 +1,306 @@
-import { useMemo, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
+  HiChevronDown,
   HiMagnifyingGlass,
-  HiMinus,
-  HiPlus,
+  HiSparkles,
   HiChatBubbleLeftRight,
   HiArrowRight,
+  HiCheckCircle,
 } from "react-icons/hi2";
-import { Link } from "react-router-dom";
+import { FaWhatsapp } from "react-icons/fa";
+import { useModal } from "@/context/ModalContext";
+
+interface FAQItem {
+  q: string;
+  a: string;
+  category: "all" | "software" | "ai" | "teams" | "security";
+  tags: string[];
+}
+
+const faqData: FAQItem[] = [
+  {
+    category: "software",
+    tags: ["Full-Stack", "Web Development", "Mobile Apps"],
+    q: "What core custom software engineering services does NexoraLab provide?",
+    a: "NexoraLab Technologies delivers full-lifecycle custom web and SaaS platforms (React 19, Next.js, Node.js, Python), high-performance mobile apps (Flutter, React Native, iOS, Android), enterprise ERP/CRM portals, scalable microservices architectures, and 24/7 cloud infrastructure management on AWS and Azure.",
+  },
+  {
+    category: "ai",
+    tags: ["AI Intelligence", "ATS Scoring", "Resume Parser"],
+    q: "How does NexoraLab's proprietary AI Talent Intelligence & ATS suite work?",
+    a: "Our AI suite utilizes advanced optical character recognition (OCR), semantic vector embeddings (Pinecone/pgvector), and Google Gemini LLMs to parse unstructured resumes, benchmark candidate skill gaps, predict market-accurate salaries, conduct automated mock interviews, and score candidates in under 15 milliseconds with 99.4% accuracy.",
+  },
+  {
+    category: "security",
+    tags: ["IP Rights", "NDA", "Source Code"],
+    q: "Who retains intellectual property (IP) rights and source code ownership?",
+    a: "You retain 100% full intellectual property ownership, Git repository access, architecture documentation, and deployment configurations upon milestone completion. We execute bilateral non-disclosure agreements (NDA) and strict confidentiality terms before starting any project.",
+  },
+  {
+    category: "teams",
+    tags: ["Dedicated Developers", "Staff Augmentation", "Agile Pods"],
+    q: "Can NexoraLab augment our existing internal software engineering team?",
+    a: "Yes. We provide pre-vetted senior full-stack, AI/ML, mobile, and DevOps engineering pods that integrate directly into your sprint cycles, daily standups, and communication channels (Slack, Jira, GitHub) within 48 to 72 hours.",
+  },
+  {
+    category: "software",
+    tags: ["Timeline", "Cost Estimate", "Fixed Scope"],
+    q: "How do you estimate project timelines, budgets, and milestones?",
+    a: "We evaluate your functional specifications, target user load, UI/UX complexity, and third-party API dependencies. Within 24 hours of your initial discovery call, our solutions architects deliver a detailed, fixed-scope milestone roadmap and transparent budget breakdown.",
+  },
+  {
+    category: "teams",
+    tags: ["Communication", "Project Updates", "Agile Pods"],
+    q: "How does your engineering team collaborate and keep clients updated?",
+    a: "We provide regular sprint updates, dedicated communication channels (Email: nexoralabtechnologies@gmail.com, WhatsApp, Slack), and live staging demonstrations directly from our engineering center in Siwan, Bihar, India.",
+  },
+  {
+    category: "security",
+    tags: ["SLA", "Maintenance", "Cloud Monitoring"],
+    q: "What post-launch SLA, maintenance, and cloud monitoring support do you offer?",
+    a: "We provide comprehensive 24/7 cloud telemetry, automated database query optimization, security vulnerability patching, critical bug fixes, and continuous feature evolution backed by a 99.99% uptime guarantee and under-15-minute emergency response SLA.",
+  },
+  {
+    category: "ai",
+    tags: ["Custom AI", "Fine-Tuning", "Vector DB"],
+    q: "Can you train or integrate custom AI models for our proprietary business data?",
+    a: "Yes. We build end-to-end Retrieval-Augmented Generation (RAG) pipelines, fine-tuned domain LLMs, semantic vector search engines, and multi-modal computer vision models that securely operate on your private enterprise data with strict zero-retention data policies.",
+  },
+];
 
 const categories = [
-  { id: "All", label: "All Questions", icon: "📚" },
-  { id: "General", label: "General", icon: "💡" },
-  { id: "Development", label: "Development", icon: "💻" },
-  { id: "Pricing", label: "Pricing", icon: "💰" },
-  { id: "Support", label: "Support", icon: "🛡️" },
+  { id: "all", label: "All Questions" },
+  { id: "software", label: "Custom Software & Web" },
+  { id: "ai", label: "AI Suite & ATS Engine" },
+  { id: "teams", label: "Dedicated Developer Pods" },
+  { id: "security", label: "Security, IP & SLA" },
 ];
 
-const faqs = [
-  {
-    id: 1,
-    category: "General",
-    question: "What core services does NexoraLab Technologies specialize in?",
-    answer:
-      "We engineer Enterprise Web Applications, AI & ATS Resume Scoring Systems, Custom CRM/ERP Platforms, Cross-Platform Mobile Apps (React Native/Flutter), Cloud DevOps, and Scalable REST/GraphQL APIs.",
-  },
-  {
-    id: 2,
-    category: "Development",
-    question: "Which modern tech stacks and AI frameworks do you utilize?",
-    answer:
-      "Our core stack includes React 19, TypeScript, Node.js, Express, Next.js, MongoDB, PostgreSQL, Docker, AWS Cloud, OpenAI GPT-4o APIs, Tailwind CSS, and Python FastAPI for AI/ML pipelines.",
-  },
-  {
-    id: 3,
-    category: "Pricing",
-    question: "How does your project pricing and contract model work?",
-    answer:
-      "We offer transparent, milestone-based Fixed-Price contracts for scoped deliverables, as well as Dedicated Engineering Team retainers on a monthly sprint basis. Every proposal includes detailed architecture and timeline breakdowns.",
-  },
-  {
-    id: 4,
-    category: "Support",
-    question: "Do you offer post-deployment maintenance and SLA warranties?",
-    answer:
-      "Yes. All delivered platforms include a 30-day post-launch warranty with zero-cost bug fixes, followed by optional managed DevOps, security patch management, and 24/7 uptime monitoring SLAs.",
-  },
-  {
-    id: 5,
-    category: "General",
-    question: "What is your typical project timeline from kickoff to MVP?",
-    answer:
-      "A focused MVP or production SaaS generally takes 3 to 6 weeks. Enterprise systems with complex integrations take 8 to 14 weeks, delivered iteratively through bi-weekly sprint demos.",
-  },
-  {
-    id: 6,
-    category: "Development",
-    question: "Can you modernize our legacy application without data loss?",
-    answer:
-      "Yes. We specialize in zero-downtime legacy migrations, refactoring monolithic codebases into scalable microservices and modernizing UI/UX while guaranteeing 100% database integrity.",
-  },
-];
+const FAQ: React.FC = () => {
+  const [activeCategory, setActiveCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [openIndexes, setOpenIndexes] = useState<number[]>([0]);
+  const { openQuoteModal } = useModal();
 
-const FAQ = () => {
-  const [active, setActive] = useState<number | null>(1);
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("All");
+  const toggleAccordion = (index: number) => {
+    setOpenIndexes((prev) =>
+      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+    );
+  };
 
-  const filteredFaqs = useMemo(() => {
-    return faqs.filter((item) => {
-      const matchCategory = category === "All" || item.category === category;
-      const matchSearch =
-        item.question.toLowerCase().includes(search.toLowerCase()) ||
-        item.answer.toLowerCase().includes(search.toLowerCase());
-      return matchCategory && matchSearch;
-    });
-  }, [search, category]);
+  const expandAll = () => {
+    setOpenIndexes(filteredFaqs.map((_, i) => i));
+  };
+
+  const collapseAll = () => {
+    setOpenIndexes([]);
+  };
+
+  const filteredFaqs = faqData.filter((item) => {
+    const matchesCategory =
+      activeCategory === "all" || item.category === activeCategory;
+    const matchesSearch =
+      searchQuery === "" ||
+      item.q.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.a.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()));
+    return matchesCategory && matchesSearch;
+  });
 
   return (
-    <section
-      id="faq"
-      className="relative min-h-screen overflow-hidden bg-transparent py-20 md:py-28"
-    >
-      <div className="relative z-10 mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 xl:px-10">
-        
-        {/* HEADER SECTION */}
-        <div className="text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2.5 rounded-full border border-cyan-500/30 bg-[#070e1b]/90 px-6 py-2.5 text-xs md:text-sm font-bold tracking-wide bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent shadow-[0_0_25px_rgba(0,210,255,0.15)]"
-          >
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#00D2FF] opacity-75" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#00D2FF]" />
-            </span>
-            FREQUENTLY ASKED QUESTIONS
-          </motion.div>
+    <section id="faq" className="relative overflow-hidden bg-transparent py-20 sm:py-28 border-t border-white/10">
+      {/* Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] rounded-full bg-[#00D2FF]/5 blur-[150px] pointer-events-none" />
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1, duration: 0.6 }}
-            className="mt-6 text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-tight font-['Outfit']"
-          >
-            Got Questions?{" "}
-            <span className="block bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
-              We've Got Answers
-            </span>
-          </motion.h1>
+      <div className="relative z-10 mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 xl:px-10">
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#00D2FF] mb-3">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#00D2FF]" />
+              FREQUENTLY ASKED QUESTIONS
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight font-['Outfit']">
+              Answers to common <em className="not-italic bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">technical questions</em>
+            </h2>
+            <p className="mt-4 text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
+              Find answers regarding custom software engineering, proprietary AI integration, pricing timelines, IP ownership, and dedicated developer pods.
+            </p>
+          </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="mt-4 max-w-2xl mx-auto text-base md:text-lg text-slate-300 leading-relaxed font-normal"
-          >
-            Explore essential answers regarding our development workflow, engineering standards, custom pricing, and SLA guarantees.
-          </motion.p>
+          {/* Search Box */}
+          <div className="w-full lg:w-96 shrink-0">
+            <div className="relative">
+              <HiMagnifyingGlass className="absolute left-4 top-1/2 -translate-y-1/2 text-cyan-400 text-lg" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search questions or keywords..."
+                className="w-full rounded-2xl border border-white/15 bg-[#070e1e]/90 pl-11 pr-4 py-3.5 text-xs sm:text-sm text-white placeholder:text-slate-500 focus:border-[#00D2FF] focus:outline-none focus:ring-1 focus:ring-[#00D2FF] backdrop-blur-xl"
+              />
+            </div>
+          </div>
         </div>
 
-        {/* SEARCH & FILTER SECTION */}
-        <div className="mt-12 max-w-3xl mx-auto">
-          {/* Search Bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-            className="group relative overflow-hidden rounded-2xl border border-slate-700 bg-[#070e1e]/95 backdrop-blur-xl shadow-xl transition-all duration-300 focus-within:border-[#00D2FF] focus-within:shadow-[0_0_25px_rgba(0,210,255,0.2)]"
-          >
-            <HiMagnifyingGlass className="absolute left-5 top-1/2 -translate-y-1/2 text-xl text-cyan-400" />
-            <input
-              type="text"
-              placeholder="Search by keyword (e.g. tech stack, timeline, pricing, support)..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="h-16 w-full bg-transparent pl-14 pr-6 text-white placeholder:text-slate-500 outline-none text-sm md:text-base font-normal"
-            />
-          </motion.div>
-
-          {/* Categories */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-            className="mt-6 flex flex-wrap justify-center gap-3"
-          >
-            {categories.map((item) => (
+        {/* Category Tabs & Expand/Collapse All */}
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-4">
+          <div className="flex flex-wrap items-center gap-2">
+            {categories.map((cat) => (
               <button
-                key={item.id}
-                onClick={() => setCategory(item.id)}
-                className={`
-                  group inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-300
-                  ${
-                    category === item.id
-                      ? "bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] text-white shadow-lg shadow-cyan-500/25 scale-105"
-                      : "border border-slate-800 bg-[#070e1e]/80 text-slate-300 hover:border-[#00D2FF]/40 hover:text-white"
-                  }
-                `}
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`rounded-full px-4 py-2 text-xs font-bold transition-all duration-300 ${
+                  activeCategory === cat.id
+                    ? "bg-gradient-to-r from-[#00D2FF] to-[#0066FF] text-white shadow-[0_0_18px_rgba(0,210,255,0.35)]"
+                    : "border border-white/10 bg-[#070e1e]/80 text-slate-300 hover:border-white/20 hover:text-white"
+                }`}
               >
-                <span className="text-base">{item.icon}</span>
-                {item.label}
+                {cat.label}
               </button>
             ))}
-          </motion.div>
+          </div>
+
+          <div className="flex items-center gap-3 text-xs font-semibold text-slate-400">
+            <button
+              onClick={expandAll}
+              className="hover:text-[#00D2FF] transition-colors cursor-pointer"
+            >
+              Expand All
+            </button>
+            <span>•</span>
+            <button
+              onClick={collapseAll}
+              className="hover:text-[#00D2FF] transition-colors cursor-pointer"
+            >
+              Collapse All
+            </button>
+          </div>
         </div>
 
-        {/* FAQ ACCORDION */}
-        <div className="mx-auto mt-12 max-w-4xl space-y-4">
+        {/* FAQ Accordion List */}
+        <div className="mt-8 grid grid-cols-1 gap-4">
           {filteredFaqs.length === 0 ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="text-center py-16 rounded-3xl border border-slate-800 bg-[#070e1e]/80 p-8"
-            >
-              <div className="text-5xl mb-4">🔍</div>
-              <p className="text-slate-300 text-base font-semibold">No questions matched your search criteria.</p>
-              <button
-                onClick={() => {
-                  setSearch("");
-                  setCategory("All");
-                }}
-                className="mt-4 inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 text-sm font-bold transition-colors"
-              >
-                Clear filter and view all FAQs →
-              </button>
-            </motion.div>
+            <div className="text-center py-16 rounded-3xl border border-white/10 bg-[#070e1e]/70">
+              <p className="text-base text-slate-300 font-semibold">No questions matched your search.</p>
+              <p className="text-xs text-slate-500 mt-1">Try another keyword or reach out directly to our engineering team.</p>
+            </div>
           ) : (
-            filteredFaqs.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className={`
-                  overflow-hidden rounded-2xl border transition-all duration-300
-                  ${
-                    active === item.id
-                      ? "border-[#00D2FF]/70 bg-[#0b132b]/95 shadow-[0_8px_30px_rgba(0,210,255,0.12)]"
-                      : "border-slate-800 bg-[#070e1e]/85 hover:border-slate-700"
-                  }
-                `}
-              >
-                <button
-                  onClick={() => setActive(active === item.id ? null : item.id)}
-                  className="flex w-full items-center justify-between gap-4 p-5 md:p-6 text-left group"
+            filteredFaqs.map((faq, idx) => {
+              const isOpen = openIndexes.includes(idx);
+              return (
+                <div
+                  key={idx}
+                  className={`group rounded-2xl border transition-all duration-300 ${
+                    isOpen
+                      ? "border-[#00D2FF]/60 bg-gradient-to-br from-[#0a1b38] to-[#070e1e] shadow-[0_0_25px_rgba(0,210,255,0.15)]"
+                      : "border-white/10 bg-[#070e1e]/80 hover:border-white/20 hover:bg-[#09152b]"
+                  }`}
                 >
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3 mb-1">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-cyan-400">
-                        {item.category}
-                      </span>
-                    </div>
-                    <h3 className="text-base md:text-lg font-bold text-white group-hover:text-cyan-300 transition-colors">
-                      {item.question}
-                    </h3>
-                  </div>
-
-                  <motion.div
-                    animate={{ rotate: active === item.id ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
-                    className={`
-                      flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all duration-300
-                      ${
-                        active === item.id
-                          ? "bg-gradient-to-r from-[#00D2FF] to-[#0066FF] text-white shadow-md shadow-cyan-500/30"
-                          : "border border-slate-700 bg-[#0a1128] text-slate-300 group-hover:border-[#00D2FF]/50 group-hover:text-white"
-                      }
-                    `}
+                  <button
+                    onClick={() => toggleAccordion(idx)}
+                    className="flex w-full items-center justify-between p-5 sm:p-6 text-left cursor-pointer"
                   >
-                    {active === item.id ? <HiMinus size={18} /> : <HiPlus size={18} />}
-                  </motion.div>
-                </button>
-
-                <AnimatePresence>
-                  {active === item.id && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="border-t border-slate-800 px-5 md:px-6 py-5 bg-[#060c1c]/50">
-                        <p className="text-sm md:text-base text-slate-300 leading-relaxed font-normal">
-                          {item.answer}
-                        </p>
+                    <div className="flex items-start gap-4 pr-4">
+                      <span
+                        className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-xs font-black font-mono transition-colors ${
+                          isOpen
+                            ? "bg-[#00D2FF] text-black"
+                            : "bg-white/5 text-slate-400 group-hover:text-white"
+                        }`}
+                      >
+                        {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
+                      </span>
+                      <div>
+                        <h3
+                          className={`text-sm sm:text-base font-bold leading-snug transition-colors ${
+                            isOpen ? "text-white" : "text-slate-200 group-hover:text-white"
+                          }`}
+                        >
+                          {faq.q}
+                        </h3>
+                        <div className="flex flex-wrap items-center gap-2 mt-2">
+                          {faq.tags.map((tag, tIdx) => (
+                            <span
+                              key={tIdx}
+                              className="rounded-md bg-white/5 border border-white/5 px-2 py-0.5 text-[10px] font-medium text-slate-400"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))
+                    </div>
+
+                    <div
+                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border transition-all duration-300 ${
+                        isOpen
+                          ? "border-[#00D2FF] bg-[#00D2FF]/20 text-[#00D2FF] rotate-180"
+                          : "border-white/10 bg-white/5 text-slate-400 group-hover:text-white"
+                      }`}
+                    >
+                      <HiChevronDown className="text-base" />
+                    </div>
+                  </button>
+
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-5 sm:px-6 pb-6 pt-2 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-white/5 font-normal">
+                          {faq.a}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })
           )}
         </div>
 
-        {/* STATS HIGHLIGHTS */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mt-16 md:mt-20 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
-        >
-          {[
-            { value: "24/7", label: "Dedicated Tech Support", icon: "🛡️", color: "from-[#00D2FF] to-[#0066FF]" },
-            { value: "<15 Min", label: "Average Response Time", icon: "⚡", color: "from-[#0066FF] to-[#7C3AED]" },
-            { value: "99.9%", label: "Uptime SLA Guarantee", icon: "✅", color: "from-[#10B981] to-[#00D2FF]" },
-            { value: "250+", label: "Platforms Supported", icon: "🚀", color: "from-[#7C3AED] to-[#EC4899]" },
-          ].map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.08 }}
-              whileHover={{ y: -6 }}
-              className="relative overflow-hidden rounded-2xl border border-slate-800 bg-[#0b132b]/85 backdrop-blur-xl p-6 text-center transition-all duration-300 hover:border-[#00D2FF]/40 hover:shadow-lg shadow-black/40"
-            >
-              <div className="text-3xl mb-1">{item.icon}</div>
-              <h3 className={`text-2xl md:text-3xl font-black bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}>
-                {item.value}
-              </h3>
-              <p className="mt-1 text-xs md:text-sm text-slate-400 font-medium">{item.label}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* FINAL CTA BANNER */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="relative mt-16 md:mt-20 overflow-hidden rounded-3xl border border-slate-800 bg-[#070e1e]/95 p-8 md:p-12 backdrop-blur-2xl shadow-2xl transition-all duration-300 hover:border-[#00D2FF]/40 text-center"
-        >
-          <div className="relative z-10 max-w-3xl mx-auto">
-            <span className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-[#070e1b] px-4 py-1.5 text-xs font-bold text-cyan-400">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#00D2FF] opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#00D2FF]" />
-              </span>
-              STILL HAVE QUESTIONS?
-            </span>
-
-            <h2 className="mt-5 text-2xl md:text-3xl lg:text-4xl font-black text-white leading-tight font-['Outfit']">
-              Let's Discuss Your Unique{" "}
-              <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
-                Architecture & Vision
-              </span>
-            </h2>
-
-            <p className="mt-4 text-sm md:text-base text-slate-300 leading-relaxed font-normal">
-              Have specific compliance, scale, or custom API requirements? Schedule a direct engineering consultation with our lead software architects.
-            </p>
-
-            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] px-8 py-3.5 text-sm font-bold text-white shadow-xl shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95"
-              >
-                <span>Consult Our Architects</span>
-                <HiChatBubbleLeftRight className="text-lg" />
-              </Link>
-
-              <Link
-                to="/services"
-                className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-[#0a1128] px-8 py-3.5 text-sm font-semibold text-slate-200 transition-all duration-300 hover:border-[#00D2FF] hover:text-white"
-              >
-                <span>Explore All Services</span>
-                <HiArrowRight className="text-lg" />
-              </Link>
+        {/* Still Have Questions Box */}
+        <div className="mt-14 rounded-3xl border border-white/10 bg-gradient-to-r from-[#081734] via-[#070e1e] to-[#0d162e] p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
+          <div className="flex items-center gap-4">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-tr from-[#00D2FF]/20 to-[#0066FF]/20 text-[#00D2FF] border border-cyan-500/30">
+              <HiChatBubbleLeftRight className="text-3xl" />
+            </div>
+            <div>
+              <h4 className="text-base sm:text-lg font-bold text-white font-['Outfit']">
+                Have a unique architecture or scaling question?
+              </h4>
+              <p className="text-xs sm:text-sm text-slate-300 mt-1 font-normal">
+                Our solutions architects are available for direct 1-on-1 consultations.
+              </p>
             </div>
           </div>
-        </motion.div>
+
+          <div className="flex flex-wrap items-center gap-3 shrink-0">
+            <a
+              href="https://wa.me/917079884369?text=Hi%20NexoraLab%20Technologies%2C%20I%20have%20a%20technical%20question%20regarding%20my%20project."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-950/30 px-5 py-3 text-xs font-bold text-emerald-400 transition hover:bg-emerald-900/40"
+            >
+              <FaWhatsapp className="text-base" />
+              <span>Ask on WhatsApp</span>
+            </a>
+
+            <button
+              onClick={openQuoteModal}
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] px-6 py-3 text-xs font-bold text-white shadow-lg shadow-cyan-500/25 transition hover:scale-105 active:scale-95"
+            >
+              <span>Request Consultation</span>
+              <HiArrowRight />
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   );

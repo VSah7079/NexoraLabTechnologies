@@ -209,10 +209,18 @@ const PortfolioBuilder = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto py-10 px-4">
+    <div className="max-w-6xl mx-auto pt-36 sm:pt-40 md:pt-44 pb-20 px-4">
       <SEO
         title="AI Developer Portfolio Generator | Real-Time Showcase Forge - NexoraLab"
-        description="Generate an ultra-modern, glassmorphic developer showcase portfolio with live project cards and instant standalone HTML export."
+        description="Generate an ultra-modern, glassmorphic developer showcase portfolio with live project cards and instant standalone HTML export from NexoraLab."
+        keywords={[
+          "developer portfolio builder",
+          "free portfolio generator for developers",
+          "online portfolio maker",
+          "glassmorphic portfolio creator",
+          "NexoraLab portfolio forge",
+        ]}
+        canonical="https://nexoralabtechnologies.in/portfolio-builder"
       />
 
       <div className="text-center">

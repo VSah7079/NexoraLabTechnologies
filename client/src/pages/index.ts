@@ -44,3 +44,6 @@ export { default as SkillGap } from './SkillGap/SkillGap';
 export { default as CareerCoach } from './CareerCoach/CareerCoach';
 export { default as SalaryPrediction } from './SalaryPrediction/SalaryPrediction';
 export { default as Interview } from './Interview/Interview';
+export { default as QuotePage } from './Quote/QuotePage';
+export { default as ProductsPage } from './Products/ProductsPage';
+export { default as ResourcesPage } from './Resources/ResourcesPage';

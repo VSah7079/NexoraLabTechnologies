@@ -5,7 +5,7 @@ const Users = () => {
   const users = [
     { id: 1, name: "Alexander Mitchell", email: "alex@enterprise.com", role: "Candidate", status: "Active" },
     { id: 2, name: "Sophia Reynolds", email: "sophia@talentpartners.com", role: "Recruiter", status: "Active" },
-    { id: 3, name: "Vikram Sah", email: "admin@nexoralabtechnologies.in", role: "SuperAdmin", status: "Active" },
+    { id: 3, name: "Vikram Sah", email: "nexoralabtechnologies@gmail.com", role: "SuperAdmin", status: "Active" },
   ];
 
   return (

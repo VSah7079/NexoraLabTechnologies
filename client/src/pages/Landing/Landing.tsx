@@ -1,5 +1,18 @@
 import { motion } from "framer-motion";
-import { Hero, About, Services, ContactCTA } from "@/components/home";
+import {
+  Hero,
+  TrustedCompanies,
+  About,
+  Services,
+  Process,
+  Portfolio,
+  Industries,
+  WhyChooseUs,
+  TechnologyPartners,
+  Insights,
+  FAQ,
+  ContactCTA,
+} from "@/components/home";
 import SEO from "@/components/common/SEO";
 
 const Landing = () => {
@@ -13,11 +26,19 @@ const Landing = () => {
       <SEO
         title="Exceptional Digital Product Engineering | NexoraLab Technologies"
         description="Scale your operations with modern web design, mobile app development, cloud infrastructure, and custom AI software solutions tailored to your startup or enterprise."
-        canonical="https://nexoralabtechnologies.in"
+        canonical="https://nexoralabtechnologies.in/landing"
       />
       <Hero />
+      <TrustedCompanies />
       <About />
       <Services />
+      <Process />
+      <Portfolio />
+      <Industries />
+      <WhyChooseUs />
+      <TechnologyPartners />
+      <Insights />
+      <FAQ />
       <ContactCTA />
     </motion.div>
   );

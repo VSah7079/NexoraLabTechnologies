@@ -206,10 +206,19 @@ ${resumeData.education.map((ed) => `### ${ed.degree} — ${ed.institution} (${ed
   };
 
   return (
-    <div className="max-w-6xl mx-auto py-10 px-4">
+    <div className="max-w-6xl mx-auto pt-36 sm:pt-40 md:pt-44 pb-20 px-4">
       <SEO
         title="AI Resume Builder Studio | Real-Time Interactive CV Generator - NexoraLab"
-        description="Craft executive-grade, ATS-ready resumes with instant live PDF preview, custom skills builder, and print-ready export."
+        description="Craft executive-grade, ATS-ready resumes with instant live PDF preview, custom skills builder, and print-ready export from NexoraLab."
+        keywords={[
+          "AI resume builder",
+          "free online resume maker",
+          "ATS friendly resume builder",
+          "live PDF resume generator",
+          "professional CV maker online",
+          "NexoraLab resume builder",
+        ]}
+        canonical="https://nexoralabtechnologies.in/resume-builder"
       />
 
       {/* Screen Header (Hidden on Print) */}

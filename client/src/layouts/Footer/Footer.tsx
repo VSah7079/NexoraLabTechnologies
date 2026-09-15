@@ -1,57 +1,77 @@
-import { motion } from "framer-motion";
+import React from "react";
 import { Link } from "react-router-dom";
 import {
-  FaFacebookF,
-  FaInstagram,
   FaLinkedinIn,
-  FaGithub,
+  FaInstagram,
+  FaFacebookF,
   FaYoutube,
   FaXTwitter,
+  FaGithub,
 } from "react-icons/fa6";
 import {
   HiEnvelope,
   HiPhone,
   HiMapPin,
   HiArrowUp,
+  HiDocumentArrowDown,
 } from "react-icons/hi2";
-
-import { navLinks } from "@/config/navigation";
 import Logo from "../Navbar/Logo";
+import { useModal } from "@/context/ModalContext";
 
-const services = [
-  "Full-Stack Web & SaaS",
-  "AI & Machine Learning",
-  "Mobile App Development",
-  "Enterprise ERP & CRM",
-  "Cloud Architecture & DevOps",
-  "Dedicated Engineering Staff",
+const companyLinks = [
+  { name: "About NexoraLab", path: "/about" },
+  { name: "Products Catalog", path: "/products" },
+  { name: "Technical Resources", path: "/resources" },
+  { name: "Client Portfolio", path: "/portfolio" },
+  { name: "Engineering Insights", path: "/insights" },
+  { name: "Careers (We're Hiring)", path: "/careers" },
+  { name: "Contact Headquarters", path: "/contact" },
+  { name: "Book Engineering Call", path: "/meeting" },
+  { name: "Request Project Quote", path: "/quote" },
 ];
 
-const companyLinks = navLinks.map((item) => ({
-  name: item.title,
-  link: item.path,
-}));
+const solutionsLinks = [
+  { name: "AI Smart Hiring & ATS Suite", path: "/solutions" },
+  { name: "On-Demand Delivery & Logistics", path: "/solutions" },
+  { name: "Telehealth & EHR Medical Platform", path: "/solutions" },
+  { name: "Multi-Vendor E-Commerce Platform", path: "/solutions" },
+  { name: "FinTech Neo-Banking & Wallet", path: "/solutions" },
+  { name: "Enterprise Custom CRM & ERP", path: "/solutions" },
+];
 
-const aiTools = [
-  { name: "Resume Analyzer", path: "/resume-analyzer" },
-  { name: "ATS Score Checker", path: "/ats-score" },
-  { name: "AI Resume Builder", path: "/resume-builder" },
-  { name: "Portfolio Builder", path: "/portfolio-builder" },
-  { name: "Skill Gap Benchmark", path: "/skill-gap" },
-  { name: "AI Career Coach", path: "/career-coach" },
-  { name: "AI Mock Interview", path: "/interview" },
+const serviceLinks = [
+  { name: "Custom Software Engineering", path: "/services#software" },
+  { name: "Web & Enterprise Portals", path: "/services#software" },
+  { name: "Mobile Apps (iOS & Android)", path: "/services#software" },
+  { name: "AWS Cloud & DevOps Automation", path: "/services#cloud" },
+  { name: "Generative AI & Data Intelligence", path: "/services#ai" },
+  { name: "Salesforce Consulting & LWC", path: "/services#salesforce" },
+  { name: "UI/UX & Product Design Studio", path: "/services#design" },
+  { name: "Digital Marketing, SEO & PPC", path: "/services#marketing" },
+];
+
+const aiSuiteLinks = [
+  { name: "AI Resume Analyzer & Auditor", path: "/resume-analyzer" },
+  { name: "ATS Score Checker & Matcher", path: "/ats-score" },
+  { name: "AI Resume Builder (Gemini)", path: "/resume-builder" },
+  { name: "AI Portfolio Builder for Devs", path: "/portfolio-builder" },
+  { name: "Skill Gap Benchmarker", path: "/skill-gap" },
+  { name: "AI Executive Career Coach", path: "/career-coach" },
+  { name: "AI Voice & Text Mock Interview", path: "/interview" },
 ];
 
 const socialLinks = [
-  { icon: <FaLinkedinIn />, href: "https://www.linkedin.com/company/135297535/admin/dashboard/" },
-  { icon: <FaInstagram />, href: "https://www.instagram.com/nexoralabtechnology/" },
-  { icon: <FaFacebookF />, href: "https://www.facebook.com/profile.php?id=61592465423073" },
-  { icon: <FaYoutube />, href: "https://www.youtube.com/@NexoraLabTechnologies" },
-  { icon: <FaXTwitter />, href: "https://x.com/nexoralab" },
-  { icon: <FaGithub />, href: "https://github.com/NexoraLab" },
+  { icon: <FaLinkedinIn />, href: "https://www.linkedin.com/company/135297535/", label: "LinkedIn" },
+  { icon: <FaInstagram />, href: "https://www.instagram.com/nexoralabtechnology/", label: "Instagram" },
+  { icon: <FaFacebookF />, href: "https://www.facebook.com/profile.php?id=61592465423073", label: "Facebook" },
+  { icon: <FaYoutube />, href: "https://www.youtube.com/@NexoraLabTechnologies", label: "YouTube" },
+  { icon: <FaXTwitter />, href: "https://x.com/nexoralab", label: "Twitter" },
+  { icon: <FaGithub />, href: "https://github.com/NexoraLab", label: "GitHub" },
 ];
 
-const Footer = () => {
+const Footer: React.FC = () => {
+  const { openBrochureModal } = useModal();
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -60,235 +80,168 @@ const Footer = () => {
   };
 
   return (
-    <footer
-      className="
-        relative
-        overflow-hidden
-        bg-transparent
-        pt-20
-        pb-10
-        border-t
-        border-white/[0.08]
-      "
-    >
-      <div
-        className="
-          mx-auto
-          max-w-[1480px]
-          px-4
-          sm:px-6
-          lg:px-8
-          xl:px-10
-        "
-      >
-        {/* Top Section */}
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
-          {/* Company Info */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="lg:col-span-1"
-          >
-            <Logo className="mb-4" />
-
-            <p className="text-xs font-bold tracking-wider text-[#00D2FF] mb-2 uppercase">
-              Innovate • Build • Elevate
+    <footer className="relative overflow-hidden bg-[#02050e] pt-20 pb-10 border-t border-white/10 text-slate-300">
+      <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 xl:px-10">
+        {/* Top Grid (Brand, Links, Map/Brochure) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 pb-16 border-b border-white/10">
+          {/* 1. Brand Col (3 cols) */}
+          <div className="lg:col-span-3 space-y-4">
+            <Logo />
+            <p className="text-xs font-bold uppercase tracking-wider text-[#00D2FF]">
+              INNOVATE • BUILD • ELEVATE
+            </p>
+            <p className="text-xs text-slate-400 leading-relaxed font-normal">
+              A software engineering & technology company based in Siwan, Bihar, India. We design and build modern web applications, mobile apps, cloud infrastructure, and proprietary AI utilities.
             </p>
 
-            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-6 font-normal">
-              Premier software engineering and AI solutions agency building high-performance, secure, and scalable digital products.
-            </p>
+            {/* Direct Contacts */}
+            <div className="space-y-2 text-xs pt-2">
+              <div className="flex items-start gap-2 text-slate-300">
+                <HiMapPin className="text-[#00D2FF] text-sm shrink-0 mt-0.5" />
+                <span>Siwan, Bihar 841226, India</span>
+              </div>
+              <a
+                href="mailto:nexoralabtechnologies@gmail.com"
+                className="flex items-center gap-2 text-slate-300 hover:text-[#00D2FF] transition"
+              >
+                <HiEnvelope className="text-[#00D2FF] text-sm shrink-0" />
+                <span>nexoralabtechnologies@gmail.com</span>
+              </a>
+              <a
+                href="tel:+917079884369"
+                className="flex items-center gap-2 text-slate-300 hover:text-[#00D2FF] transition"
+              >
+                <HiPhone className="text-[#00D2FF] text-sm shrink-0" />
+                <span>+91 70798 84369</span>
+              </a>
+            </div>
 
-            {/* Social Links */}
-            <div className="flex flex-wrap gap-2.5">
-              {socialLinks.map((social, index) => (
-                <motion.a
-                  key={index}
-                  href={social.href}
+            {/* Socials */}
+            <div className="flex flex-wrap gap-2 pt-2">
+              {socialLinks.map((s, i) => (
+                <a
+                  key={i}
+                  href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ y: -3, scale: 1.1 }}
-                  className="
-                    flex
-                    h-9
-                    w-9
-                    items-center
-                    justify-center
-                    rounded-full
-                    border
-                    border-white/[0.1]
-                    bg-white/[0.03]
-                    text-slate-300
-                    transition-all
-                    duration-200
-                    hover:border-[#00D2FF]/60
-                    hover:text-[#00D2FF]
-                    hover:shadow-[0_0_15px_rgba(0,210,255,0.3)]
-                  "
+                  aria-label={s.label}
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-slate-300 transition hover:border-[#00D2FF] hover:text-[#00D2FF] hover:scale-110 text-xs"
                 >
-                  {social.icon}
-                </motion.a>
+                  {s.icon}
+                </a>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          {/* Quick Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              Quick Links
+          {/* 2. Solutions Links (2.5 cols) */}
+          <div className="lg:col-span-2">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-4 flex items-center gap-1.5">
+              <span className="text-[#00D2FF]">✦</span>
+              <span>SOLUTIONS</span>
             </h4>
-            <ul className="space-y-2.5 text-xs sm:text-sm">
-              {companyLinks.map((item) => (
-                <li key={item.name}>
+            <ul className="space-y-2 text-xs">
+              {solutionsLinks.map((item, idx) => (
+                <li key={idx}>
                   <Link
-                    to={item.link}
-                    className="text-slate-400 transition-colors hover:text-[#00D2FF]"
+                    to={item.path}
+                    className="text-slate-400 hover:text-[#00D2FF] transition-colors leading-snug block"
                   >
                     {item.name}
                   </Link>
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
-          {/* Core Services */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              Our Services
+          {/* 3. Services Links (2.5 cols) */}
+          <div className="lg:col-span-2">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-4 flex items-center gap-1.5">
+              <span className="text-cyan-400">✦</span>
+              <span>SERVICES</span>
             </h4>
-            <ul className="space-y-2.5 text-xs sm:text-sm">
-              {services.map((service) => (
-                <li key={service}>
+            <ul className="space-y-2 text-xs">
+              {serviceLinks.map((item, idx) => (
+                <li key={idx}>
                   <Link
-                    to="/services"
-                    className="text-slate-400 transition-colors hover:text-[#00D2FF]"
+                    to={item.path}
+                    className="text-slate-400 hover:text-[#00D2FF] transition-colors leading-snug block"
                   >
-                    {service}
+                    {item.name}
                   </Link>
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
-          {/* AI Intelligence Suite */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              AI Tools & Suite
+          {/* 4. AI Talent Suite (2.5 cols) */}
+          <div className="lg:col-span-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-4 flex items-center gap-1.5">
+              <span className="text-purple-400">✦</span>
+              <span>AI TALENT SUITE</span>
             </h4>
-            <ul className="space-y-2.5 text-xs sm:text-sm">
-              {aiTools.map((tool) => (
-                <li key={tool.name}>
-                  <Link
-                    to={tool.path}
-                    className="text-slate-400 transition-colors hover:text-[#00D2FF]"
-                  >
-                    {tool.name}
+            <ul className="space-y-2 text-xs text-slate-400 mb-4">
+              {aiSuiteLinks.map((tool, idx) => (
+                <li key={idx}>
+                  <Link to={tool.path} className="hover:text-[#00D2FF] transition flex items-center gap-1.5">
+                    <span className="text-[#00D2FF] text-[10px]">›</span>
+                    <span>{tool.name}</span>
                   </Link>
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
-          {/* Contact Information */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              Get in Touch
-            </h4>
-            <ul className="space-y-3 text-xs sm:text-sm text-slate-400">
-              <li className="flex items-start gap-2.5">
-                <HiMapPin className="text-[#00D2FF] text-base shrink-0 mt-0.5" />
-                <span>Siwan, Bihar, India</span>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <HiPhone className="text-[#00D2FF] text-base shrink-0" />
-                <a
-                  href="tel:+917079884369"
-                  className="hover:text-[#00D2FF] transition-colors"
-                >
-                  +91 70798 84369
-                </a>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <HiEnvelope className="text-[#00D2FF] text-base shrink-0" />
-                <a
-                  href="mailto:info@nexoralabtechnologies.in"
-                  className="hover:text-[#00D2FF] transition-colors"
-                >
-                  info@nexoralabtechnologies.in
-                </a>
-              </li>
-            </ul>
-
-            {/* Newsletter form */}
-            <div className="mt-5">
-              <div className="text-xs font-semibold text-white mb-2">Subscribe to Tech Insights</div>
-              <div className="flex rounded-full border border-white/[0.1] bg-white/[0.03] p-1">
-                <input
-                  type="email"
-                  placeholder="Your email..."
-                  className="w-full bg-transparent px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none"
-                />
-                <button
-                  type="button"
-                  className="rounded-full bg-gradient-to-r from-[#00D2FF] to-[#0066FF] px-3.5 py-1 text-xs font-semibold text-white hover:brightness-110"
-                >
-                  Join
-                </button>
-              </div>
+          {/* 5. Company & Insights (2 cols) */}
+          <div className="lg:col-span-2 flex flex-col justify-between">
+            <div>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-4 flex items-center gap-1.5">
+                <span className="text-emerald-400">✦</span>
+                <span>COMPANY</span>
+              </h4>
+              <ul className="space-y-2 text-xs">
+                {companyLinks.map((item, idx) => (
+                  <li key={idx}>
+                    <Link
+                      to={item.path}
+                      className="text-slate-400 hover:text-[#00D2FF] transition-colors leading-snug block"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </motion.div>
+
+            {/* Download Brochure Button */}
+            <button
+              onClick={openBrochureModal}
+              className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-white/[0.06] border border-white/10 py-2.5 text-xs font-bold text-white transition hover:bg-[#00D2FF] hover:text-black hover:border-transparent cursor-pointer"
+            >
+              <HiDocumentArrowDown className="text-sm" />
+              <span>Brochure →</span>
+            </button>
+          </div>
         </div>
 
-        {/* Bottom Section */}
-        <div className="mt-14 pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-slate-500 text-center sm:text-left">
-            © {new Date().getFullYear()} NexoraLab Technologies. All rights reserved. • Innovate. Build. Elevate.
+        {/* Bottom Bar */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+          <p className="text-center sm:text-left">
+            © {new Date().getFullYear()} <span className="text-slate-300 font-semibold">NexoraLab Technologies</span> • Siwan, Bihar 841226, India • Innovate. Build. Elevate.
           </p>
 
-          <button
-            onClick={scrollToTop}
-            className="
-              flex
-              h-9
-              w-9
-              items-center
-              justify-center
-              rounded-full
-              border
-              border-white/[0.1]
-              bg-white/[0.03]
-              text-slate-300
-              transition-all
-              hover:border-[#00D2FF]
-              hover:text-[#00D2FF]
-              hover:scale-110
-            "
-            aria-label="Back to top"
-          >
-            <HiArrowUp size={16} />
-          </button>
+          <div className="flex items-center gap-6">
+            <Link to="/about" className="hover:text-white transition">Privacy Policy</Link>
+            <Link to="/about" className="hover:text-white transition">Terms of Service</Link>
+            <Link to="/about" className="hover:text-white transition">Refund Policy</Link>
+
+            <button
+              onClick={scrollToTop}
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:border-[#00D2FF] hover:text-[#00D2FF] hover:scale-110 cursor-pointer"
+              aria-label="Scroll to top"
+            >
+              <HiArrowUp size={14} />
+            </button>
+          </div>
         </div>
       </div>
     </footer>
