@@ -580,11 +580,10 @@ const ProductsPage: React.FC = () => {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
-                      isActive
-                        ? "bg-gradient-to-r from-[#00D2FF] to-[#0066FF] text-white shadow-[0_0_20px_rgba(0,210,255,0.4)] scale-105"
-                        : "bg-[#080f22] border border-white/10 text-slate-300 hover:text-white hover:border-cyan-500/40"
-                    }`}
+                    className={`inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${isActive
+                      ? "bg-gradient-to-r from-[#00D2FF] to-[#0066FF] text-white shadow-[0_0_20px_rgba(0,210,255,0.4)] scale-105"
+                      : "bg-[#080f22] border border-white/10 text-slate-300 hover:text-white hover:border-cyan-500/40"
+                      }`}
                   >
                     <span>{tab.emoji}</span>
                     <span>{tab.label}</span>
@@ -639,47 +638,47 @@ const ProductsPage: React.FC = () => {
                         ID: #{prod.id}
                       </span>
 
-                    <h2 className="text-lg font-bold text-white group-hover:text-cyan-300 transition-colors font-['Outfit'] leading-snug">
-                      {prod.title}
-                    </h2>
+                      <h2 className="text-lg font-bold text-white group-hover:text-cyan-300 transition-colors font-['Outfit'] leading-snug">
+                        {prod.title}
+                      </h2>
 
-                    <p className="text-xs font-semibold text-[#00D2FF] mt-1 font-mono">
-                      {prod.tagline}
-                    </p>
+                      <p className="text-xs font-semibold text-[#00D2FF] mt-1 font-mono">
+                        {prod.tagline}
+                      </p>
 
-                    <p className="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed font-normal">
-                      {prod.desc}
-                    </p>
+                      <p className="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed font-normal">
+                        {prod.desc}
+                      </p>
 
-                    {/* Core Features */}
-                    <div className="mt-5 pt-4 border-t border-white/10">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-2.5">
-                        Production Architecture Inclusions:
-                      </span>
-                      <ul className="space-y-2 text-xs text-slate-300">
-                        {prod.features.map((feat, fIdx) => (
-                          <li key={fIdx} className="flex items-start gap-2.5">
-                            <HiCheckCircle className="text-[#00D2FF] text-sm shrink-0 mt-0.5" />
-                            <span>{feat}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                      {/* Core Features */}
+                      <div className="mt-5 pt-4 border-t border-white/10">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-2.5">
+                          Production Architecture Inclusions:
+                        </span>
+                        <ul className="space-y-2 text-xs text-slate-300">
+                          {prod.features.map((feat, fIdx) => (
+                            <li key={fIdx} className="flex items-start gap-2.5">
+                              <HiCheckCircle className="text-[#00D2FF] text-sm shrink-0 mt-0.5" />
+                              <span>{feat}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
 
-                    {/* Tech Stack Tags */}
-                    <div className="mt-5 pt-3 border-t border-white/10">
-                      <div className="flex flex-wrap gap-1.5">
-                        {prod.techStack.map((tech, tIdx) => (
-                          <span
-                            key={tIdx}
-                            className="rounded-lg bg-white/[0.04] border border-white/[0.08] px-2 py-0.5 text-[10.5px] font-mono text-slate-300 group-hover:border-cyan-500/30 transition"
-                          >
-                            {tech}
-                          </span>
-                        ))}
+                      {/* Tech Stack Tags */}
+                      <div className="mt-5 pt-3 border-t border-white/10">
+                        <div className="flex flex-wrap gap-1.5">
+                          {prod.techStack.map((tech, tIdx) => (
+                            <span
+                              key={tIdx}
+                              className="rounded-lg bg-white/[0.04] border border-white/[0.08] px-2 py-0.5 text-[10.5px] font-mono text-slate-300 group-hover:border-cyan-500/30 transition"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
                   </div>
 
                   {/* Actions & Timeline */}
