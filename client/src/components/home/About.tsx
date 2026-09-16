@@ -1,22 +1,46 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { HiArrowRight, HiShieldCheck, HiSparkles, HiCheckBadge, HiCpuChip } from "react-icons/hi2";
+import {
+  HiArrowRight,
+  HiShieldCheck,
+  HiSparkles,
+  HiCheckBadge,
+  HiCpuChip,
+  HiCloudArrowUp,
+  HiRocketLaunch,
+} from "react-icons/hi2";
 import { useModal } from "@/context/ModalContext";
 
 const reasonCards = [
   {
+    icon: HiCpuChip,
+    iconColor: "text-cyan-400",
+    iconBg: "bg-cyan-500/10 border-cyan-500/20",
+    badge: "01",
     title: "AI-First Engineering",
     desc: "Proprietary AI pipelines, neural resume parsing, semantic vector embeddings, and LLM automation engineered for production workloads.",
   },
   {
+    icon: HiCloudArrowUp,
+    iconColor: "text-blue-400",
+    iconBg: "bg-blue-500/10 border-blue-500/20",
+    badge: "02",
     title: "Enterprise Cloud & Microservices",
     desc: "Battle-tested cloud architectures on AWS, Azure, and Kubernetes engineered to sustain high concurrency with sub-15ms response latency.",
   },
   {
+    icon: HiRocketLaunch,
+    iconColor: "text-purple-400",
+    iconBg: "bg-purple-500/10 border-purple-500/20",
+    badge: "03",
     title: "Full Product Lifecycle",
     desc: "From initial discovery and interactive Figma prototypes to full-stack code delivery, continuous testing, and 24/7 SLA maintenance.",
   },
   {
+    icon: HiShieldCheck,
+    iconColor: "text-emerald-400",
+    iconBg: "bg-emerald-500/10 border-emerald-500/20",
+    badge: "04",
     title: "100% IP & Code Ownership",
     desc: "Strict non-disclosure agreements (NDA), transparent milestone deliverables, and complete intellectual property ownership transferred to you.",
   },
@@ -114,22 +138,44 @@ const About: React.FC = () => {
         </div>
 
         {/* 4 Reason Cards */}
-        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {reasonCards.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="rounded-2xl border border-white/10 bg-[#070e1e]/80 p-6 backdrop-blur-xl transition hover:border-[#00D2FF]/40 hover:-translate-y-1 shadow-lg"
-            >
-              <h3 className="text-base font-bold text-white">{item.title}</h3>
-              <p className="mt-2.5 text-xs sm:text-sm text-slate-400 leading-relaxed">
-                {item.desc}
-              </p>
-            </motion.div>
-          ))}
+        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+          {reasonCards.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                className="group relative flex flex-col justify-between h-full rounded-3xl border border-white/10 bg-[#070e1e]/80 p-6 sm:p-7 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50 hover:shadow-[0_0_30px_rgba(0,210,255,0.18)] hover:-translate-y-1.5"
+              >
+                {/* Ambient Top Glow on Hover */}
+                <div className="absolute -top-[1px] left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-[#00D2FF]/0 to-transparent group-hover:via-[#00D2FF]/80 transition-all duration-300" />
+
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div
+                      className={`flex h-11 w-11 items-center justify-center rounded-2xl border ${item.iconBg} ${item.iconColor} transition-transform duration-300 group-hover:scale-110`}
+                    >
+                      <Icon className="text-xl" />
+                    </div>
+                    <span className="text-xs font-mono font-bold text-slate-500 group-hover:text-cyan-400 transition-colors">
+                      {item.badge}
+                    </span>
+                  </div>
+
+                  <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-cyan-300 transition-colors font-['Outfit']">
+                    {item.title}
+                  </h3>
+
+                  <p className="mt-2.5 text-xs sm:text-sm text-slate-300/90 leading-relaxed font-normal">
+                    {item.desc}
+                  </p>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

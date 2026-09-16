@@ -633,7 +633,7 @@ const ProductsPage: React.FC = () => {
                       </span>
                     </div>
 
-                    <div className="p-6 sm:p-7 pb-0">
+                    <div className="p-6 sm:p-7 pb-5">
                       <span className="text-[11px] font-bold text-cyan-400 font-mono block mb-1">
                         ID: #{prod.id}
                       </span>
@@ -681,21 +681,26 @@ const ProductsPage: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Actions & Timeline */}
-                  <div className="mt-6 pt-4 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <span className="text-[11px] font-mono text-slate-400">
-                      ⏱ <strong>Deployment Timeline:</strong> {prod.timeline}
-                    </span>
-
-                    <div className="flex items-center gap-2.5">
-                      <button
-                        onClick={openQuoteModal}
-                        className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] px-4 py-2 text-xs font-bold text-white shadow-[0_0_15px_rgba(0,210,255,0.3)] hover:scale-105 transition cursor-pointer"
-                      >
-                        <span>Request Demo & Quote</span>
-                        <HiArrowRight className="text-xs" />
-                      </button>
+                  {/* Actions & Timeline Footer */}
+                  <div className="bg-[#050b18]/90 border-t border-white/10 p-5 sm:px-7 sm:py-4.5">
+                    <div className="flex items-center justify-between gap-2 text-xs font-mono mb-3">
+                      <span className="flex items-center gap-1.5 text-slate-400 text-[11.5px]">
+                        <span className="text-[#00D2FF]">⏱</span>
+                        <span>Timeline:</span>
+                        <strong className="text-cyan-300 font-semibold">{prod.timeline}</strong>
+                      </span>
+                      <span className="text-[10.5px] text-emerald-400 font-semibold bg-emerald-950/40 border border-emerald-500/30 px-2 py-0.5 rounded-md">
+                        Turnkey Ready
+                      </span>
                     </div>
+
+                    <button
+                      onClick={openQuoteModal}
+                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] px-4 py-2.5 text-xs font-bold text-white shadow-[0_0_15px_rgba(0,210,255,0.3)] hover:shadow-[0_0_25px_rgba(0,102,255,0.5)] hover:scale-[1.02] active:scale-95 transition-all duration-200 cursor-pointer"
+                    >
+                      <span>Request Demo & Quote</span>
+                      <HiArrowRight className="text-xs" />
+                    </button>
                   </div>
                 </motion.div>
               ))}

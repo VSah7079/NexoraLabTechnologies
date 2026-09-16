@@ -131,7 +131,7 @@ const Process: React.FC = () => {
       <div className="relative z-10 mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 xl:px-10">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-          <div className="max-w-3xl space-y-3">
+          <div className="max-w-4xl space-y-3">
             <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#00D2FF]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#00D2FF]" />
               <span>ENGINEERING METHODOLOGY</span>
@@ -142,7 +142,7 @@ const Process: React.FC = () => {
                 Scale Your Software
               </span>
             </h2>
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
+            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal max-w-3xl">
               We follow a milestone-driven product engineering lifecycle that combines strategic discovery, user-centric design, robust full-stack engineering, and continuous SLA monitoring.
             </p>
           </div>
@@ -166,7 +166,7 @@ const Process: React.FC = () => {
         </div>
 
         {/* Step Progression Tabs Rail */}
-        <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 items-stretch">
           {steps.map((item, index) => {
             const StepIcon = item.icon;
             const isActive = activeStep === index;
@@ -174,40 +174,51 @@ const Process: React.FC = () => {
               <button
                 key={item.id}
                 onClick={() => setActiveStep(index)}
-                className={`group relative flex flex-col justify-between rounded-2xl border p-4 sm:p-5 text-left transition-all duration-300 cursor-pointer ${
+                className={`group relative flex flex-col justify-between h-full min-h-[140px] sm:min-h-[148px] rounded-2xl border p-4 sm:p-5 text-left transition-all duration-300 cursor-pointer overflow-hidden backdrop-blur-xl ${
                   isActive
-                    ? "border-[#00D2FF] bg-gradient-to-b from-[#0c1e40] to-[#070e1e] shadow-[0_0_25px_rgba(0,210,255,0.25)] scale-[1.02]"
-                    : "border-white/10 bg-[#070e1e]/70 hover:border-white/20 hover:bg-[#0c1835]"
+                    ? "border-cyan-400 bg-gradient-to-b from-[#0c2246] via-[#081530] to-[#050b18] shadow-[0_0_30px_rgba(0,210,255,0.28),0_10px_25px_rgba(0,0,0,0.8)]"
+                    : "border-white/10 bg-[#070e1e]/85 hover:border-cyan-500/40 hover:bg-[#0a1530] shadow-md"
                 }`}
               >
-                <div className="flex items-center justify-between mb-3">
+                {/* Active Top Glow Line */}
+                {isActive && (
+                  <div className="absolute -top-[1px] left-1/4 right-1/4 h-[2px] bg-gradient-to-r from-transparent via-[#00D2FF] to-transparent pointer-events-none" />
+                )}
+
+                <div className="flex items-center justify-between mb-3 w-full">
                   <div
-                    className={`flex h-10 w-10 items-center justify-center rounded-xl transition-colors ${
+                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all duration-300 ${
                       isActive
-                        ? "bg-[#00D2FF] text-black shadow-md"
-                        : "bg-white/5 text-slate-300 group-hover:text-white"
+                        ? "bg-gradient-to-tr from-[#00D2FF] to-[#0066FF] text-white shadow-[0_0_15px_rgba(0,210,255,0.4)]"
+                        : "bg-white/[0.05] border border-white/10 text-slate-300 group-hover:border-cyan-400/40 group-hover:text-cyan-300 group-hover:bg-cyan-500/10"
                     }`}
                   >
                     <StepIcon className="text-lg" />
                   </div>
                   <span
-                    className={`font-mono text-xs font-black ${
-                      isActive ? "text-[#00D2FF]" : "text-slate-500"
+                    className={`font-mono text-xs font-black transition-colors ${
+                      isActive ? "text-[#00D2FF]" : "text-slate-500 group-hover:text-slate-400"
                     }`}
                   >
                     {item.step}
                   </span>
                 </div>
 
-                <div>
+                <div className="w-full">
                   <h3
-                    className={`text-xs sm:text-sm font-bold leading-snug ${
-                      isActive ? "text-white" : "text-slate-300 group-hover:text-white"
+                    className={`text-xs sm:text-sm font-bold leading-snug transition-colors line-clamp-2 ${
+                      isActive ? "text-white" : "text-slate-200 group-hover:text-white"
                     }`}
                   >
                     {item.title}
                   </h3>
-                  <p className="text-[11px] text-slate-400 mt-1 line-clamp-1">{item.duration}</p>
+                  <p
+                    className={`text-[11px] mt-1.5 font-medium transition-colors ${
+                      isActive ? "text-cyan-300" : "text-slate-400 group-hover:text-slate-300"
+                    }`}
+                  >
+                    {item.duration}
+                  </p>
                 </div>
               </button>
             );
