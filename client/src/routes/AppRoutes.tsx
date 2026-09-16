@@ -14,6 +14,7 @@ import {
   Industries, 
   WhyChooseUs,
   TechnologyPartners,
+  Testimonials,
   Insights,
   FAQ, 
   ContactCTA,
@@ -33,6 +34,7 @@ import SolutionsPage from "../pages/Solutions/SolutionsPage";
 import ProductsPage from "../pages/Products/ProductsPage";
 import ResourcesPage from "../pages/Resources/ResourcesPage";
 import InsightsPage from "../pages/Insights/InsightsPage";
+import TestimonialsPage from "../pages/Testimonials/TestimonialsPage";
 import ContactPage from "../pages/Contact/ContactPage";
 import QuotePage from "../pages/Quote/QuotePage";
 import Meeting from "../pages/Meeting/Meeting";
@@ -60,6 +62,11 @@ import AdminServicesCMS from "../pages/Admin/AdminServicesCMS";
 import AdminProductsCMS from "../pages/Admin/AdminProductsCMS";
 import AdminPortfolioCMS from "../pages/Admin/AdminPortfolioCMS";
 import AdminInsightsCMS from "../pages/Admin/AdminInsightsCMS";
+import AdminTestimonialsCMS from "../pages/Admin/AdminTestimonialsCMS";
+import AdminFaqCMS from "../pages/Admin/AdminFaqCMS";
+import AdminSectionsCMS from "../pages/Admin/AdminSectionsCMS";
+import AdminCareersCMS from "../pages/Admin/AdminCareersCMS";
+import AdminResourcesCMS from "../pages/Admin/AdminResourcesCMS";
 import AdminSettings from "../pages/Admin/AdminSettings";
 
 // ============================================
@@ -78,6 +85,7 @@ const HomePage = () => (
     <Industries />
     <WhyChooseUs />
     <TechnologyPartners />
+    <Testimonials />
     <Insights />
     <FAQ />
     <ContactCTA />
@@ -271,9 +279,12 @@ const AppRoutes = () => {
       <Route path="/portfolio" element={<PortfolioPage />} />
       <Route path="/projects" element={<PortfolioPage />} />
       
-      {/* ✅ CAREERS & INSIGHTS ROUTE */}
+      {/* ✅ CAREERS, INSIGHTS & TESTIMONIALS ROUTE */}
       <Route path="/careers" element={<Careers />} />
       <Route path="/insights" element={<InsightsPage />} />
+      <Route path="/testimonials" element={<TestimonialsPage />} />
+      <Route path="/reviews" element={<TestimonialsPage />} />
+      <Route path="/client-reviews" element={<TestimonialsPage />} />
       
       {/* ✅ CONTACT & QUOTE ROUTES */}
       <Route path="/contact" element={<ContactPage />} />
@@ -308,10 +319,15 @@ const AppRoutes = () => {
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={<Navigate to="/admin" replace />} />
       <Route path="/admin/submissions" element={<AdminSubmissions />} />
+      <Route path="/admin/sections" element={<AdminSectionsCMS />} />
       <Route path="/admin/services" element={<AdminServicesCMS />} />
       <Route path="/admin/products" element={<AdminProductsCMS />} />
+      <Route path="/admin/resources" element={<AdminResourcesCMS />} />
       <Route path="/admin/portfolio" element={<AdminPortfolioCMS />} />
+      <Route path="/admin/careers" element={<AdminCareersCMS />} />
       <Route path="/admin/insights" element={<AdminInsightsCMS />} />
+      <Route path="/admin/testimonials" element={<AdminTestimonialsCMS />} />
+      <Route path="/admin/faqs" element={<AdminFaqCMS />} />
       <Route path="/admin/settings" element={<AdminSettings />} />
       
       {/* ✅ 404 - MUST BE LAST */}

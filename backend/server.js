@@ -65,9 +65,20 @@ app.use(
   })
 );
 
-// 4. Request Body Parsers with Strict Size Limits (Prevents payload flooding/DoS attacks)
-app.use(express.json({ limit: '50kb' }));
-app.use(express.urlencoded({ extended: true, limit: '50kb' }));
+const path = require('path');
+const fs = require('fs');
+
+const UPLOADS_DIR = path.join(__dirname, 'uploads');
+if (!fs.existsSync(UPLOADS_DIR)) {
+  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+}
+
+// 4. Request Body Parsers with 10mb limit for image uploads
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Static uploads serving
+app.use('/uploads', express.static(UPLOADS_DIR));
 
 // 5. NoSQL Injection Sanitization (Strips MongoDB operators like $gt, $ne, etc.)
 app.use(mongoSanitize());

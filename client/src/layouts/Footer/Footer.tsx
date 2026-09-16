@@ -20,6 +20,7 @@ import { useModal } from "@/context/ModalContext";
 
 const companyLinks = [
   { name: "About NexoraLab", path: "/about" },
+  { name: "Client Testimonials & Reviews", path: "/testimonials" },
   { name: "Products Catalog", path: "/products" },
   { name: "Technical Resources", path: "/resources" },
   { name: "Client Portfolio", path: "/portfolio" },

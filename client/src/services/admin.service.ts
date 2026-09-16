@@ -23,6 +23,10 @@ export const removeAdminToken = () => {
   if (typeof window !== 'undefined') {
     localStorage.removeItem(ADMIN_TOKEN_KEY);
     localStorage.removeItem(ADMIN_USER_KEY);
+    localStorage.removeItem('nexora_admin_token');
+    localStorage.removeItem('nexora_admin_profile');
+    sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+    sessionStorage.removeItem(ADMIN_USER_KEY);
   }
 };
 
@@ -127,7 +131,7 @@ export const adminService = {
     }),
 
   // CMS Content
-  getContent: (type: 'service' | 'product' | 'portfolio' | 'insight' | 'testimonial') =>
+  getContent: (type: 'service' | 'services' | 'product' | 'products' | 'portfolio' | 'insight' | 'insights' | 'testimonial' | 'testimonials' | 'faq' | 'faqs' | 'section' | 'sections' | string) =>
     adminFetch(`/admin/content/${type}`),
 
   createContent: (type: string, payload: any) =>

@@ -24,7 +24,7 @@ export interface PublicSettings {
 }
 
 export const contentService = {
-  getContent: async (type: 'services' | 'products' | 'portfolio' | 'insights' | 'service' | 'product' | 'insight') => {
+  getContent: async (type: 'services' | 'products' | 'portfolio' | 'insights' | 'testimonials' | 'faqs' | 'sections' | string) => {
     try {
       const res = await fetch(`${API_BASE_URL}/content/${type}`);
       const data = await res.json();

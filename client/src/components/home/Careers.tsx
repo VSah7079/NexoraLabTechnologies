@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import SEO from "@/components/common/SEO";
@@ -284,6 +284,8 @@ const culturePerks = [
   },
 ];
 
+import { contentService } from "@/services/content.service";
+
 const Careers: React.FC = () => {
   const location = useLocation();
   const isStandalone = location.pathname === "/careers";
@@ -292,6 +294,35 @@ const Careers: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedJob, setSelectedJob] = useState<JobPosition | null>(null);
   const [applyingJob, setApplyingJob] = useState<JobPosition | null>(null);
+  const [positionsList, setPositionsList] = useState<JobPosition[]>(openPositions);
+
+  useEffect(() => {
+    const fetchCmsCareers = async () => {
+      try {
+        const items = await contentService.getContent("careers");
+        if (items && items.length > 0) {
+          const mapped: JobPosition[] = items.map((item: any, idx: number) => ({
+            id: item._id || item.id || idx + 1,
+            title: item.title,
+            department: (item.department || "Engineering") as any,
+            location: item.location || "Siwan, Bihar / Remote",
+            type: item.jobType || "Full-Time",
+            experience: item.experience || "3+ Years",
+            salary: item.salary || "Competitive",
+            tags: Array.isArray(item.tags) ? item.tags : ["Engineering"],
+            description: item.description || "",
+            responsibilities: Array.isArray(item.responsibilities) ? item.responsibilities : [],
+            requirements: Array.isArray(item.requirements) ? item.requirements : [],
+            perks: Array.isArray(item.perks) ? item.perks : [],
+          }));
+          setPositionsList(mapped);
+        }
+      } catch {
+        // Fallback to openPositions
+      }
+    };
+    fetchCmsCareers();
+  }, []);
 
   // Application form state
   const [applicantName, setApplicantName] = useState("");
@@ -304,13 +335,13 @@ const Careers: React.FC = () => {
 
   const departments = ["All", "Engineering", "AI & Data", "Design", "Business"];
 
-  const filteredJobs = openPositions.filter((job) => {
+  const filteredJobs = positionsList.filter((job) => {
     const matchesDept =
       activeDepartment === "All" || job.department === activeDepartment;
     const matchesSearch =
       searchQuery === "" ||
       job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (Array.isArray(job.tags) && job.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()))) ||
       job.location.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesDept && matchesSearch;
   });

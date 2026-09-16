@@ -15,9 +15,10 @@ const globalLimiter = rateLimit({
 // 2. Strict Authentication & Admin Route Limiter (Stops Brute Force & Credential Stuffing)
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10, // Max 10 attempts per 15 minutes per IP
+  max: process.env.NODE_ENV === 'production' ? 15 : 200, // Generous limit in dev, strict in prod
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => process.env.NODE_ENV !== 'production' && (req.ip === '127.0.0.1' || req.ip === '::1' || req.ip === '::ffff:127.0.0.1'),
   message: {
     success: false,
     message: 'Too many authentication attempts. For security reasons, this IP is temporarily rate-limited for 15 minutes.',

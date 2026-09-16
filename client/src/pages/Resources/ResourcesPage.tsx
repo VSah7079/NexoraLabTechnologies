@@ -758,6 +758,8 @@ const faqsList = [
   },
 ];
 
+import { contentService } from "@/services/content.service";
+
 const ResourcesPage: React.FC = () => {
   const { openQuoteModal, openBrochureModal } = useModal();
   const location = useLocation();
@@ -765,6 +767,7 @@ const ResourcesPage: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [resourceItems, setResourceItems] = useState<ResourceItem[]>(allResources);
 
   // Auto-scroll to hash anchor if present
   React.useEffect(() => {
@@ -779,8 +782,42 @@ const ResourcesPage: React.FC = () => {
     }
   }, [location.hash]);
 
+  // Fetch dynamic CMS resources
+  React.useEffect(() => {
+    const fetchCmsResources = async () => {
+      try {
+        const items = await contentService.getContent("resources");
+        if (items && items.length > 0) {
+          const mapped: ResourceItem[] = items.map((item: any, idx: number) => ({
+            id: item._id || item.id || `cms_res_${idx}`,
+            category: (item.category?.includes("Guides") ? "guides-whitepapers" : item.category?.includes("Cloud") ? "cloud-iac-blueprints" : item.category?.includes("Security") ? "security-compliance" : item.category?.includes("Deck") ? "downloads-deck" : "guides-whitepapers") as any,
+            categoryLabel: item.category || "Guides & Engineering Blogs",
+            emoji: "💡",
+            badge: item.badge || "Engineering Hub",
+            badgeColor: "text-cyan-300 bg-cyan-500/10 border-cyan-500/30",
+            title: item.title,
+            tagline: item.subtitle || item.tagline || "",
+            desc: item.description || "",
+            highlights: Array.isArray(item.highlights) ? item.highlights : [],
+            techTags: Array.isArray(item.techTags) ? item.techTags : ["Engineering"],
+            link: item.link || "/insights",
+            linkLabel: item.linkLabel || "Explore Resource",
+          }));
+          // Merge: dynamic items first, then static defaults that aren't duplicates
+          const nonDupes = allResources.filter(
+            (def) => !mapped.some((m) => m.title.toLowerCase() === def.title.toLowerCase())
+          );
+          setResourceItems([...mapped, ...nonDupes]);
+        }
+      } catch {
+        // Keep default allResources
+      }
+    };
+    fetchCmsResources();
+  }, []);
+
   const filteredResources = useMemo(() => {
-    return allResources.filter((item) => {
+    return resourceItems.filter((item) => {
       const matchesCategory = activeCategory === "all" || item.category === activeCategory;
       const query = searchQuery.toLowerCase().trim();
       const matchesQuery =
@@ -792,7 +829,7 @@ const ResourcesPage: React.FC = () => {
         item.highlights.some((h) => h.toLowerCase().includes(query));
       return matchesCategory && matchesQuery;
     });
-  }, [activeCategory, searchQuery]);
+  }, [activeCategory, searchQuery, resourceItems]);
 
   return (
     <>

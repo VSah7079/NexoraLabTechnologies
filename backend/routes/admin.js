@@ -209,6 +209,21 @@ router.get('/dashboard-stats', verifyAdminToken, async (req, res) => {
     // Estimate total potential deal value
     const highValueQuotes = quotes.filter((q) => q.budget && (q.budget.includes('$15,000') || q.budget.includes('$35,000') || q.budget.includes('Enterprise'))).length;
 
+    let allContent = [];
+    if (isMongoConnected()) {
+      allContent = await ContentItem.find();
+    } else {
+      allContent = readDiskData('content');
+    }
+
+    const servicesCount = allContent.filter((c) => c.type === 'services' || c.type === 'service').length;
+    const productsCount = allContent.filter((c) => c.type === 'products' || c.type === 'product').length;
+    const portfolioCount = allContent.filter((c) => c.type === 'portfolio').length;
+    const insightsCount = allContent.filter((c) => c.type === 'insights' || c.type === 'insight').length;
+    const testimonialsCount = allContent.filter((c) => c.type === 'testimonials' || c.type === 'testimonial').length;
+    const faqsCount = allContent.filter((c) => c.type === 'faqs' || c.type === 'faq').length;
+    const sectionsCount = allContent.filter((c) => c.type === 'sections' || c.type === 'section').length;
+
     res.json({
       success: true,
       stats: {
@@ -222,6 +237,16 @@ router.get('/dashboard-stats', verifyAdminToken, async (req, res) => {
         contactedCount: contacted,
         convertedCount: converted,
         highValueQuotes,
+        cms: {
+          services: servicesCount,
+          products: productsCount,
+          portfolio: portfolioCount,
+          insights: insightsCount,
+          testimonials: testimonialsCount,
+          faqs: faqsCount,
+          sections: sectionsCount,
+          totalCmsItems: allContent.length,
+        },
       },
       recentActivity: submissions.slice(0, 10),
     });
@@ -733,5 +758,54 @@ router.put(
     }
   }
 );
+
+// 11. Upload Image File (Accepts Base64 Data URI or raw buffer and saves to /uploads)
+router.post('/upload-image', verifyAdminToken, async (req, res) => {
+  try {
+    const { image, filename, base64 } = req.body;
+    const rawData = image || base64;
+
+    if (!rawData) {
+      return res.status(400).json({ success: false, message: 'Image base64 data required.' });
+    }
+
+    // Determine extension & clean base64 string
+    let extension = 'png';
+    let base64Image = rawData;
+
+    if (rawData.startsWith('data:')) {
+      const match = rawData.match(/^data:image\/([a-zA-Z0-9+]+);base64,/);
+      if (match) {
+        extension = match[1] === 'jpeg' ? 'jpg' : match[1];
+        base64Image = rawData.replace(/^data:image\/[a-zA-Z0-9+]+;base64,/, '');
+      }
+    }
+
+    const buffer = Buffer.from(base64Image, 'base64');
+    const safeName = (filename ? filename.replace(/[^a-zA-Z0-9_-]/g, '_') : 'img') + '_' + Date.now() + '.' + extension;
+    const path = require('path');
+    const fs = require('fs');
+    const uploadsDir = path.join(__dirname, '../uploads');
+
+    if (!fs.existsSync(uploadsDir)) {
+      fs.mkdirSync(uploadsDir, { recursive: true });
+    }
+
+    const filePath = path.join(uploadsDir, safeName);
+    fs.writeFileSync(filePath, buffer);
+
+    const fileUrl = `/uploads/${safeName}`;
+
+    res.json({
+      success: true,
+      message: 'Image uploaded successfully!',
+      url: fileUrl,
+      filename: safeName,
+    });
+  } catch (error) {
+    console.error('Image upload error:', error);
+    res.status(500).json({ success: false, message: 'Failed to upload image.', error: error.message });
+  }
+});
 
 module.exports = router;

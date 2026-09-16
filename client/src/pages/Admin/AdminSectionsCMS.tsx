@@ -3,24 +3,25 @@ import {
   HiPlus,
   HiPencil,
   HiTrash,
-  HiDevicePhoneMobile,
+  HiRectangleGroup,
   HiXMark,
   HiMagnifyingGlass,
+  HiSparkles,
   HiArrowTopRightOnSquare,
 } from "react-icons/hi2";
 import AdminLayout from "./AdminLayout";
 import { adminService } from "@/services/admin.service";
 import ImageUploadField from "@/components/admin/ImageUploadField";
 
-const productCategories = [
-  "Talent AI & ATS",
-  "DevOps & Cloud Auto-Scaler",
-  "Enterprise AI Copilot",
-  "FinTech SaaS Suite",
-  "HealthTech HIPAA Suite",
+const sectionCategories = [
+  "Home Hero Banner",
+  "About Us Overview",
+  "CTA Banners",
+  "Technology Partners",
+  "Global Delivery Network",
 ];
 
-const AdminProductsCMS: React.FC = () => {
+const AdminSectionsCMS: React.FC = () => {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -31,47 +32,50 @@ const AdminProductsCMS: React.FC = () => {
   const [formData, setFormData] = useState({
     title: "",
     subtitle: "",
-    category: "Talent AI & ATS",
-    description: "",
-    badge: "Turnkey SaaS",
+    badge: "Enterprise Software & AI Agency",
+    category: "Home Hero Banner",
     imageUrl: "",
-    liveUrl: "",
-    price: "",
-    featuresStr: "",
+    description: "",
+    ctaText: "Schedule Discovery",
+    ctaLink: "/meeting",
+    secondaryCtaText: "Explore Products",
+    secondaryCtaLink: "/products",
     order: 0,
     isActive: true,
   });
 
-  const fetchProducts = async () => {
+  const fetchSections = async () => {
     setLoading(true);
     try {
-      const res = await adminService.getContent("products");
+      const res = await adminService.getContent("sections");
       if (res.success && res.items) {
         setItems(res.items);
       }
     } catch {
       setItems([
         {
-          _id: "p1",
-          title: "Nexora AI Talent Intelligence & ATS Engine",
-          subtitle: "Autonomous resume parsing, semantic score matching, and candidate evaluation",
-          category: "Talent AI & ATS",
-          description: "AI-powered recruitment suite that parses resumes in seconds, calculates deep semantic match scores against job descriptions, and predicts candidate skill fit.",
-          badge: "Turnkey SaaS",
-          liveUrl: "/resume-analyzer",
-          features: ["Instant Multi-Format Resume Parser", "Semantic Skill Matching Engine", "Bias-Free Automated Screening", "Custom Interview Generator"],
+          _id: "sec_1",
+          title: "Hero Section Banner",
+          subtitle: "Innovate • Build • Elevate",
+          badge: "Enterprise Software & AI Agency",
+          category: "Home Hero Banner",
+          description: "We engineer mission-critical web applications, enterprise SaaS platforms, native mobile experiences, and proprietary AI talent intelligence engines for visionary companies globally.",
+          ctaText: "Schedule Engineering Discovery",
+          ctaLink: "/meeting",
+          secondaryCtaText: "Explore Turnkey Products",
+          secondaryCtaLink: "/products",
           order: 1,
           isActive: true,
         },
         {
-          _id: "p2",
-          title: "Nexora CloudOps Auto-Scaler",
-          subtitle: "Autonomous Kubernetes cloud cost optimizer and self-healing cluster manager",
-          category: "DevOps & Cloud Auto-Scaler",
-          description: "Intelligent monitoring agent that dynamically sizes cloud nodes based on predicted traffic, reducing AWS/GCP bills by up to 40%.",
-          badge: "DevOps Tool",
-          liveUrl: "/services",
-          features: ["Real-time Node Predictive Scaling", "Automated Health Recovery", "Slack/Discord Alert Integrations", "Multi-Cloud Dashboard"],
+          _id: "sec_2",
+          title: "About Company Narrative",
+          subtitle: "Headquartered in Siwan, Bihar • Serving Clients Worldwide",
+          badge: "Our Mission & Vision",
+          category: "About Us Overview",
+          description: "NexoraLab Technologies was founded with a singular conviction: to deliver Tier-1 software engineering, resilient cloud infrastructure, and state-of-the-art AI solutions with world-class craftsmanship and transparent execution.",
+          ctaText: "Get in Touch",
+          ctaLink: "/contact",
           order: 2,
           isActive: true,
         },
@@ -82,7 +86,7 @@ const AdminProductsCMS: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchProducts();
+    fetchSections();
   }, []);
 
   const handleOpenAddModal = () => {
@@ -90,13 +94,14 @@ const AdminProductsCMS: React.FC = () => {
     setFormData({
       title: "",
       subtitle: "",
-      category: productCategories[0],
-      description: "",
-      badge: "Turnkey SaaS",
+      badge: "Enterprise Division",
+      category: sectionCategories[0],
       imageUrl: "",
-      liveUrl: "",
-      price: "",
-      featuresStr: "",
+      description: "",
+      ctaText: "Get Started",
+      ctaLink: "/quote",
+      secondaryCtaText: "",
+      secondaryCtaLink: "",
       order: items.length + 1,
       isActive: true,
     });
@@ -108,13 +113,14 @@ const AdminProductsCMS: React.FC = () => {
     setFormData({
       title: item.title || "",
       subtitle: item.subtitle || "",
-      category: item.category || productCategories[0],
-      description: item.description || "",
       badge: item.badge || "",
+      category: item.category || sectionCategories[0],
       imageUrl: item.imageUrl || item.image || "",
-      liveUrl: item.liveUrl || "",
-      price: item.price || "",
-      featuresStr: Array.isArray(item.features) ? item.features.join(", ") : "",
+      description: item.description || item.content || "",
+      ctaText: item.ctaText || "",
+      ctaLink: item.ctaLink || "",
+      secondaryCtaText: item.secondaryCtaText || "",
+      secondaryCtaLink: item.secondaryCtaLink || "",
       order: item.order || 0,
       isActive: item.isActive !== false,
     });
@@ -126,47 +132,43 @@ const AdminProductsCMS: React.FC = () => {
     if (!formData.title.trim()) return;
 
     setSaving(true);
-    const features = formData.featuresStr
-      .split(",")
-      .map((f) => f.trim())
-      .filter(Boolean);
-
     const payload = {
       title: formData.title.trim(),
       subtitle: formData.subtitle.trim(),
-      category: formData.category,
-      description: formData.description.trim(),
       badge: formData.badge.trim(),
+      category: formData.category,
       imageUrl: formData.imageUrl.trim(),
-      liveUrl: formData.liveUrl.trim(),
-      price: formData.price.trim(),
-      features,
+      description: formData.description.trim(),
+      ctaText: formData.ctaText.trim(),
+      ctaLink: formData.ctaLink.trim(),
+      secondaryCtaText: formData.secondaryCtaText.trim(),
+      secondaryCtaLink: formData.secondaryCtaLink.trim(),
       order: Number(formData.order),
       isActive: formData.isActive,
     };
 
     try {
       if (editingItem) {
-        await adminService.updateContent("products", editingItem._id || editingItem.id, payload);
+        await adminService.updateContent("sections", editingItem._id || editingItem.id, payload);
       } else {
-        await adminService.createContent("products", payload);
+        await adminService.createContent("sections", payload);
       }
       setIsModalOpen(false);
-      fetchProducts();
+      fetchSections();
     } catch (err: any) {
-      alert(err.message || "Failed to save product");
+      alert(err.message || "Failed to save section");
     } finally {
       setSaving(false);
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this product?")) return;
+    if (!confirm("Are you sure you want to delete this section banner?")) return;
     try {
-      await adminService.deleteContent("products", id);
-      fetchProducts();
+      await adminService.deleteContent("sections", id);
+      fetchSections();
     } catch (err: any) {
-      alert(err.message || "Failed to delete product");
+      alert(err.message || "Failed to delete section");
     }
   };
 
@@ -178,16 +180,16 @@ const AdminProductsCMS: React.FC = () => {
 
   return (
     <AdminLayout
-      title="Turnkey SaaS Products CMS"
-      subtitle="Publish proprietary software, AI tools, and enterprise modules accessible to clients."
-      badge="Product Studio"
+      title="Hero & Site Banners CMS"
+      subtitle="Customize home hero copy, company about story, call-to-action buttons, and trust copy across the site."
+      badge="Site Studio"
       actionButton={
         <button
           onClick={handleOpenAddModal}
-          className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 px-4 py-2.5 text-xs font-bold text-white shadow-[0_0_20px_rgba(59,130,246,0.3)] transition hover:scale-105 active:scale-95 cursor-pointer"
+          className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2.5 text-xs font-bold text-white shadow-[0_0_20px_rgba(0,210,255,0.3)] transition hover:scale-105 active:scale-95 cursor-pointer"
         >
           <HiPlus size={16} />
-          <span>Add New Product</span>
+          <span>Add Section Banner</span>
         </button>
       }
     >
@@ -202,40 +204,40 @@ const AdminProductsCMS: React.FC = () => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search products..."
+              placeholder="Search site sections..."
               className="w-full rounded-2xl border border-white/10 bg-white/5 pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
             />
           </div>
         </div>
 
-        {/* Products Grid */}
+        {/* Grid */}
         {loading ? (
           <div className="p-12 text-center">
             <div className="mx-auto h-8 w-8 rounded-full border-2 border-cyan-400 border-t-transparent animate-spin" />
           </div>
         ) : filteredItems.length === 0 ? (
           <div className="p-12 rounded-3xl border border-white/10 bg-[#060c1c]/90 text-center space-y-2">
-            <p className="text-sm font-bold text-white">No products found.</p>
-            <p className="text-xs text-slate-400">Click "Add New Product" to configure one.</p>
+            <p className="text-sm font-bold text-white">No section banners found.</p>
+            <p className="text-xs text-slate-400">Click "Add Section Banner" to create one.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {filteredItems.map((item) => (
               <div
                 key={item._id || item.id}
-                className={`rounded-3xl border p-5 backdrop-blur-xl transition space-y-4 flex flex-col justify-between ${
+                className={`rounded-3xl border p-6 backdrop-blur-xl transition space-y-4 flex flex-col justify-between ${
                   item.isActive !== false
-                    ? "border-white/10 bg-[#060c1c]/90 hover:border-blue-500/40"
+                    ? "border-white/10 bg-[#060c1c]/90 hover:border-cyan-500/40"
                     : "border-white/5 bg-[#060c1c]/40 opacity-60"
                 }`}
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-md border border-blue-500/20">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded-md border border-cyan-500/20">
                       {item.category}
                     </span>
                     {item.badge && (
-                      <span className="text-[10px] font-bold text-cyan-300 bg-cyan-500/10 px-2 py-0.5 rounded-md border border-cyan-500/20">
+                      <span className="text-[10px] font-bold text-violet-300 bg-violet-500/10 px-2 py-0.5 rounded-md border border-violet-500/20">
                         {item.badge}
                       </span>
                     )}
@@ -252,56 +254,45 @@ const AdminProductsCMS: React.FC = () => {
                   )}
 
                   <div>
-                    <h3 className="text-base font-black text-white font-['Outfit']">{item.title}</h3>
-                    {item.subtitle && <p className="text-xs text-slate-400 font-medium mt-0.5">{item.subtitle}</p>}
+                    <h3 className="text-lg font-black text-white font-['Outfit']">{item.title}</h3>
+                    {item.subtitle && <p className="text-xs text-cyan-300 font-semibold mt-0.5">{item.subtitle}</p>}
                   </div>
 
-                  <p className="text-xs text-slate-300 line-clamp-3 leading-relaxed">{item.description}</p>
+                  <p className="text-xs text-slate-300 leading-relaxed">{item.description}</p>
 
-                  {item.liveUrl && (
-                    <a
-                      href={item.liveUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1 text-[11px] font-bold text-cyan-400 hover:text-cyan-300 transition"
-                    >
-                      <span>Live Product Demo</span>
-                      <HiArrowTopRightOnSquare />
-                    </a>
-                  )}
-
-                  {Array.isArray(item.features) && item.features.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 pt-1">
-                      {item.features.map((f: string, idx: number) => (
-                        <span
-                          key={idx}
-                          className="text-[10px] font-semibold text-slate-300 bg-white/5 px-2 py-0.5 rounded-md border border-white/5"
-                        >
-                          ✓ {f}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                  {/* CTAs preview */}
+                  <div className="flex flex-wrap gap-2 pt-2 border-t border-white/5">
+                    {item.ctaText && (
+                      <span className="text-[11px] font-bold text-black bg-cyan-400 px-3 py-1 rounded-xl">
+                        Primary CTA: {item.ctaText} ({item.ctaLink || "#"})
+                      </span>
+                    )}
+                    {item.secondaryCtaText && (
+                      <span className="text-[11px] font-bold text-white bg-white/10 px-3 py-1 rounded-xl border border-white/10">
+                        Secondary: {item.secondaryCtaText} ({item.secondaryCtaLink || "#"})
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 <div className="pt-4 border-t border-white/10 flex items-center justify-between">
                   <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
                     <span className={`h-2 w-2 rounded-full ${item.isActive !== false ? "bg-emerald-400" : "bg-slate-500"}`} />
-                    <span>{item.isActive !== false ? "Active" : "Draft"}</span>
+                    <span>{item.isActive !== false ? "Live on Site" : "Draft"}</span>
                   </div>
 
                   <div className="flex items-center gap-1.5">
                     <button
                       onClick={() => handleOpenEditModal(item)}
-                      className="p-2 rounded-xl bg-white/5 hover:bg-blue-500/20 text-slate-300 hover:text-blue-300 transition"
-                      title="Edit Product"
+                      className="p-2 rounded-xl bg-white/5 hover:bg-cyan-500/20 text-slate-300 hover:text-cyan-300 transition"
+                      title="Edit Section"
                     >
                       <HiPencil size={15} />
                     </button>
                     <button
                       onClick={() => handleDelete(item._id || item.id)}
                       className="p-2 rounded-xl bg-white/5 hover:bg-red-500/20 text-slate-300 hover:text-red-400 transition"
-                      title="Delete Product"
+                      title="Delete Section"
                     >
                       <HiTrash size={15} />
                     </button>
@@ -318,7 +309,7 @@ const AdminProductsCMS: React.FC = () => {
             <div className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-3xl border border-white/15 bg-[#060c1c] p-6 sm:p-8 shadow-2xl space-y-6">
               <div className="flex items-center justify-between border-b border-white/10 pb-4">
                 <h2 className="text-xl font-black text-white font-['Outfit']">
-                  {editingItem ? "Edit Product" : "Add New SaaS Product"}
+                  {editingItem ? "Edit Section Banner" : "Add Section Banner"}
                 </h2>
                 <button
                   onClick={() => setIsModalOpen(false)}
@@ -330,12 +321,12 @@ const AdminProductsCMS: React.FC = () => {
 
               <form onSubmit={handleSave} className="space-y-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-300">Product Title</label>
+                  <label className="text-xs font-bold text-slate-300">Section Headline</label>
                   <input
                     type="text"
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    placeholder="e.g. Nexora AI Talent Intelligence & ATS Engine"
+                    placeholder="e.g. Hero Section Banner"
                     required
                     className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
                   />
@@ -343,13 +334,13 @@ const AdminProductsCMS: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-300">Category</label>
+                    <label className="text-xs font-bold text-slate-300">Category Section</label>
                     <select
                       value={formData.category}
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                       className="w-full rounded-2xl border border-white/10 bg-[#040814] px-4 py-2.5 text-xs text-white focus:border-cyan-400 focus:outline-none"
                     >
-                      {productCategories.map((c) => (
+                      {sectionCategories.map((c) => (
                         <option key={c} value={c}>
                           {c}
                         </option>
@@ -358,72 +349,97 @@ const AdminProductsCMS: React.FC = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-300">Badge</label>
+                    <label className="text-xs font-bold text-slate-300">Badge Tag</label>
                     <input
                       type="text"
                       value={formData.badge}
                       onChange={(e) => setFormData({ ...formData, badge: e.target.value })}
-                      placeholder="e.g. Turnkey SaaS, AI Tool"
+                      placeholder="e.g. Enterprise Software & AI Agency"
                       className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-300">Subtitle / Tagline</label>
+                  <label className="text-xs font-bold text-slate-300">Subtitle / Hook</label>
                   <input
                     type="text"
                     value={formData.subtitle}
                     onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })}
-                    placeholder="Autonomous resume parsing and talent evaluation"
+                    placeholder="e.g. Innovate • Build • Elevate"
                     className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
                   />
                 </div>
 
                 <ImageUploadField
-                  label="Product Thumbnail / Dashboard Preview Image"
+                  label="Section Hero Graphic / Background Banner"
                   value={formData.imageUrl}
                   onChange={(url) => setFormData({ ...formData, imageUrl: url })}
-                  placeholder="Paste direct image URL or upload image file..."
+                  placeholder="Paste direct image URL or upload section graphic..."
                 />
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-300">Live Demo / Product URL</label>
-                  <input
-                    type="text"
-                    value={formData.liveUrl}
-                    onChange={(e) => setFormData({ ...formData, liveUrl: e.target.value })}
-                    placeholder="e.g. /resume-analyzer or https://..."
-                    className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-300">Product Description</label>
+                  <label className="text-xs font-bold text-slate-300">Section Narrative / Copy</label>
                   <textarea
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    rows={3}
-                    placeholder="Describe functionality, capabilities, and target users..."
+                    rows={4}
+                    placeholder="Enter the main copy displayed in this section..."
+                    required
                     className="w-full rounded-2xl border border-white/10 bg-white/5 p-3.5 text-xs text-white placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
                   />
                 </div>
 
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-300">
-                    Feature Capabilities (Comma-separated)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.featuresStr}
-                    onChange={(e) => setFormData({ ...formData, featuresStr: e.target.value })}
-                    placeholder="Multi-Format Resume Parser, Semantic Matching, Custom Question Generator"
-                    className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-300">Primary CTA Text</label>
+                    <input
+                      type="text"
+                      value={formData.ctaText}
+                      onChange={(e) => setFormData({ ...formData, ctaText: e.target.value })}
+                      placeholder="e.g. Schedule Discovery"
+                      className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-300">Primary CTA Link</label>
+                    <input
+                      type="text"
+                      value={formData.ctaLink}
+                      onChange={(e) => setFormData({ ...formData, ctaLink: e.target.value })}
+                      placeholder="e.g. /meeting or /quote"
+                      className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-300">Secondary CTA Text</label>
+                    <input
+                      type="text"
+                      value={formData.secondaryCtaText}
+                      onChange={(e) => setFormData({ ...formData, secondaryCtaText: e.target.value })}
+                      placeholder="e.g. Explore Products"
+                      className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-300">Secondary CTA Link</label>
+                    <input
+                      type="text"
+                      value={formData.secondaryCtaLink}
+                      onChange={(e) => setFormData({ ...formData, secondaryCtaLink: e.target.value })}
+                      placeholder="e.g. /products"
+                      className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
+                    />
+                  </div>
                 </div>
 
                 <div className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.02] border border-white/5">
-                  <span className="text-xs font-bold text-slate-200">Active / Published</span>
+                  <span className="text-xs font-bold text-slate-200">Active on Website</span>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
@@ -431,7 +447,7 @@ const AdminProductsCMS: React.FC = () => {
                       onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
                       className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500" />
+                    <div className="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cyan-500" />
                   </label>
                 </div>
 
@@ -446,9 +462,9 @@ const AdminProductsCMS: React.FC = () => {
                   <button
                     type="submit"
                     disabled={saving}
-                    className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 text-xs font-bold text-white transition disabled:opacity-50"
+                    className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-xs font-bold text-white transition disabled:opacity-50"
                   >
-                    {saving ? "Saving..." : editingItem ? "Update Product" : "Publish Product"}
+                    {saving ? "Saving..." : editingItem ? "Update Section" : "Publish Section"}
                   </button>
                 </div>
               </form>
@@ -460,4 +476,4 @@ const AdminProductsCMS: React.FC = () => {
   );
 };
 
-export default AdminProductsCMS;
+export default AdminSectionsCMS;

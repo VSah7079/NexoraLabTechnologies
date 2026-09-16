@@ -1,15 +1,17 @@
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import { HiArrowRight, HiStar } from "react-icons/hi2";
+import { contentService } from "@/services/content.service";
 
 import "swiper/css";
 import "swiper/css/pagination";
 
-const testimonials = [
+const defaultTestimonials = [
   {
-    id: 1,
+    id: "t1",
     name: "Rahul Sharma",
     company: "TechNova Pvt. Ltd.",
     role: "CEO & Founder",
@@ -19,7 +21,7 @@ const testimonials = [
       "NexoraLab Technologies delivered an outstanding enterprise ERP solution that completely transformed our operations and accelerated workflow by 400%.",
   },
   {
-    id: 2,
+    id: "t2",
     name: "Priya Verma",
     company: "EduSmart Platforms",
     role: "Product Director",
@@ -29,7 +31,7 @@ const testimonials = [
       "World-class engineering team! The UI/UX redesign gave our EdTech app a ultra-premium feel with flawless sub-second loading performance.",
   },
   {
-    id: 3,
+    id: "t3",
     name: "Amit Singh",
     company: "HealthCare Plus",
     role: "Managing Director",
@@ -39,7 +41,7 @@ const testimonials = [
       "The HIPAA-compliant hospital management & analytics suite exceeded all our expectations. Highly recommended for critical enterprise software.",
   },
   {
-    id: 4,
+    id: "t4",
     name: "Sneha Patel",
     company: "Retail Hub Global",
     role: "CTO",
@@ -51,6 +53,30 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
+  const [items, setItems] = useState(defaultTestimonials);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const cmsItems = await contentService.getContent("testimonials");
+        if (cmsItems && cmsItems.length > 0) {
+          const mapped = cmsItems.map((item: any, idx: number) => ({
+            id: item._id || item.id || `cms_t_${idx}`,
+            name: item.clientName || item.name || "Verified Client",
+            company: item.company || "Enterprise Client",
+            role: item.role || "Executive",
+            image: item.avatarUrl || item.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(item.clientName || "Client")}&background=00D2FF&color=fff&size=64&bold=true`,
+            rating: item.rating || 5,
+            review: item.description || item.content || item.review || "",
+          }));
+          setItems(mapped);
+        }
+      } catch {
+        // Fallback to defaultTestimonials
+      }
+    };
+    fetchReviews();
+  }, []);
   return (
     <section
       id="testimonials"
@@ -127,7 +153,7 @@ const Testimonials = () => {
               },
             }}
           >
-            {testimonials.map((item) => (
+            {items.map((item) => (
               <SwiperSlide key={item.id}>
                 <motion.div
                   whileHover={{ y: -8 }}
