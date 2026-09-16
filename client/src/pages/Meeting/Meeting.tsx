@@ -34,6 +34,7 @@ const Meeting = () => {
     topic: "web-saas",
     meetingType: "video",
     message: "",
+    _hp: "", // Anti-spam bot honeypot
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -63,10 +64,35 @@ const Meeting = () => {
     { slot: "08:00 PM", period: "Night / US Overlap" },
   ];
 
+  const validate = () => {
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedPhone = formData.phone.trim();
+
+    if (!trimmedName || trimmedName.length < 2) {
+      setError("Please enter your full name (minimum 2 characters).");
+      return false;
+    }
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!trimmedEmail || !emailRegex.test(trimmedEmail)) {
+      setError("Please enter a valid business email address.");
+      return false;
+    }
+    const phoneDigits = trimmedPhone.replace(/\D/g, "");
+    if (!phoneDigits || phoneDigits.length < 7 || phoneDigits.length > 15) {
+      setError("Please enter a valid phone number (7-15 digits).");
+      return false;
+    }
+    if (!formData.date || !formData.time) {
+      setError("Please select your preferred meeting date and time slot.");
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.phone || !formData.date || !formData.time) {
-      setError("Please fill in all mandatory fields highlighted with an asterisk (*).");
+    if (!validate()) {
       return;
     }
 
@@ -75,15 +101,16 @@ const Meeting = () => {
 
     try {
       await formsService.submitMeeting({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
         countryCode: "+91",
-        company: formData.company,
+        company: formData.company.trim(),
         meetingDate: formData.date,
         meetingTimeSlot: formData.time,
         meetingTopic: formData.topic,
-        meetingAgenda: formData.message,
+        meetingAgenda: formData.message.trim() || "No agenda provided",
+        _hp: formData._hp,
       });
 
       setIsSubmitting(false);
@@ -92,7 +119,7 @@ const Meeting = () => {
       const topicLabel = consultationTopics.find((t) => t.id === formData.topic)?.label || formData.topic;
       const typeLabel = meetingTypes.find((m) => m.id === formData.meetingType)?.label || formData.meetingType;
 
-      const whatsappMessage = `Hi NexoraLab Technologies,%0A%0AI would like to schedule an Engineering Consultation:%0A%0A👤 *Name:* ${formData.name}%0A🏢 *Company:* ${formData.company || "N/A"}%0A📧 *Email:* ${formData.email}%0A📱 *Phone:* ${formData.phone}%0A🎯 *Topic:* ${topicLabel}%0A📹 *Channel:* ${typeLabel}%0A📅 *Preferred Date:* ${formData.date}%0A⏰ *Time Slot:* ${formData.time} (IST)%0A💬 *Scope Details:* ${formData.message || "None provided"}%0A%0APlease confirm my calendar invite.`;
+      const whatsappMessage = `Hi NexoraLab Technologies,%0A%0AI would like to schedule an Engineering Consultation:%0A%0A👤 *Name:* ${formData.name.trim()}%0A🏢 *Company:* ${formData.company.trim() || "N/A"}%0A📧 *Email:* ${formData.email.trim()}%0A📱 *Phone:* ${formData.phone.trim()}%0A🎯 *Topic:* ${topicLabel}%0A📹 *Channel:* ${typeLabel}%0A📅 *Preferred Date:* ${formData.date}%0A⏰ *Time Slot:* ${formData.time} (IST)%0A💬 *Scope Details:* ${formData.message.trim() || "None provided"}%0A%0APlease confirm my calendar invite.`;
 
       window.open(`https://wa.me/917079884369?text=${whatsappMessage}`, "_blank");
     } catch {
@@ -234,6 +261,18 @@ const Meeting = () => {
             className="lg:col-span-8 rounded-3xl border border-white/15 bg-[#070e1e]/95 backdrop-blur-2xl shadow-2xl p-6 sm:p-10"
           >
             <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Anti-Spam Bot Honeypot Field */}
+              <input
+                type="text"
+                name="_hp"
+                value={formData._hp}
+                onChange={handleChange}
+                style={{ display: "none", position: "absolute", left: "-9999px" }}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+              />
+
               {/* Step 1: Project Topic */}
               <div>
                 <div className="flex items-center gap-2 mb-3">

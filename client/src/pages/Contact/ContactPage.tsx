@@ -50,6 +50,7 @@ const ContactPage: React.FC = () => {
     service: "",
     budget: "",
     message: "",
+    _hp: "", // Anti-spam bot honeypot
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,19 +59,30 @@ const ContactPage: React.FC = () => {
 
   const validate = () => {
     const errs: Record<string, string> = {};
-    if (!formData.name.trim() || formData.name.trim().length < 2) {
-      errs.name = "Please enter your full name.";
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedPhone = formData.phone.trim();
+
+    if (!trimmedName || trimmedName.length < 2) {
+      errs.name = "Please enter your full name (minimum 2 characters).";
+    } else if (trimmedName.length > 100) {
+      errs.name = "Name must not exceed 100 characters.";
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim() || !emailRegex.test(formData.email.trim())) {
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!trimmedEmail || !emailRegex.test(trimmedEmail)) {
       errs.email = "Please enter a valid business email address.";
     }
-    if (!formData.phone.trim() || formData.phone.trim().length < 8) {
-      errs.phone = "Please enter a valid phone number.";
+
+    const phoneDigits = trimmedPhone.replace(/\D/g, "");
+    if (!phoneDigits || phoneDigits.length < 7 || phoneDigits.length > 15) {
+      errs.phone = "Please enter a valid phone number (7-15 digits).";
     }
+
     if (!formData.service) {
       errs.service = "Please select a primary service.";
     }
+
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -92,14 +104,15 @@ const ContactPage: React.FC = () => {
     setIsSubmitting(true);
     try {
       await formsService.submitContact({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
         countryCode: formData.countryCode,
         company: "",
         service: formData.service,
         budget: formData.budget || "Discussion based",
-        message: formData.message || "No message provided",
+        message: formData.message.trim() || "No message provided",
+        _hp: formData._hp,
       });
       setIsSubmitted(true);
     } catch {
@@ -254,6 +267,7 @@ const ContactPage: React.FC = () => {
                             service: "",
                             budget: "",
                             message: "",
+                            _hp: "",
                           });
                         }}
                         className="rounded-full bg-white/10 px-6 py-2.5 text-xs font-bold text-white hover:bg-white/20 transition"
@@ -280,6 +294,18 @@ const ContactPage: React.FC = () => {
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
+                      {/* Anti-Spam Bot Honeypot Field */}
+                      <input
+                        type="text"
+                        name="_hp"
+                        value={formData._hp}
+                        onChange={handleChange}
+                        style={{ display: "none", position: "absolute", left: "-9999px" }}
+                        tabIndex={-1}
+                        autoComplete="off"
+                        aria-hidden="true"
+                      />
+
                       {/* Name & Email */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>

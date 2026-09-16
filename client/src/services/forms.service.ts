@@ -10,6 +10,7 @@ export interface QuotePayload {
   timeline?: string;
   company?: string;
   message?: string;
+  _hp?: string;
 }
 
 export interface ContactPayload {
@@ -21,6 +22,7 @@ export interface ContactPayload {
   service?: string;
   budget?: string;
   message: string;
+  _hp?: string;
 }
 
 export interface MeetingPayload {
@@ -33,6 +35,7 @@ export interface MeetingPayload {
   meetingTimeSlot: string;
   meetingTopic?: string;
   meetingAgenda?: string;
+  _hp?: string;
 }
 
 export interface BrochurePayload {
@@ -41,6 +44,7 @@ export interface BrochurePayload {
   phone?: string;
   countryCode?: string;
   company?: string;
+  _hp?: string;
 }
 
 export interface CareerPayload {
@@ -53,6 +57,7 @@ export interface CareerPayload {
   portfolioUrl?: string;
   resumeUrl?: string;
   message?: string;
+  _hp?: string;
 }
 
 const postForm = async (endpoint: string, body: any) => {

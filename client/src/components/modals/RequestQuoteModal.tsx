@@ -71,6 +71,7 @@ const RequestQuoteModal: React.FC = () => {
     service: "",
     budget: "",
     message: "",
+    _hp: "", // Anti-spam bot honeypot
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -86,12 +87,17 @@ const RequestQuoteModal: React.FC = () => {
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
-    if (!formData.name.trim() || formData.name.trim().length < 2) {
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+
+    if (!trimmedName || trimmedName.length < 2) {
       newErrors.name = "Full name must be at least 2 characters.";
+    } else if (trimmedName.length > 100) {
+      newErrors.name = "Full name cannot exceed 100 characters.";
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim() || !emailRegex.test(formData.email.trim())) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!trimmedEmail || !emailRegex.test(trimmedEmail)) {
       newErrors.email = "Please enter a valid business email address.";
     }
 
@@ -139,7 +145,16 @@ const RequestQuoteModal: React.FC = () => {
 
     setIsSubmitting(true);
     try {
-      await formsService.submitQuote(formData);
+      await formsService.submitQuote({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        countryCode: formData.countryCode,
+        phone: formData.phone.trim(),
+        service: formData.service,
+        budget: formData.budget || "Flexible / Discussion Based",
+        message: formData.message.trim() || "No message provided",
+        _hp: formData._hp,
+      });
       setIsSuccess(true);
     } catch {
       setErrors({
@@ -148,7 +163,6 @@ const RequestQuoteModal: React.FC = () => {
     } finally {
       setIsSubmitting(false);
     }
-
   };
 
   const handleClose = () => {
@@ -163,6 +177,7 @@ const RequestQuoteModal: React.FC = () => {
         service: "",
         budget: "",
         message: "",
+        _hp: "",
       });
       setErrors({});
     }, 300);
@@ -298,6 +313,18 @@ const RequestQuoteModal: React.FC = () => {
                   </div>
 
                   <form onSubmit={handleSubmit} className="space-y-3">
+                    {/* Anti-Spam Bot Honeypot Field */}
+                    <input
+                      type="text"
+                      name="_hp"
+                      value={formData._hp}
+                      onChange={handleChange}
+                      style={{ display: "none", position: "absolute", left: "-9999px" }}
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                    />
+
                     {/* Row 1: Full Name & Email */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                       <div>

@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const { body, param, validationResult } = require('express-validator');
 const Submission = require('../models/Submission');
 const ContentItem = require('../models/ContentItem');
 const Setting = require('../models/Setting');
@@ -30,115 +32,157 @@ const verifyAdminToken = (req, res, next) => {
   }
 };
 
-// 1. Admin Login (Supports ID + Password, Email + Password, Master Passkey, or Quick PIN)
-router.post('/login', async (req, res) => {
-  try {
-    const { id, username, email, password, passkey, pin } = req.body;
+// 1. Admin Login (Supports ID + Password, Email + Password, Master Passkey, or PIN)
+router.post(
+  '/login',
+  [
+    body('id').optional().isString().trim().escape().isLength({ max: 100 }),
+    body('username').optional().isString().trim().escape().isLength({ max: 100 }),
+    body('email').optional().isString().trim().escape().isLength({ max: 100 }),
+    body('password').optional().isString().isLength({ max: 128 }),
+    body('passkey').optional().isString().isLength({ max: 128 }),
+    body('pin').optional().isString().isLength({ max: 64 }),
+  ],
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ success: false, errors: errors.array() });
+      }
 
-    const inputId = (id || username || email || '').trim().toLowerCase();
-    const inputPassword = (password || '').trim();
-    const inputKey = (passkey || pin || '').trim();
+      const { id, username, email, password, passkey, pin } = req.body;
 
-    let authenticatedAdmin = null;
+      const inputId = (id || username || email || '').trim().toLowerCase();
+      const inputPassword = (password || '').trim();
+      const inputKey = (passkey || pin || '').trim();
 
-    // A. Check ID & Password in MongoDB
-    if (isMongoConnected() && inputId && inputPassword) {
-      try {
-        const foundUser = await AdminUser.findOne({
-          $or: [{ username: inputId }, { email: inputId }],
-          isActive: true,
+      if (!inputPassword && !inputKey) {
+        return res.status(400).json({
+          success: false,
+          message: 'Password or Passkey is required.',
         });
-
-        if (foundUser) {
-          const isMatch = await foundUser.matchPassword(inputPassword);
-          if (isMatch) {
-            foundUser.lastLogin = new Date();
-            await foundUser.save();
-            authenticatedAdmin = {
-              id: foundUser._id.toString(),
-              username: foundUser.username,
-              email: foundUser.email,
-              name: foundUser.name,
-              role: foundUser.role,
-            };
-          }
-        }
-      } catch (err) {
-        console.warn('MongoDB AdminUser lookup warning:', err.message);
       }
-    }
 
-    // B. Check Passkey or Default ID/Password if not yet authenticated
-    if (!authenticatedAdmin) {
-      let storedPasskey = defaultSettings.adminPasskey;
-      let storedPin = defaultSettings.quickPin;
+      let authenticatedAdmin = null;
 
-      if (isMongoConnected()) {
+      // A. Check ID & Password in MongoDB AdminUser collection
+      if (isMongoConnected() && inputId && inputPassword) {
         try {
-          const settingDoc = await Setting.findOne();
-          if (settingDoc && settingDoc.adminPasskeyHash) {
-            storedPasskey = settingDoc.adminPasskeyHash;
+          const foundUser = await AdminUser.findOne({
+            $or: [{ username: inputId }, { email: inputId }],
+            isActive: true,
+          });
+
+          if (foundUser) {
+            const isMatch = await foundUser.matchPassword(inputPassword);
+            if (isMatch) {
+              foundUser.lastLogin = new Date();
+              await foundUser.save();
+              authenticatedAdmin = {
+                id: foundUser._id.toString(),
+                username: foundUser.username,
+                email: foundUser.email,
+                name: foundUser.name,
+                role: foundUser.role,
+              };
+            }
           }
-        } catch (e) {
-          console.warn('Could not read settings doc:', e.message);
+        } catch (err) {
+          console.warn('MongoDB AdminUser lookup warning:', err.message);
         }
       }
 
-      const isPasskeyMatch =
-        (inputKey && (inputKey === storedPasskey || inputKey === storedPin || inputKey === 'NexoraAdmin@2026' || inputKey === '707988')) ||
-        (inputPassword && (inputPassword === 'Admin@Nexora2026' || inputPassword === 'NexoraAdmin@2026' || inputPassword === 'admin123' || inputPassword === '707988'));
+      // B. Check Passkey or Master Admin Credentials
+      if (!authenticatedAdmin) {
+        let storedPasskeyHash = '';
+        const masterPass = process.env.ADMIN_PASSWORD || 'Admin@Nexora2026';
+        const masterPasskey = process.env.ADMIN_PASSKEY || 'NexoraAdmin@2026';
 
-      const isIdMatch =
-        !inputId ||
-        inputId === 'admin' ||
-        inputId === 'admin@nexoralab.in' ||
-        inputId === 'nexoralab' ||
-        inputId === 'nexora' ||
-        inputId === 'nexoralabtechnologies@gmail.com';
+        if (isMongoConnected()) {
+          try {
+            const settingDoc = await Setting.findOne();
+            if (settingDoc && settingDoc.adminPasskeyHash) {
+              storedPasskeyHash = settingDoc.adminPasskeyHash;
+            }
+          } catch (e) {
+            console.warn('Could not read settings doc:', e.message);
+          }
+        }
 
-      if (isPasskeyMatch && isIdMatch) {
-        authenticatedAdmin = {
-          id: 'nexora_admin_root',
-          username: inputId || 'admin',
-          email: 'admin@nexoralab.in',
-          name: 'NexoraLab Principal Admin',
-          role: 'superadmin',
-        };
+        let isPasskeyValid = false;
+        if (inputKey) {
+          if (storedPasskeyHash) {
+            if (storedPasskeyHash.startsWith('$2a$') || storedPasskeyHash.startsWith('$2b$')) {
+              isPasskeyValid = await bcrypt.compare(inputKey, storedPasskeyHash);
+            } else {
+              isPasskeyValid = inputKey === storedPasskeyHash;
+            }
+          }
+          if (!isPasskeyValid) {
+            isPasskeyValid = inputKey === masterPasskey || inputKey === masterPass;
+          }
+        }
+
+        let isPasswordValid = false;
+        if (inputPassword) {
+          isPasswordValid = inputPassword === masterPass || inputPassword === masterPasskey;
+        }
+
+        const allowedRootUsernames = [
+          '',
+          'admin',
+          'admin@nexoralab.in',
+          'nexoralab',
+          'nexora',
+          'nexoralabtechnologies@gmail.com',
+        ];
+
+        const isIdValid = allowedRootUsernames.includes(inputId);
+
+        if ((isPasskeyValid || isPasswordValid) && isIdValid) {
+          authenticatedAdmin = {
+            id: 'nexora_admin_root',
+            username: inputId || 'admin',
+            email: 'admin@nexoralab.in',
+            name: 'NexoraLab Principal Admin',
+            role: 'superadmin',
+          };
+        }
       }
-    }
 
-    if (!authenticatedAdmin) {
-      return res.status(401).json({
-        success: false,
-        message: 'Invalid Admin ID or Password. Access denied.',
+      if (!authenticatedAdmin) {
+        return res.status(401).json({
+          success: false,
+          message: 'Invalid Admin credentials. Access denied.',
+        });
+      }
+
+      const token = jwt.sign(
+        {
+          id: authenticatedAdmin.id,
+          username: authenticatedAdmin.username,
+          email: authenticatedAdmin.email,
+          role: authenticatedAdmin.role || 'admin',
+        },
+        JWT_SECRET,
+        { expiresIn: '7d' }
+      );
+
+      res.json({
+        success: true,
+        message: 'Admin authentication successful! Welcome to NexoraLab Command Center.',
+        token,
+        admin: {
+          ...authenticatedAdmin,
+          authenticatedAt: new Date(),
+        },
       });
+    } catch (error) {
+      console.error('Admin login error:', error);
+      res.status(500).json({ success: false, message: 'Login server error.', error: error.message });
     }
-
-    const token = jwt.sign(
-      {
-        id: authenticatedAdmin.id,
-        username: authenticatedAdmin.username,
-        email: authenticatedAdmin.email,
-        role: authenticatedAdmin.role || 'admin',
-      },
-      JWT_SECRET,
-      { expiresIn: '7d' }
-    );
-
-    res.json({
-      success: true,
-      message: 'Admin authentication successful! Welcome to NexoraLab Command Center.',
-      token,
-      admin: {
-        ...authenticatedAdmin,
-        authenticatedAt: new Date(),
-      },
-    });
-  } catch (error) {
-    console.error('Admin login error:', error);
-    res.status(500).json({ success: false, message: 'Login server error.', error: error.message });
   }
-});
+);
 
 // 2. Admin Dashboard Stats
 router.get('/dashboard-stats', verifyAdminToken, async (req, res) => {
@@ -488,7 +532,14 @@ router.get('/settings', verifyAdminToken, async (req, res) => {
 
 router.put('/settings', verifyAdminToken, async (req, res) => {
   try {
-    const updates = req.body;
+    const updates = { ...req.body };
+
+    // If an admin is updating the passkey, hash it securely
+    if (updates.adminPasskey && updates.adminPasskey.trim().length >= 6) {
+      const salt = await bcrypt.genSalt(10);
+      updates.adminPasskeyHash = await bcrypt.hash(updates.adminPasskey.trim(), salt);
+      delete updates.adminPasskey;
+    }
 
     if (isMongoConnected()) {
       let doc = await Setting.findOne();
@@ -499,14 +550,19 @@ router.put('/settings', verifyAdminToken, async (req, res) => {
         doc.updatedAt = new Date();
       }
       const saved = await doc.save();
-      return res.json({ success: true, message: 'Site settings updated successfully!', settings: saved });
+      const safeResponse = saved.toObject();
+      delete safeResponse.adminPasskeyHash;
+      return res.json({ success: true, message: 'Site settings updated successfully!', settings: safeResponse });
     }
 
     // Disk fallback
     const diskSettings = [updates];
     writeDiskData('settings', diskSettings);
 
-    res.json({ success: true, message: 'Site settings updated successfully!', settings: updates });
+    const safeUpdates = { ...updates };
+    delete safeUpdates.adminPasskey;
+    delete safeUpdates.adminPasskeyHash;
+    res.json({ success: true, message: 'Site settings updated successfully!', settings: safeUpdates });
   } catch (error) {
     console.error('Error updating settings:', error);
     res.status(500).json({ success: false, message: 'Failed to update settings.', error: error.message });
@@ -587,74 +643,92 @@ router.get('/profile', verifyAdminToken, async (req, res) => {
   }
 });
 
-router.put('/credentials', verifyAdminToken, async (req, res) => {
-  try {
-    const { username, email, newPassword, name } = req.body;
-
-    if (isMongoConnected()) {
-      let adminUser = await AdminUser.findOne({
-        $or: [{ _id: req.admin.id }, { username: req.admin.username }, { email: req.admin.email }],
-      });
-
-      if (!adminUser) {
-        adminUser = await AdminUser.findOne();
+router.put(
+  '/credentials',
+  verifyAdminToken,
+  [
+    body('username').optional().isString().trim().isLength({ min: 3, max: 50 }).matches(/^[a-zA-Z0-9_.-]+$/).withMessage('Username must be alphanumeric with no spaces'),
+    body('email').optional().isEmail().normalizeEmail().withMessage('Valid email required'),
+    body('name').optional().isString().trim().escape().isLength({ max: 100 }),
+    body('newPassword').optional().isLength({ min: 6, max: 128 }).withMessage('New password must be at least 6 characters'),
+  ],
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ success: false, errors: errors.array() });
       }
 
-      if (adminUser) {
-        if (username) adminUser.username = username.trim().toLowerCase();
-        if (email) adminUser.email = email.trim().toLowerCase();
-        if (name) adminUser.name = name.trim();
-        if (newPassword && newPassword.trim().length >= 6) {
-          adminUser.password = newPassword.trim();
+      const { username, email, newPassword, name } = req.body;
+
+      if (isMongoConnected()) {
+        let adminUser = await AdminUser.findOne({
+          $or: [{ _id: req.admin.id }, { username: req.admin.username }, { email: req.admin.email }],
+        });
+
+        if (!adminUser) {
+          adminUser = await AdminUser.findOne();
         }
-        await adminUser.save();
 
-        return res.json({
-          success: true,
-          message: 'Admin credentials updated successfully in database!',
-          admin: {
-            username: adminUser.username,
-            email: adminUser.email,
-            name: adminUser.name,
-            role: adminUser.role,
-          },
-        });
-      } else {
-        const created = await AdminUser.create({
-          username: (username || 'admin').trim().toLowerCase(),
-          email: (email || 'admin@nexoralab.in').trim().toLowerCase(),
-          password: newPassword ? newPassword.trim() : 'Admin@Nexora2026',
-          name: name || 'NexoraLab Principal Admin',
-          role: 'superadmin',
-        });
-        return res.json({
-          success: true,
-          message: 'Admin credentials initialized in database!',
-          admin: {
-            username: created.username,
-            email: created.email,
-            name: created.name,
-            role: created.role,
-          },
-        });
+        if (adminUser) {
+          if (username) adminUser.username = username.trim().toLowerCase();
+          if (email) adminUser.email = email.trim().toLowerCase();
+          if (name) adminUser.name = name.trim();
+          if (newPassword && newPassword.trim().length >= 6) {
+            adminUser.password = newPassword.trim(); // Pre-save hook will hash with bcrypt
+          }
+          await adminUser.save();
+
+          return res.json({
+            success: true,
+            message: 'Admin credentials updated successfully in database!',
+            admin: {
+              username: adminUser.username,
+              email: adminUser.email,
+              name: adminUser.name,
+              role: adminUser.role,
+            },
+          });
+        } else {
+          const created = await AdminUser.create({
+            username: (username || 'admin').trim().toLowerCase(),
+            email: (email || 'admin@nexoralab.in').trim().toLowerCase(),
+            password: newPassword ? newPassword.trim() : (process.env.ADMIN_PASSWORD || 'Admin@Nexora2026'),
+            name: name || 'NexoraLab Principal Admin',
+            role: 'superadmin',
+          });
+          return res.json({
+            success: true,
+            message: 'Admin credentials initialized in database!',
+            admin: {
+              username: created.username,
+              email: created.email,
+              name: created.name,
+              role: created.role,
+            },
+          });
+        }
       }
-    }
 
-    // Disk fallback update
-    const diskSettings = readDiskData('settings');
-    if (diskSettings && diskSettings[0]) {
-      if (newPassword) diskSettings[0].adminPasskey = newPassword;
-      writeDiskData('settings', diskSettings);
-    }
+      // Disk fallback update
+      const diskSettings = readDiskData('settings');
+      if (diskSettings && diskSettings[0]) {
+        if (newPassword) {
+          const salt = await bcrypt.genSalt(10);
+          diskSettings[0].adminPasskey = await bcrypt.hash(newPassword.trim(), salt);
+        }
+        writeDiskData('settings', diskSettings);
+      }
 
-    res.json({
-      success: true,
-      message: 'Admin credentials updated successfully!',
-    });
-  } catch (error) {
-    console.error('Error updating admin credentials:', error);
-    res.status(500).json({ success: false, message: 'Failed to update credentials.', error: error.message });
+      res.json({
+        success: true,
+        message: 'Admin credentials updated successfully!',
+      });
+    } catch (error) {
+      console.error('Error updating admin credentials:', error);
+      res.status(500).json({ success: false, message: 'Failed to update credentials.', error: error.message });
+    }
   }
-});
+);
 
 module.exports = router;

@@ -12,6 +12,7 @@ const BrochureModal: React.FC = () => {
     email: "",
     countryCode: "+91",
     phone: "",
+    _hp: "", // Anti-spam bot honeypot
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -19,16 +20,23 @@ const BrochureModal: React.FC = () => {
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
-    if (!formData.name.trim() || formData.name.trim().length < 2) {
-      newErrors.name = "Full name is required.";
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+
+    if (!trimmedName || trimmedName.length < 2) {
+      newErrors.name = "Full name is required (minimum 2 characters).";
+    } else if (trimmedName.length > 100) {
+      newErrors.name = "Full name cannot exceed 100 characters.";
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim() || !emailRegex.test(formData.email.trim())) {
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!trimmedEmail || !emailRegex.test(trimmedEmail)) {
       newErrors.email = "Please enter a valid email address.";
     }
+
     const phoneDigits = formData.phone.replace(/\D/g, "");
-    if (!phoneDigits || phoneDigits.length < 8) {
-      newErrors.phone = "Please enter a valid contact number.";
+    if (!phoneDigits || phoneDigits.length < 7 || phoneDigits.length > 15) {
+      newErrors.phone = "Please enter a valid contact number (7-15 digits).";
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -51,21 +59,26 @@ const BrochureModal: React.FC = () => {
     if (!validate()) return;
     setIsSubmitting(true);
     try {
-      await formsService.submitBrochure(formData);
+      await formsService.submitBrochure({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        countryCode: formData.countryCode,
+        phone: formData.phone.trim(),
+        _hp: formData._hp,
+      });
       setIsSuccess(true);
     } catch {
       setErrors({ global: "Something went wrong. Please try again." });
     } finally {
       setIsSubmitting(false);
     }
-
   };
 
   const handleClose = () => {
     closeBrochureModal();
     setTimeout(() => {
       setIsSuccess(false);
-      setFormData({ name: "", email: "", countryCode: "+91", phone: "" });
+      setFormData({ name: "", email: "", countryCode: "+91", phone: "", _hp: "" });
       setErrors({});
     }, 300);
   };
@@ -127,6 +140,17 @@ const BrochureModal: React.FC = () => {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Anti-Spam Bot Honeypot Field */}
+                  <input
+                    type="text"
+                    name="_hp"
+                    value={formData._hp}
+                    onChange={handleChange}
+                    style={{ display: "none", position: "absolute", left: "-9999px" }}
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                  />
                   <div>
                     <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
                       Full Name *

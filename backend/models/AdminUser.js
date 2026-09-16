@@ -44,14 +44,25 @@ const adminUserSchema = new mongoose.Schema(
   }
 );
 
+// Pre-save hook to hash password if modified
+adminUserSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    return next();
+  }
+  // If not already bcrypt hashed
+  if (!this.password.startsWith('$2a$') && !this.password.startsWith('$2b$')) {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  }
+  next();
+});
+
 // Match password helper
 adminUserSchema.methods.matchPassword = async function (enteredPassword) {
   if (!enteredPassword) return false;
-  // If password in DB is hashed with bcrypt
   if (this.password.startsWith('$2a$') || this.password.startsWith('$2b$')) {
     return await bcrypt.compare(enteredPassword, this.password);
   }
-  // Plaintext match fallback
   return this.password === enteredPassword;
 };
 
