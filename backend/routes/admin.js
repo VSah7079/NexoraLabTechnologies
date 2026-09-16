@@ -505,15 +505,17 @@ router.delete('/content/:type/:id', verifyAdminToken, async (req, res) => {
 // 8. Site Settings & Admin Security Config
 router.get('/settings', verifyAdminToken, async (req, res) => {
   try {
-    let settings = defaultSettings;
+    let settings = { ...defaultSettings };
 
     if (isMongoConnected()) {
       const doc = await Setting.findOne();
-      if (doc) settings = doc;
+      if (doc) {
+        settings = { ...defaultSettings, ...doc.toObject() };
+      }
     } else {
       const diskSettings = readDiskData('settings');
       if (diskSettings && diskSettings[0]) {
-        settings = diskSettings[0];
+        settings = { ...defaultSettings, ...diskSettings[0] };
       }
     }
 
@@ -522,6 +524,7 @@ router.get('/settings', verifyAdminToken, async (req, res) => {
       ...settings,
       hasCustomPasskey: !!settings.adminPasskeyHash,
     };
+    delete safeSettings.adminPasskeyHash;
 
     res.json({ success: true, settings: safeSettings });
   } catch (error) {

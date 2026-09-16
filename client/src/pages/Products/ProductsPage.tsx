@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -28,6 +28,7 @@ import {
 import { FaBrain, FaReact, FaAws, FaDocker, FaPython, FaSalesforce } from "react-icons/fa6";
 import SEO from "@/components/common/SEO";
 import { useModal } from "@/context/ModalContext";
+import { contentService } from "@/services/content.service";
 import {
   ecommerceMarketplaceImg,
   telehealthImg,
@@ -467,13 +468,58 @@ const ourProductEdgePoints = [
 ];
 
 const ProductsPage: React.FC = () => {
+  const [productsList, setProductsList] = useState<ProductItem[]>(allProducts);
   const [activeTab, setActiveTab] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const { openQuoteModal } = useModal();
   const location = useLocation();
 
+  useEffect(() => {
+    const fetchDynamicProducts = async () => {
+      try {
+        const dynamicItems = await contentService.getContent("products");
+        if (dynamicItems && dynamicItems.length > 0) {
+          const mapped: ProductItem[] = dynamicItems.map((item: any) => ({
+            id: item._id || item.slug || String(Date.now()),
+            category: (item.category || "on-demand").toLowerCase().includes("book")
+              ? "booking-services"
+              : (item.category || "on-demand").toLowerCase().includes("ecom")
+              ? "ecommerce"
+              : (item.category || "on-demand").toLowerCase().includes("edu")
+              ? "education"
+              : (item.category || "on-demand").toLowerCase().includes("health")
+              ? "healthcare"
+              : (item.category || "on-demand").toLowerCase().includes("social")
+              ? "social"
+              : "on-demand",
+            categoryLabel: item.category || "On-Demand & Delivery",
+            emoji: item.emoji || "🚀",
+            badge: item.badge || "Turnkey",
+            badgeColor: "text-cyan-300 bg-cyan-500/10 border-cyan-500/30",
+            title: item.title,
+            tagline: item.tagline || item.description || "Production-ready software application.",
+            desc: item.description || item.tagline || "",
+            features: Array.isArray(item.tags) ? item.tags : [
+              "Production-Ready Native Source Code Included",
+              "Multi-Tenant Admin & Merchant Control Panels",
+              "Real-time Push Notifications & Webhook Sync",
+              "100% Intellectual Property & Source Code Transfer",
+            ],
+            techStack: ["React 19", "Node.js", "PostgreSQL", "AWS S3", "Docker"],
+            timeline: "Launch in 3–4 Weeks",
+            demoPath: item.liveUrl || "/quote",
+          }));
+          setProductsList([...mapped, ...allProducts]);
+        }
+      } catch (e) {
+        console.warn("Using default products data:", e);
+      }
+    };
+    fetchDynamicProducts();
+  }, []);
+
   // Scroll to hash on load or hash change
-  React.useEffect(() => {
+  useEffect(() => {
     if (location.hash) {
       const targetId = location.hash.replace("#", "");
       setTimeout(() => {
@@ -486,7 +532,7 @@ const ProductsPage: React.FC = () => {
   }, [location.hash]);
 
   const filteredProducts = useMemo(() => {
-    return allProducts.filter((product) => {
+    return productsList.filter((product) => {
       const matchesTab = activeTab === "all" || product.category === activeTab;
       const query = searchQuery.toLowerCase().trim();
       const matchesSearch =
@@ -499,7 +545,7 @@ const ProductsPage: React.FC = () => {
 
       return matchesTab && matchesSearch;
     });
-  }, [activeTab, searchQuery]);
+  }, [productsList, activeTab, searchQuery]);
 
   return (
     <>

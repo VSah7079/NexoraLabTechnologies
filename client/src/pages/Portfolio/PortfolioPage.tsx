@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -15,6 +15,7 @@ import {
 } from "react-icons/hi2";
 import SEO from "@/components/common/SEO";
 import { useModal } from "@/context/ModalContext";
+import { contentService } from "@/services/content.service";
 import {
   aiSolutionsImg,
   cloudSaasImg,
@@ -25,7 +26,7 @@ import {
 
 interface CaseStudy {
   id: string;
-  category: "ai" | "cloud" | "mobile" | "saas" | "fintech";
+  category: "ai" | "cloud" | "mobile" | "saas" | "fintech" | string;
   title: string;
   clientType: string;
   image: string;
@@ -38,7 +39,7 @@ interface CaseStudy {
   techStack: string[];
 }
 
-const caseStudiesData: CaseStudy[] = [
+const defaultCaseStudiesData: CaseStudy[] = [
   {
     id: "ai-talent",
     category: "ai",
@@ -152,14 +153,47 @@ const caseStudiesData: CaseStudy[] = [
 ];
 
 const PortfolioPage: React.FC = () => {
+  const [caseStudies, setCaseStudies] = useState<CaseStudy[]>(defaultCaseStudiesData);
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<CaseStudy | null>(null);
   const { openQuoteModal } = useModal();
 
+  useEffect(() => {
+    const fetchDynamicPortfolio = async () => {
+      try {
+        const dynamicItems = await contentService.getContent("portfolio");
+        if (dynamicItems && dynamicItems.length > 0) {
+          const mapped: CaseStudy[] = dynamicItems.map((item: any) => ({
+            id: item._id || item.slug || String(Date.now()),
+            category: (item.category || "saas").toLowerCase(),
+            title: item.title,
+            clientType: item.clientName || "Enterprise Client",
+            image: item.imageUrl || cloudSaasImg,
+            metric: item.metrics || "+250% Growth",
+            metricLabel: "Engineered by NexoraLab",
+            overview: item.description || "Scalable custom architecture deliverable by NexoraLab Technologies.",
+            challenge: "Overcoming legacy monolithic scaling limits and improving latency.",
+            solution: "Delivered cloud-native microservices with enterprise grade SLA.",
+            impacts: [
+              "99.9% Uptime SLA delivered",
+              "Sub-50ms API query response time",
+              "100% IP and source code ownership transferred",
+            ],
+            techStack: Array.isArray(item.tags) ? item.tags : (item.tags ? String(item.tags).split(",").map((t: string) => t.trim()) : ["React 19", "Node.js", "AWS"]),
+          }));
+          setCaseStudies([...mapped, ...defaultCaseStudiesData]);
+        }
+      } catch (e) {
+        console.warn("Using default portfolio data:", e);
+      }
+    };
+    fetchDynamicPortfolio();
+  }, []);
+
   const filteredStudies =
     activeFilter === "all"
-      ? caseStudiesData
-      : caseStudiesData.filter((c) => c.category === activeFilter);
+      ? caseStudies
+      : caseStudies.filter((c) => c.category.toLowerCase().includes(activeFilter.toLowerCase()));
 
   return (
     <>

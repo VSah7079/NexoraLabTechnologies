@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   HiSparkles,
@@ -11,6 +11,7 @@ import {
 } from "react-icons/hi2";
 import SEO from "@/components/common/SEO";
 import { useModal } from "@/context/ModalContext";
+import { contentService } from "@/services/content.service";
 
 import {
   insightsNextjsReactImg,
@@ -23,7 +24,7 @@ import {
 interface Article {
   id: string;
   title: string;
-  category: "ai" | "cloud" | "mobile" | "frontend" | "security";
+  category: "ai" | "cloud" | "mobile" | "frontend" | "security" | string;
   categoryLabel: string;
   image: string;
   readTime: string;
@@ -34,7 +35,7 @@ interface Article {
   tags: string[];
 }
 
-const articlesData: Article[] = [
+const defaultArticlesData: Article[] = [
   {
     id: "nextjs16-react19-enterprise",
     title: "Next.js 16 & React 19: Why Modern Full-Stack Dominates Enterprise SaaS in 2026",
@@ -108,15 +109,43 @@ const articlesData: Article[] = [
 ];
 
 const InsightsPage: React.FC = () => {
+  const [articles, setArticles] = useState<Article[]>(defaultArticlesData);
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
   const { openQuoteModal } = useModal();
 
+  useEffect(() => {
+    const fetchDynamicInsights = async () => {
+      try {
+        const dynamicItems = await contentService.getContent("insights");
+        if (dynamicItems && dynamicItems.length > 0) {
+          const mappedDynamic: Article[] = dynamicItems.map((item: any) => ({
+            id: item._id || item.slug || String(Date.now()),
+            title: item.title,
+            category: (item.category || "ai").toLowerCase(),
+            categoryLabel: item.category || "Engineering",
+            image: item.imageUrl || insightsAiAgentsImg,
+            readTime: item.readTime || "5 min read",
+            date: new Date(item.createdAt || Date.now()).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+            author: item.author?.name || item.authorName || "Vikram Sah",
+            authorRole: item.author?.role || "Principal Architect",
+            summary: item.excerpt || item.description || item.content?.substring(0, 150) + "..." || "",
+            tags: Array.isArray(item.tags) ? item.tags : (item.tags ? String(item.tags).split(",").map((t: string) => t.trim()) : ["Engineering"]),
+          }));
+          setArticles([...mappedDynamic, ...defaultArticlesData]);
+        }
+      } catch (e) {
+        console.warn("Using default articles data:", e);
+      }
+    };
+    fetchDynamicInsights();
+  }, []);
+
   const filteredArticles =
     activeCategory === "all"
-      ? articlesData
-      : articlesData.filter((a) => a.category === activeCategory);
+      ? articles
+      : articles.filter((a) => a.category.toLowerCase().includes(activeCategory.toLowerCase()));
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
