@@ -10,6 +10,8 @@ import {
   HiClock,
 } from "react-icons/hi2";
 import { useModal } from "@/context/ModalContext";
+import { formsService } from "@/services/forms.service";
+
 
 interface PhoneRule {
   min: number;
@@ -137,7 +139,7 @@ const RequestQuoteModal: React.FC = () => {
 
     setIsSubmitting(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await formsService.submitQuote(formData);
       setIsSuccess(true);
     } catch {
       setErrors({
@@ -146,6 +148,7 @@ const RequestQuoteModal: React.FC = () => {
     } finally {
       setIsSubmitting(false);
     }
+
   };
 
   const handleClose = () => {

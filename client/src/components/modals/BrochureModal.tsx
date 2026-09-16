@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiXMark, HiUser, HiEnvelope, HiPhone, HiCheckCircle } from "react-icons/hi2";
 import { useModal } from "@/context/ModalContext";
+import { formsService } from "@/services/forms.service";
+
 
 const BrochureModal: React.FC = () => {
   const { isBrochureModalOpen, closeBrochureModal } = useModal();
@@ -49,13 +51,14 @@ const BrochureModal: React.FC = () => {
     if (!validate()) return;
     setIsSubmitting(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await formsService.submitBrochure(formData);
       setIsSuccess(true);
     } catch {
       setErrors({ global: "Something went wrong. Please try again." });
     } finally {
       setIsSubmitting(false);
     }
+
   };
 
   const handleClose = () => {

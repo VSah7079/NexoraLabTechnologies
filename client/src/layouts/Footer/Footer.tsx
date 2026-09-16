@@ -230,9 +230,13 @@ const Footer: React.FC = () => {
           </p>
 
           <div className="flex items-center gap-6">
-            <Link to="/about" className="hover:text-white transition">Privacy Policy</Link>
-            <Link to="/about" className="hover:text-white transition">Terms of Service</Link>
-            <Link to="/about" className="hover:text-white transition">Refund Policy</Link>
+            <Link to="/privacy-policy" className="hover:text-[#00D2FF] transition">Privacy Policy</Link>
+            <Link to="/terms-of-service" className="hover:text-[#00D2FF] transition">Terms of Service</Link>
+            <Link to="/refund-policy" className="hover:text-[#00D2FF] transition">Refund Policy</Link>
+            <Link to="/admin" className="hover:text-cyan-400 text-slate-500 font-semibold transition flex items-center gap-1">
+              <span>Admin</span>
+            </Link>
+
 
             <button
               onClick={scrollToTop}

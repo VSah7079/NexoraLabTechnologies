@@ -1,5 +1,6 @@
 // src/App.tsx
 import React from "react";
+import { useLocation } from "react-router-dom";
 import Navbar from "@/layouts/Navbar/Navbar";
 import AppRoutes from "@/routes/AppRoutes";
 import Footer from "@/layouts/Footer/Footer";
@@ -10,6 +11,20 @@ import RequestQuoteModal from "@/components/modals/RequestQuoteModal";
 import BrochureModal from "@/components/modals/BrochureModal";
 
 function App() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
+  // Pure isolated Admin Console (Zero public elements, Navbar, Footer, or WhatsApp widgets)
+  if (isAdminRoute) {
+    return (
+      <ModalProvider>
+        <main className="min-h-screen bg-[#02050e] text-slate-100">
+          <AppRoutes />
+        </main>
+      </ModalProvider>
+    );
+  }
+
   return (
     <ModalProvider>
       <NetworkBackground />

@@ -20,6 +20,8 @@ import {
 } from "react-icons/hi2";
 import { FaWhatsapp } from "react-icons/fa";
 import SEO from "@/components/common/SEO";
+import { formsService } from "@/services/forms.service";
+
 
 const Meeting = () => {
   const [formData, setFormData] = useState({
@@ -71,7 +73,19 @@ const Meeting = () => {
     setIsSubmitting(true);
     setError("");
 
-    setTimeout(() => {
+    try {
+      await formsService.submitMeeting({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        countryCode: "+91",
+        company: formData.company,
+        meetingDate: formData.date,
+        meetingTimeSlot: formData.time,
+        meetingTopic: formData.topic,
+        meetingAgenda: formData.message,
+      });
+
       setIsSubmitting(false);
       setIsSubmitted(true);
 
@@ -81,8 +95,12 @@ const Meeting = () => {
       const whatsappMessage = `Hi NexoraLab Technologies,%0A%0AI would like to schedule an Engineering Consultation:%0A%0A👤 *Name:* ${formData.name}%0A🏢 *Company:* ${formData.company || "N/A"}%0A📧 *Email:* ${formData.email}%0A📱 *Phone:* ${formData.phone}%0A🎯 *Topic:* ${topicLabel}%0A📹 *Channel:* ${typeLabel}%0A📅 *Preferred Date:* ${formData.date}%0A⏰ *Time Slot:* ${formData.time} (IST)%0A💬 *Scope Details:* ${formData.message || "None provided"}%0A%0APlease confirm my calendar invite.`;
 
       window.open(`https://wa.me/917079884369?text=${whatsappMessage}`, "_blank");
-    }, 1200);
+    } catch {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    }
   };
+
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>

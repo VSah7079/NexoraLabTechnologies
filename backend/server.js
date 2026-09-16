@@ -10,6 +10,9 @@ dotenv.config();
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const aiRoutes = require('./routes/ai');
+const formsRoutes = require('./routes/forms');
+const adminRoutes = require('./routes/admin');
+const contentRoutes = require('./routes/content');
 
 // Initialize express app
 const app = express();
@@ -19,19 +22,36 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Database connection
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('MongoDB connected successfully'))
-  .catch((err) => console.error('MongoDB connection error:', err));
+const { seedInitialData } = require('./utils/seedData');
 
-// Routes
+// Database connection with error tolerance
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(async () => {
+    console.log('MongoDB connected successfully');
+    await seedInitialData();
+  })
+  .catch((err) => {
+    console.warn('MongoDB connection warning (resilient disk fallback active):', err.message);
+    seedInitialData();
+  });
+
+// Mount Routes
+app.use('/api/forms', formsRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/content', contentRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/ai', aiRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Server is running' });
+  res.json({
+    status: 'OK',
+    message: 'NexoraLab Technologies API server running',
+    timestamp: new Date(),
+    mongoConnected: mongoose.connection.readyState === 1,
+  });
 });
 
 // Error handling middleware
@@ -45,7 +65,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`NexoraLab Technologies API Server running on port ${PORT}`);
 });

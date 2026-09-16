@@ -12,8 +12,10 @@ import {
   HiGlobeAlt,
 } from "react-icons/hi2";
 import { FaWhatsapp } from "react-icons/fa6";
-import SEO from "@/components/common/SEO";
+import { useModal } from "@/context/ModalContext";
+import { formsService } from "@/services/forms.service";
 import { contactHubImg } from "@/assets/images";
+import SEO from "@/components/common/SEO";
 
 const serviceOptions = [
   "Custom Software & Web Engineering (React/Next.js)",
@@ -89,33 +91,25 @@ const ContactPage: React.FC = () => {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch("/api/inquiries/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fullName: formData.name,
-          workEmail: formData.email,
-          phoneNumber: `${formData.countryCode} ${formData.phone}`,
-          serviceInterest: formData.service,
-          estimatedBudget: formData.budget || "Discussion based",
-          projectBrief: formData.message || "No message provided",
-          sourcePage: "Contact Page",
-        }),
+      await formsService.submitContact({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        countryCode: formData.countryCode,
+        company: "",
+        service: formData.service,
+        budget: formData.budget || "Discussion based",
+        message: formData.message || "No message provided",
       });
-
-      if (res.ok) {
-        setIsSubmitted(true);
-      } else {
-        const data = await res.json().catch(() => ({}));
-        setErrors({ global: data.message || "Failed to submit inquiry. Please try again or WhatsApp us." });
-      }
+      setIsSubmitted(true);
     } catch {
-      // Fallback optimistic success for offline / non-connected client
+      // Fallback optimistic success
       setIsSubmitted(true);
     } finally {
       setIsSubmitting(false);
     }
   };
+
 
   return (
     <>

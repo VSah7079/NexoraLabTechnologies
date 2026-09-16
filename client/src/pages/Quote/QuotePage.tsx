@@ -17,6 +17,8 @@ import {
 } from "react-icons/hi2";
 import { FaWhatsapp } from "react-icons/fa6";
 import SEO from "@/components/common/SEO";
+import { formsService } from "@/services/forms.service";
+
 
 interface PhoneRule {
   min: number;
@@ -170,7 +172,7 @@ const QuotePage: React.FC = () => {
 
     setIsSubmitting(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+      await formsService.submitQuote(formData);
       setIsSuccess(true);
     } catch {
       setErrors({
@@ -180,6 +182,7 @@ const QuotePage: React.FC = () => {
       setIsSubmitting(false);
     }
   };
+
 
   return (
     <div className="relative min-h-screen bg-[#040813] text-slate-100 pt-36 sm:pt-40 md:pt-44 pb-24 overflow-hidden">
