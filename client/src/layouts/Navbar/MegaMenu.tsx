@@ -986,7 +986,7 @@ const MegaMenu: React.FC = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.98 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-[52px] left-1/2 -translate-x-1/2 w-[98vw] max-w-[1320px] z-[9999] rounded-3xl border border-white/20 bg-[#060c1c] shadow-[0_35px_90px_rgba(0,0,0,0.99),0_0_40px_rgba(0,210,255,0.15)] overflow-hidden"
+            className="absolute top-[52px] left-1/2 -translate-x-1/2 w-[98vw] max-w-[1320px] z-[9999] rounded-3xl border border-white/20 bg-[#040816] shadow-[0_35px_90px_rgba(0,0,0,0.99),0_0_40px_rgba(0,210,255,0.15)] backdrop-blur-3xl overflow-hidden"
           >
             {/* Top Light Accent */}
             <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[#00D2FF] to-transparent" />

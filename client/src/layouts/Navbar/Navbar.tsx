@@ -37,11 +37,17 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-[1000] w-full transition-all duration-300">
+      <header
+        className={`fixed top-0 left-0 right-0 z-[1000] w-full transition-all duration-300 ${
+          scrolled
+            ? "bg-[#040814]/95 backdrop-blur-2xl border-b border-cyan-500/20 shadow-[0_12px_36px_rgba(0,0,0,0.9),0_0_20px_rgba(0,210,255,0.06)]"
+            : "bg-transparent"
+        }`}
+      >
         {/* Top Utility Contact Strip */}
         <div
-          className={`hidden md:flex h-9 items-center justify-between border-b border-white/[0.08] bg-[#040814]/95 px-6 lg:px-12 text-[11px] font-semibold text-slate-300 backdrop-blur-md transition-all duration-300 ${
-            scrolled ? "h-0 py-0 opacity-0 overflow-hidden border-none" : "opacity-100"
+          className={`hidden md:flex items-center justify-between border-b border-white/[0.08] bg-[#040814]/95 px-6 lg:px-12 text-[11px] font-semibold text-slate-300 backdrop-blur-md transition-all duration-300 ${
+            scrolled ? "h-0 py-0 opacity-0 overflow-hidden border-none" : "h-9 opacity-100"
           }`}
         >
           {/* Left: Email & Live Status */}
@@ -90,17 +96,23 @@ const Navbar: React.FC = () => {
           </div>
         </div>
 
-        {/* Main Floating Glass Navbar */}
-        <div className="mx-auto w-full max-w-[1480px] px-3 sm:px-6 pt-2 sm:pt-2.5">
+        {/* Main Navbar */}
+        <div
+          className={`mx-auto w-full max-w-[1480px] transition-all duration-300 ${
+            scrolled ? "px-4 sm:px-6 lg:px-8 pt-0 pb-0" : "px-3 sm:px-6 pt-2 sm:pt-2.5"
+          }`}
+        >
           <div
-            className={`relative flex h-[62px] sm:h-[68px] items-center justify-between rounded-full border transition-all duration-300 px-4 sm:px-6 ${
+            className={`relative flex h-[62px] sm:h-[68px] items-center justify-between transition-all duration-300 ${
               scrolled
-                ? "border-cyan-500/30 bg-[#060b18]/95 shadow-[0_20px_50px_rgba(0,0,0,0.85),0_0_25px_rgba(0,210,255,0.15)] backdrop-blur-2xl"
-                : "border-white/[0.12] bg-[#060b18]/85 shadow-[0_20px_50px_rgba(0,0,0,0.7),0_1px_0_rgba(255,255,255,0.1)_inset] backdrop-blur-2xl"
+                ? "rounded-none border-0 bg-transparent shadow-none px-0"
+                : "rounded-full border border-white/[0.12] bg-[#060b18]/85 shadow-[0_20px_50px_rgba(0,0,0,0.7),0_1px_0_rgba(255,255,255,0.1)_inset] backdrop-blur-2xl px-4 sm:px-6"
             }`}
           >
-            {/* Top Glowing Ambient Light Line */}
-            <div className="absolute -top-[1px] left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-[#00D2FF]/70 to-transparent pointer-events-none" />
+            {/* Top Glowing Ambient Light Line (Only in floating pill mode) */}
+            {!scrolled && (
+              <div className="absolute -top-[1px] left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-[#00D2FF]/70 to-transparent pointer-events-none" />
+            )}
 
             {/* 1. Left: Brand Logo */}
             <div className="flex items-center shrink-0">
