@@ -149,10 +149,10 @@ const ContactPage: React.FC = () => {
                   <HiSparkles />
                   <span>Direct Engineering Access</span>
                 </div>
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight font-['Outfit']">
                   Let’s engineer something{" "}
                   <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
-                    extraordinary
+                    extraordinary together
                   </span>
                 </h1>
                 <p className="mt-4 text-sm sm:text-base text-slate-300 leading-relaxed font-normal">

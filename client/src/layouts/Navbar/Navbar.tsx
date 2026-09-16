@@ -138,7 +138,7 @@ const Navbar: React.FC = () => {
               {/* Request Project Quote Primary Button */}
               <button
                 onClick={openQuoteModal}
-                className="inline-flex items-center justify-center gap-1.5 px-4 sm:px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] shadow-[0_0_20px_rgba(0,210,255,0.35)] transition-all duration-200 hover:shadow-[0_0_30px_rgba(0,102,255,0.6)] hover:scale-105 active:scale-95 cursor-pointer"
+                className="hidden sm:inline-flex items-center justify-center gap-1.5 px-4 sm:px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] shadow-[0_0_20px_rgba(0,210,255,0.35)] transition-all duration-200 hover:shadow-[0_0_30px_rgba(0,102,255,0.6)] hover:scale-105 active:scale-95 cursor-pointer"
               >
                 <span>Request Quote</span>
                 <HiArrowRight className="text-xs sm:text-sm" />

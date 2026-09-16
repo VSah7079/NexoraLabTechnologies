@@ -14,20 +14,20 @@ const ContactCTA: React.FC = () => {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-[#00D2FF]/15 blur-[120px] pointer-events-none" />
           <div className="absolute bottom-0 right-10 w-[400px] h-[300px] rounded-full bg-[#7C3AED]/15 blur-[120px] pointer-events-none" />
 
-          <div className="relative z-10 max-w-3xl mx-auto">
+          <div className="relative z-10 max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#00D2FF] mb-4">
               <span className="flex h-2 w-2 rounded-full bg-[#00D2FF] animate-ping" />
               <span>Innovate • Build • Elevate</span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight font-['Outfit']">
               Ready to architect your next{" "}
               <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
                 digital system?
               </span>
             </h2>
 
-            <p className="mt-5 text-sm sm:text-base md:text-lg text-slate-300 leading-relaxed font-normal">
+            <p className="mt-5 text-sm sm:text-base md:text-lg text-slate-300 leading-relaxed font-normal max-w-3xl mx-auto">
               Tell us about your product roadmap, custom software requirements, or AI automation goals. Our solutions architects will evaluate your project and deliver an actionable technical roadmap.
             </p>
 

@@ -300,9 +300,8 @@ const TrustedCompanies: React.FC = () => {
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-[1.15] font-['Outfit']">
               Trusted by{" "}
               <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
-                global enterprises
-              </span>{" "}
-              and ambitious innovators
+                global enterprises & innovators
+              </span>
             </h2>
 
             <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">

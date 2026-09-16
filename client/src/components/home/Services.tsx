@@ -706,18 +706,19 @@ const Services: React.FC = () => {
       <div className="relative z-10 mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 xl:px-10">
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-2">
-          <div className="max-w-3xl space-y-3">
+          <div className="max-w-4xl space-y-3">
             <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#00D2FF]">
               <HiSparkles />
               <span>Full-Spectrum Enterprise Services</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-[1.18] font-['Outfit'] tracking-tight">
               End-to-End Software,{" "}
-              <span className="block sm:inline bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
+              <br className="hidden sm:inline" />
+              <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
                 Cloud & AI Engineering
               </span>
             </h2>
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
+            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal max-w-3xl">
               10 specialized engineering divisions and 70+ deliverables — engineered to scale startups, growth brands, and enterprise platforms worldwide.
             </p>
           </div>

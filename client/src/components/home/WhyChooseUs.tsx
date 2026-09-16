@@ -73,15 +73,19 @@ const WhyChooseUs: React.FC = () => {
 
       <div className="relative z-10 mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 xl:px-10">
         {/* Header */}
-        <div className="max-w-3xl">
+        <div className="max-w-4xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#00D2FF] mb-3">
             <HiSparkles />
             <span>Why Partner With Us</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight">
-            Why High-Growth Companies Choose <em className="not-italic bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">NexoraLab</em>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight font-['Outfit']">
+            Why High-Growth Companies{" "}
+            <br className="hidden sm:inline" />
+            <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
+              Choose NexoraLab
+            </span>
           </h2>
-          <p className="mt-4 text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
+          <p className="mt-4 text-sm sm:text-base text-slate-300 leading-relaxed font-normal max-w-3xl">
             We combine high-end product design, scalable full-stack engineering, and AI automation to deliver robust software systems that drive real enterprise revenue.
           </p>
         </div>

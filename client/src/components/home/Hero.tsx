@@ -91,10 +91,10 @@ const Hero: React.FC = () => {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="inline-flex items-center gap-2.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1.5 text-xs sm:text-sm font-semibold text-slate-200 backdrop-blur-md shadow-[0_0_25px_rgba(0,210,255,0.2)]"
+              className="inline-flex items-center gap-2 sm:gap-2.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3.5 sm:px-4 py-1.5 text-[11px] sm:text-xs md:text-sm font-semibold text-slate-200 backdrop-blur-md shadow-[0_0_25px_rgba(0,210,255,0.2)]"
             >
-              <span className="flex h-2 w-2 rounded-full bg-[#00D2FF] animate-ping" />
-              <span className="text-[#00D2FF] font-bold">NEXORALAB TECHNOLOGIES</span>
+              <span className="flex h-2 w-2 shrink-0 rounded-full bg-[#00D2FF] animate-ping" />
+              <span className="text-[#00D2FF] font-bold tracking-wider">NEXORALAB</span>
               <span className="text-slate-500">•</span>
               <span className="text-slate-300">Innovate • Build • Elevate</span>
             </motion.div>
@@ -104,13 +104,13 @@ const Hero: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-black text-white tracking-tight leading-[1.12]"
+              className="text-3xl sm:text-5xl md:text-6xl xl:text-7xl font-black text-white tracking-tight leading-[1.14] font-['Outfit']"
             >
-              Architecting Next-Gen{" "}
+              Architecting <span className="whitespace-nowrap">Next-Gen</span>{" "}
+              <br className="hidden sm:inline" />
               <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
-                Software, AI Systems
-              </span>{" "}
-              & Cloud Platforms
+                Software & AI Systems
+              </span>
             </motion.h1>
 
             {/* Subtext */}

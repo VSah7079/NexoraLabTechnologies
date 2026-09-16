@@ -42,14 +42,17 @@ const GlobalDelivery: React.FC = () => {
     <section id="global-delivery" className="relative overflow-hidden bg-transparent py-20 sm:py-28">
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 xl:px-10">
         {/* Header */}
-        <div className="max-w-3xl">
+        <div className="max-w-4xl">
           <div className="text-xs font-bold uppercase tracking-wider text-[#00D2FF] mb-2">
             Headquarters & Client Reach
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight">
-            Engineering excellence from <em className="not-italic text-[#00D2FF]">Siwan, Bihar, India</em>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight font-['Outfit']">
+            Engineering excellence from{" "}
+            <span className="bg-gradient-to-r from-[#00D2FF] via-[#0066FF] to-[#7C3AED] bg-clip-text text-transparent">
+              Siwan, Bihar, India
+            </span>
           </h2>
-          <p className="mt-4 text-sm sm:text-base text-slate-300 leading-relaxed">
+          <p className="mt-4 text-sm sm:text-base text-slate-300 leading-relaxed font-normal max-w-3xl">
             From our headquarters in Siwan, Bihar, India, we partner with businesses and startups across multiple continents to design, build, and scale mission-critical web applications, mobile platforms, and AI intelligence systems.
           </p>
         </div>
